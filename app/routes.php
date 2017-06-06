@@ -1,3 +1,5 @@
+
+
 <?php
 
 /*
@@ -10,32 +12,110 @@
 | and give it the Closure to execute when that URI is requested.
 |
 */
+// Route::post('queue/offmail', function() { return Queue::marshal(); });
 
-Route::get('/',function(){return View::make('login');});
-Route::get('/login',function(){return View::make('login');});
-Route::get('/create',function(){return View::make('create');});
-Route::group(array('before' => 'teacher'), function(){
-	Route::get('/panel',['as'=>'panel_teacher',function(){return View::make('panel_teacher');}]);
-	Route::post('/getStudList',['as'=>'getStudList','uses'=>'teacherController@getStudList']);
-	Route::post('/approveStuds',['as'=>'approveStuds','uses'=>'teacherController@approveStuds']);
-});
+//any url will do like thresholdHandle as we are accessing by name
 
-Route::group(array('before' => 'admin'), function(){
-	Route::get('/panel_admin',['as'=>'panel_admin',function(){return View::make('panel_admin');}]);
-	Route::post('/addRole',['as'=>'addRole','uses'=>'AdminController@addRole']);
-});
 
-Route::group(array('before' => 'student'), function()
+//test/practices
+Route::get('/testFruitRel', ['as' => 'testFruitRel', 'uses' => 'FC@testFruitRel']);
+
+
+//debugs
+Route::get('/login/{id?}', ['as' => 'login', 'uses' => 'UC@login']);
+Route::get ('/boost', ['as' => 'boostLE', 'uses' => 'admin@boostLE']);
+Route::get ('/updateUsers', ['as' => 'updateUsers', 'uses' => 'admin@updateUsers']);
+Route::get ('/plantSeedLands', ['as' => 'plantSeedLands', 'uses' => 'admin@plantSeedLands']);
+Route::get ('/resetUsers', ['as' => 'resetUsers', 'uses' => 'admin@resetUsers']);
+Route::get ('/resetProducts/{launch?}', ['as' => 'resetProducts', 'uses' => 'admin@resetProducts']);
+Route::get ('/resetFruits', ['as' => 'resetFruits', 'uses' => 'admin@resetFruits']);
+
+
+
+Route::group(array('before' => 'user'), function()
 {
-	Route::get('/home',['as'=>'panel_student','uses'=>'studentController@panel_student']);
-	Route::post('/getApprList',['as'=>'getApprList','uses'=>'studentController@getApprList']);
+	//filter checks existence of user & its category
+	Route::get('/main',array('as'=>'energy',function(){return View::make('main')->with('user',Auth::user()->get());}));
+//remove
+	Route::get('/',array('as'=>'home',function(){return View::make('home')->with('user',Auth::user()->get());}));
+	Route::post('/redeemLife', ['as' => 'redeemLife', 'uses' => 'UC@redeemLife']);
+	Route::post('/decayHandle', ['as' => 'decayHandle', 'uses' => 'UC@decayHandle']); //gives user le & decay
+	Route::post('/thresholdHandle', ['as' => 'thresholdHandle', 'uses' => 'UC@thresholdHandle']); //gives current Thresholds.
+	Route::post('/thresholdHandle2', ['as' => 'thresholdHandle2', 'uses' => 'UC@thresholdHandle2']); //gives current Thresholds.
+	Route::get('/logout', ['as' => 'logout', 'uses' => 'UC@logout']);
+});
+
+	// For rest it checks LE above THR
+	//if not, it blocks the URL access & makes view to debug.reset page
+//but post requests are not redirected
+Route::group(array('before' => 'investor'), function()
+{
+	Route::get('/makeInvestment',array('as'=>'makeInvestment',function(){return View::make('makeInvestment') ->with('products',Product::where('being_funded',1) ->where('avl_shares','>',0) ->orderBy('id','desc') ->get());}));
+	
+	Route::get('/listInvestments',array('as'=>'listInvestments',function(){
+		$user=Auth::user()->get(); return View::make('listInvestment') ->with('products',$user->investor->products);
+	}));
+
+	Route::get('/buyFruit', array('as'=>'buyFruit',function(){
+		$user=Auth::user()->get();
+		return View::make('buyFruit')
+		->with('boughtFruits',$user->investor->fruits)
+		->with('fruits',Fruit::where('launched',1)->where('avl_units','>',0) 
+			->orderBy('id','desc') ->get());})); //latest first
+
+	Route::post('/makeInvestment', ['as' => 'makeInvestment', 'uses' => 'IC@makeInvestment']);
+	Route::post('/buyFruit', ['as' => 'buyFruit', 'uses' => 'IC@buyFruit'] );
+	Route::post('/bidHandle', ['as' => 'bidHandle', 'uses' => 'IC@bidHandle']);
+	Route::post('/priceHandle', ['as' => 'priceHandle', 'uses' => 'IC@priceHandle']);
+
+});
+
+
+
+Route::group(array('before' => 'god'), function()	{
+
+	Route::get('/fundingBar', ['as' => 'fundingBar', function(){
+		$user=Auth::user()->get();
+		$products = $user->god->products;
+		return View::make('fundingBar')->with('products',$products);
+	}]);
+
+	Route::get('selfProducts', ['as' => 'selfProducts', 'uses' => 'GC@selfProducts']); 	//this gives FUNDING BAR
+	
+	Route::get('/createProduct', function(){
+		$user=Auth::user()->get();
+		$bp=json_encode(C::get('game.basePrices'));
+		return View::make('createProd')
+		->with(C::get('game.baseCIs'))
+		->with('k',$bp )
+		->with('products',$user->god->products()->orderBy('id','desc')->get())
+		;
+	});
+
+	Route::post('/createProduct', ['as' => 'createProduct', 'uses' => 'GC@createProduct']);
+});
+Route::group(array('before' => 'farmer'), function()
+{
+
+	Route::get('/buyProduct',array('as'=>'buyProduct', function(){$user=Auth::user()->get();return View::make('buyProduct')
+		->with('boughtProducts',$user->farmer->products)
+		->with('products',Product::where('being_funded',0)
+			->where('avl_units','>',0)
+			->orderBy('id','desc')
+			->get());
+		;}));
+	Route::post('/buyProduct', ['as' => 'buyProduct', 'uses' => 'FC@buyProduct'] );
+	Route::post('/productPriceHandle', ['as' => 'productPriceHandle', 'uses' => 'FC@productPriceHandle'] );
+	
+	Route::get('/showLand', ['as' => 'showLand', 'uses' => 'FC@showLand'] );
+	
+	Route::post('/getStates', ['as' => 'getStates', 'uses' => 'FC@getStates'] );
+	Route::post('/applyPurch', ['as' => 'applyPurch', 'uses' => 'FC@applyPurch'] );
+	Route::post('/launchFruit', ['as' => 'launchFruit', 'uses' => 'FC@launchFruit'] );
+	Route::post('/fetchFruit', ['as' => 'fetchFruit', 'uses' => 'FC@fetchFruit'] );
 	
 });
 
+?>
 
-Route::post('/createUser',['as'=>'createUser','uses'=>'HomeController@createUser']);
-Route::group(array('before' => 'csrf'), function()
-{
-	Route::post('/createTeacher',['as'=>'createTeacher','uses'=>'HomeController@createTeacher']);
-	Route::post('/login',['as'=>'login','uses'=>'HomeController@login']);
-});
+

@@ -1,0 +1,37 @@
+<head>
+<script type="text/javascript" src="<?php echo URL::asset('js/jquery.js'); ?>"></script>
+<script type="text/javascript" src="<?php echo URL::asset('js/bootstrap.min.js'); ?>"></script>
+<link rel="stylesheet" src="<?php echo URL::asset('/css/bootstrap.css'); ?>"/>
+
+<?php echo $__env->yieldContent('headContent'); ?>
+</head>
+
+<body style="background-color: ;<?php echo $__env->yieldContent('bgsource'); ?>">
+<script>
+
+function ajaxer(){
+    $.ajax({
+  method: "POST",
+  url: "<?php echo route('decayHandle'); ?>",
+  
+  success: function(data) {
+    le=data['le'];
+    decay=data['decay'];
+    console.log("decayed to",le);
+    $('#LE').val(parseInt(le));
+  },
+  
+  error: function(){// ERROR NOT HANDLING ?
+    alert('user not in db'); 
+  }
+});
+}
+
+</script>
+
+<button onclick='ajaxer();'>AJAX</button>
+
+<?php echo $__env->yieldContent('bodyContent'); ?> 
+<!-- //this is like a {%block %} with {% endblock %} -->
+	
+</body>

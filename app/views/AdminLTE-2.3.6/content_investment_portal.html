@@ -1,0 +1,68 @@
+
+
+<div id="invest" style="width:90%;background:#3399ff;margin:0%-20%3%2%;border-radius:10px">
+  <div class="box-header with-border" style="margin:5%50%0%5%">
+    <h3 class="box-title">Investment Bar</h3>
+  </div>
+  <!-- /.box-header -->
+  <script type="text/javascript">
+    function makeProgDiv(id){
+      var but='<div id="'+id+'"class="container-fluid">  </div>';
+      return but;
+
+    }
+    var cellData1=[
+    ['#'  ,'product' ,'investment'  ,'shares' ,'profit' ,'expiry'],
+    ['#'  ,'product' ,makeProgDiv("err")  ,'shares' ,'profit' ,'expiery '],
+    ['#'  ,'product' ,makeProgDiv("dd")  ,'shares' ,'profit' ,'expiery '],
+    ['#'  ,'product' ,makeProgDiv("kk")  ,'shares' ,'profit' ,'expiery '],
+    ['#'  ,'product' ,makeProgDiv("hh")  ,'shares' ,'profit' ,'expiery'],
+    ['#'  ,'product' ,makeProgDiv("gg")  ,'shares' ,'profit' ,'expiery '],
+    ['#'  ,'product' ,makeProgDiv("ll")  ,'shares' ,'profit' ,'expiery '],
+
+    ] ;
+
+    insertTable(cellData1,"invest",1);
+
+
+    var Colors=["aqua","red","green","yellow","blue"];
+
+//Change The following-
+var InvestorNames=["Mr.A","Mr.B","Mr.C","Mr.D","Mr.E","Mr.B","Mr.C","Mr.D","Mr.E","Mr.B","Mr.C","Mr.D","Mr.E"];//progress bar entries
+var Percentages=[20,3,6,7,8,8,8,5,9,4,5,] //Length of InvestorNames = Percentages
+var Info="Funding Details Here..."
+
+
+makeProgress(InvestorNames,Percentages,1,"err",Info);
+makeProgress(InvestorNames,Percentages,1,"dd",Info);
+makeProgress(InvestorNames,Percentages,1,"kk",Info);
+makeProgress(InvestorNames,Percentages,1,"ll",Info);
+makeProgress(InvestorNames,Percentages,1,"hh",Info);
+makeProgress(InvestorNames,Percentages,1,"gg",Info);
+
+
+
+function makeProgress(InvestorNames,Percentages,product_id,divID,Info){
+  var progressDiv=document.getElementById(divID);
+
+  var len=InvestorNames.length;
+  var progressGroup='<div class="progress lg">';
+  for(var i=0;i<len;i++){
+    progressGroup+='<div class="progress-bar progress-bar-'+
+    Colors[i%Colors.length]+
+    '" style="width: '+Percentages[i]+'%">'+
+    '<div class="progress-label">'+
+    '<span class="badge bg-yellow" style="font-size:10px">'+InvestorNames[i]+' </span> '+
+    Percentages[i]+'% </div></div>';
+  }
+  progressGroup+='</div>';
+
+
+  var Q=document.createElement('div');
+  Q.innerHTML='<div class="row">'+
+  progressGroup+
+  '</div>'+
+  '</div>';
+
+  progressDiv.appendChild(Q);
+}

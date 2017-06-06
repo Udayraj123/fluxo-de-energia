@@ -1,0 +1,18 @@
+<?php $__env->startSection('title'); ?>
+    Technothlon | 404
+<?php $__env->stopSection(); ?>
+<?php $__env->startSection('body'); ?>
+    <section class="wet-asphalt no-margin" style="height: 100%">
+        <div class="container"  style="padding:40px 30px 40px 30px;">
+            <div>
+                <div style="height: 100%; padding-left: 200px;" class="col-md-6">
+                    <img src="<?php echo asset('images/404.png'); ?>" alt="" height="450px"/>
+                </div>
+                <div style="display: inline-block; margin-top:175px" class="col-md-6 pull-left">
+                    <p class="lead">The page you are looking for is not available. <br>If you think it should work please <a href="<?php echo route('home'); ?>" class="linkNormal"> report us.</a></p>
+                </div>
+            </div>
+        </div>
+    </section>
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('misc.master', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

@@ -1,0 +1,63 @@
+
+<style>
+label > input{ /* HIDE RADIO */
+  display:none;
+}
+label > input + span{ /* IMAGE STYLES */
+  cursor:pointer;
+  border:2px solid transparent;
+}
+label > input:checked + span{ /* (CHECKED) IMAGE STYLES */
+  border:2px solid #f00;
+}
+  table, th, td {
+    border-collapse: collapse;
+  }
+</style>
+  </head>
+
+<div id="CheckBox" class="box-header with-border" style="background:#994d00;opacity:0.85;width:40%;padding:1%1%1%1%;margin:3%0%0%15%">
+  <div class="box-header with-border">
+      <h3 class="box-title" style="color:black;opacity:1">Land</h3>
+      </div>
+</div>
+<div id="CheckBox" class="box-header with-border" style="background:#994d00;opacity:0.85;width:20%;padding:1%1%1%1%;margin:-23.5%0%0%60%">
+  <div class="box-header with-border">
+      <h3 class="box-title" style="color:black;opacity:1">Product Submit</h3>
+      </div>
+      <div class="btn-group" style="margin:5%0%0%5%">
+                  <button type="button" class="btn btn-success btn-flat">Product</button>
+                  <button type="button" class="btn btn-success btn-flat dropdown-toggle" data-toggle="dropdown">
+                    <span class="caret"></span>
+                    <span class="sr-only">Toggle Dropdown</span>
+                  </button>
+                  <ul class="dropdown-menu" role="menu">
+                    <li><span>Sass</span></li>
+                    <li><span>shobit</span></li>
+                    <li><span>sam</span></li>
+                    <li><span>John</span></li>
+                  </ul>
+                </div><br>
+               &nbsp; <input type="submit" value="Submit" style="margin:2%0%0%3%">
+</div>
+
+<script type="text/javascript">
+function makeBox(Edit){
+      var but= '<label><input type="RADIO" name="fb" value="small" /><span class="btn btn-app"><i class="fa fa-music"></i>'+Edit+
+      '</span>'+
+    '</label>';
+      return but;
+  }
+  var cellData2=[
+  [makeBox("Land 1"),makeBox("Land 2"),makeBox("Land 2"),makeBox("Land 2")],
+  [makeBox("Land 1"),makeBox("Land 2"),makeBox("Land 2"),makeBox("Land 2")],
+  [makeBox("Land 1"),makeBox("Land 2"),makeBox("Land 2"),makeBox("Land 2")],
+  [makeBox("Land 1"),makeBox("Land 2"),makeBox("Land 2"),makeBox("Land 2")],
+
+  
+  ] ;
+      insertTable(cellData2,"CheckBox",0);
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<title>
+  God Stats
+</title>
+<html lang="en">
+
+<head>
+  <script>
+    function insertTable(cellData,divID,black){
+
+      var start=0;
+      var tableContainer=document.getElementById(divID);
+      var table1= document.createElement('table');
+      table1.className="table table-bordered";
+      var tableHeight=cellData.length-start,tableWidth=cellData[start+1].length;
+
+      for(var i=start;i<tableHeight;i++){
+        var current_row=table1.insertRow();
+        if(i==start && black){
+          current_row.style="background:black;color:white";
+        }
+        for(var j=0; j<tableWidth;j++){
+          var current_col=current_row.insertCell();
+          current_col.innerHTML='<strong>'+cellData[i%tableHeight][j%tableWidth]+'</strong>';
+        }
+      }
+      tableContainer.appendChild(table1);
+    }
+    function insertTable2(cellData,divID,black){
+
+      var start=0;
+      var tableContainer=document.getElementById(divID);
+      var tableHeight=cellData.length-start,tableWidth=cellData[start+1].length;
+      var n = 12/tableWidth;
+      for(var i=start;i<tableHeight;i++){
+        var current_row=document.createElement('div');  current_row.className="row";
+        if(i==start && black){
+          current_row.style="background:black;color:white";
+        }
+        for(var j=0; j<tableWidth;j++){
+          var current_col=document.createElement('div');  current_col.className="col-md-"+n;
+          current_col.innerHTML='<strong>'+cellData[i%tableHeight][j%tableWidth]+'</strong>';
+          current_row.appendChild(current_col);
+        }
+        tableContainer.appendChild(current_row);
+      }
+    }
+
+  </script>
+
+  <style>
+    table, th, td {
+      border: 1px solid black;
+      border-collapse: collapse;
+    }
+  </style>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>AdminLTE 2 | Simple Tables</title>
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  <!-- Bootstrap 3.3.6 -->
+  <link rel="stylesheet" href="./bootstrap/css/bootstrap.min.css">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+  <!-- Ionicons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">    
+  <!-- Theme style -->
+  <link rel="stylesheet" href="./dist/css/AdminLTE.min.css">
+<!-- AdminLTE Skins. Choose a skin from the css/skins
+  folder instead of downloading all of them to reduce the load. -->
+  <link rel="stylesheet" href="./dist/css/skins/_all-skins.min.css">
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+<![endif]-->
+<script src="./javas.js"></script>
+</head>
+<body background="god1.jpg" style="background-repeat:no-repeat;background-size:140%" >
+  <span class="info-box-icon bg-aqua" style="opacity:0.85"><div><i class="fa fa-fw fa-user"></i></div></span>
+  <header class="main-header" style="background:#3399ff;width:93.9%;margin-left:6.1%;opacity:0.85">
+    <nav class="navbar navbar-static-top">
+     <ul class="nav navbar-nav navbar-right">
+                <li>
+          <a class="headLink" style="font-size:28px;color:#994d00;color:black;opacity:1" href="./home_god.html">Energy</a>
+        </li>
+        <li>
+          <a class="headLink" style="font-size:28px;color:#994d00;color:black;opacity:1" href="./product_Creator.html">product Creator</a>
+        </li>
+        <li>
+          <a class="headLink" style="font-size:28px;color:#994d00;color:black;opacity:1" href="./investment_portal.html">Investment Portal</a>
+        </li>
+        <li>
+          <a class="headLink" style="font-size:28px;color:#994d00;color:black;opacity:1" href="./god_stats.html">God Stats</a>
+        </li>
+        <li>
+      </ul>
+  </nav>
+  </header>
+
+
+
+  <div id="stats" style="width:90%;background:#3399ff;margin:5%0%0%5%;border-radius:10px;opacity:0.75">
+    <p class="text-center" style="font-size:28px">
+      <strong>FARMER Stats</strong>
+    </p>
+  </div>
+
+  
+  <script type="text/javascript">
+    function makeProg(farmer,curr_LE,THR){
+      var diff= THR - curr_LE;
+      var closeness=100*(1 - diff/THR);
+      var prog='<div class="progress-group">'+
+      '<span class="progress-text">'+farmer+'</span>'+
+      '<span class="progress-number"><b>'+curr_LE+'</b>/'+THR+'</span>'+
+      '<div class="progress sm"><div class="progress-bar progress-bar-green" style="width:'+ closeness+'%"></div></div></div>';
+      return prog;
+    }
+
+    function makeData(sample,tableWidth,tableHeight){
+      var cellData=[];
+      var row = [];
+      for(var j=0; j<tableWidth;j++){
+        row.push(sample);
+      }
+      for(var i=0;i<tableHeight;i++){
+        cellData.push(row)
+      }
+      return cellData;
+    }
+    var cellData1=makeData(makeProg("farmer1",20000,25000),3,10);
+    insertTable(cellData1,"stats",0);
+
+
+
+  </script>
+</body>
+</html>

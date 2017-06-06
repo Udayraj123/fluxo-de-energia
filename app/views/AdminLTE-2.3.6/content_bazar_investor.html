@@ -1,0 +1,38 @@
+
+<div id="Bazar" style="width:50%;background:#66ff66;margin:10%0%0%2%;border-radius:10px;opacity:0.8">
+  <div class="box-header with-border" style="margin:0%50%0%0%">
+    <h3 class="box-title">Bazar</h3>
+  </div>
+</div>
+
+<div style="width:40%;background:#66ff66;margin:-21%0%0%55%;border-radius:10px;opacity:0.8">
+  <div class="box-header with-border" style="margin:0%50%0%0%">
+    <h3 class="box-title">Seed Menu</h3>
+  </div>
+  <div class="box-body" id="SeedTable">
+  </div>
+</div>
+<script type="text/javascript">
+  function makeButton(text){
+    var but='<button type="button">'+text+'</button>';
+    return but;
+  }
+  var cellData=[
+  ['#','Seed','Price','Growth time'],
+  ['1.','seed1','-','-'],
+  ['2.','seed2','-','-'],
+  ['3.','seed3','-','-'],
+  ['4.','seed4','-','-'],
+  ['5.','seed5','-','-'],
+  ] ;
+  var cellData3=[
+  ['#','fruits',  'quantity',  'detail',  'price', 'energy stored','Button'],
+  ['1.',  'Apple', '50',  '-', '3000 per unit','-', makeButton("HEY")],
+  ['2.',  'Mango', '80',  '-', '3000 per unit', '-',makeButton("HEY")],
+  ['3.',  'grapes',  '90',  '-', '3000 per unit', '-',makeButton("HEY")],
+  ['4.', 'banana',  '20',  '-', '3000 per unit', '-',makeButton("HEY")],
+  ['5.', 'banana',  '20',  '-', '3000 per unit', '-',makeButton("HEY")],
+  ];
+  insertTable(cellData,"SeedTable");
+  insertTable(cellData3,"Bazar");
+</script>

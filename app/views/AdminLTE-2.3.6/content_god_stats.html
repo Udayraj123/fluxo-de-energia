@@ -1,0 +1,36 @@
+
+  <div id="stats" style="width:90%;background:#3399ff;margin:5%0%0%5%;border-radius:10px;opacity:0.75">
+    <p class="text-center" style="font-size:28px">
+      <strong>FARMER Stats</strong>
+    </p>
+  </div>
+
+  
+  <script type="text/javascript">
+    function makeProg(farmer,curr_LE,THR){
+      var diff= THR - curr_LE;
+      var closeness=100*(1 - diff/THR);
+      var prog='<div class="progress-group">'+
+      '<span class="progress-text">'+farmer+'</span>'+
+      '<span class="progress-number"><b>'+curr_LE+'</b>/'+THR+'</span>'+
+      '<div class="progress sm"><div class="progress-bar progress-bar-green" style="width:'+ closeness+'%"></div></div></div>';
+      return prog;
+    }
+
+    function makeData(sample,tableWidth,tableHeight){
+      var cellData=[];
+      var row = [];
+      for(var j=0; j<tableWidth;j++){
+        row.push(sample);
+      }
+      for(var i=0;i<tableHeight;i++){
+        cellData.push(row)
+      }
+      return cellData;
+    }
+    var cellData1=makeData(makeProg("farmer1",20000,25000),3,10);
+    insertTable(cellData1,"stats",0);
+
+
+
+  </script>

@@ -1,0 +1,10 @@
+ErrorDocument 404 start.php
+DirectoryIndex start.php
+
+<IfModule mod_rewrite.c>
+    RewriteEngine on
+    rewriterule ^technothlon(.*)$ http://technothlon.techniche.org$1 [R=301,L,QSA]
+    RewriteCond %{REQUEST_FILENAME} !-f
+	RewriteCond %{REQUEST_FILENAME} !-d
+	RewriteRule .*$ /start.php [L,QSA]
+</IfModule>

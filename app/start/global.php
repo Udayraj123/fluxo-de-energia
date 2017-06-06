@@ -17,6 +17,7 @@ ClassLoader::addDirectories(array(
 	app_path().'/controllers',
 	app_path().'/models',
 	app_path().'/database/seeds',
+	app_path().'/classes',
 
 ));
 
@@ -31,7 +32,10 @@ ClassLoader::addDirectories(array(
 |
 */
 
-Log::useFiles(storage_path().'/logs/laravel.log');
+#Log::useFiles(storage_path().'/logs/laravel.log');
+
+$logFile = 'laravel.log';
+Log::useDailyFiles(storage_path().'/logs/'.$logFile);
 
 /*
 |--------------------------------------------------------------------------
@@ -49,6 +53,7 @@ Log::useFiles(storage_path().'/logs/laravel.log');
 App::error(function(Exception $exception, $code)
 {
 	Log::error($exception);
+	return View::make('misc.error');
 });
 
 /*
@@ -77,5 +82,12 @@ App::down(function()
 | definitions instead of putting them all in the main routes file.
 |
 */
+
+App::missing(function($exception)
+{
+    $url = Request::fullUrl();
+    Log::warning("404 for URL: $url");
+	return Response::view('misc.error404', array(), 404);
+});
 
 require app_path().'/filters.php';

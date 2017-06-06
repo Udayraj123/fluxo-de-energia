@@ -1,0 +1,18 @@
+
+  <div class="well" style="background:#3399ff">
+              <input id="ex6" type="text" data-slider-min="-5" data-slider-max="20" data-slider-step="1" data-slider-value="3" data-value="8" value="8" style="display: none;">
+              <span id="ex6CurrentSliderValLabel">Price <span id="ex6SliderVal">8</span></span>
+            </div>
+
+<script type="text/javascript">
+      // $(document).ready(function() {
+        /* Example 1 */
+        $("#ex6").slider();
+        $("#ex6").on("slide", function(slideEvt) {
+          $("#ex6SliderVal").text(slideEvt.value);
+        });
+// });
+
+/* Example 2 */
+</script>
+    </tr> <tr> <td> <p style="align:center" >&nbsp;&nbsp;Name:&nbsp;&nbsp;&nbsp; </p> </td> <td>
