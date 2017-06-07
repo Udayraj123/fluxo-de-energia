@@ -440,7 +440,7 @@ public function showLand(){
 			$num_units=$p->avl_units;
 		}
 		$price=$num_units* $buy_price;
-		$total=Config::get('game.sysLE'); //CHECK IF THIS WORKS ALL TIME
+		$total=Game::sysLE()//CHECK IF THIS WORKS ALL TIME
 		$THR= $total * Config::get('game.facF'); //this factor may depend on number of users ?!
 		
 

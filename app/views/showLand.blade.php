@@ -160,7 +160,7 @@
         $("#status").html(text);
       },
 
-  error: function(){// ERROR NOT HANDLING ?
+  error: function(){// Server Disconnected
     alert('error updating RGT'); 
   }
 });
@@ -187,7 +187,7 @@ $.ajax({
 console.log(data);
 updateLands();
 },
-  error: function(){// ERROR NOT HANDLING ?
+  error: function(){// Server Disconnected
     alert('error updating Fruit Land'); 
   }
 });

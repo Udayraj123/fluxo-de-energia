@@ -26,7 +26,7 @@ god.jpg
 				$('#RFT').val(parseInt(data['RFT']));
 			},
 
-  			error: function(){// ERROR NOT HANDLING ?
+  			error: function(){// Server Disconnected
   				X=data;	
   				alert('error updating bp, check type X in console'); 
   			}

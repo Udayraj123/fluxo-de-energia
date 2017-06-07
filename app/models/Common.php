@@ -20,5 +20,10 @@ class Common extends Eloquent {
 
 
 // no relations. its a commons table
+    /*
+     To access global values :	
+     > sysLE, upperTHR, lowerTHR for each cat.
+
+     */
 
 } 

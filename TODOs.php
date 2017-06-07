@@ -2,20 +2,26 @@
 """
 7 June : 
 So the plan is : Try not doing it casually, give it finite time and finish the backend first.
-Today : List of places to put Events .
-	>Well, if we look at the functions calling on usual actions, the book keeping done is unique*, so events not there is OK.
-	>
+Today : 
+  List of places to put Events .
+	> Well, if we look at the functions calling on usual actions, the book keeping done is unique*, so events not there is OK.
+	> Nope >> Use them when you get the feel of
 
-	List Major coding left :
+  List Major coding left :
 	1. Transitions
+		>Think of their stable movements
 	2. Ajax fill
-	3. Frontend graphs integration
+	3. Frontend :
+		>selfProducts
+		>Home Page Graphs
+  
 
-
+Get : What is maxFertSeeds for ?
 Later : Write test files !
 """
 TodayDos :
-	master.blade.php should have a Links array (stored in game.php) to populate Navigation links;
+Done >> master.blade.php should have a Links array (stored in game.php) to populate Navigation links;
+Done >> sumLE was already improved. Just had to put it into Game::
 
 AllToDos: 
 12Oct
@@ -134,7 +140,8 @@ TodO:: Ajax to refresh lands in farmer land
 8Oct
 ->Done- ::land object shall be created after added from purchases(like seed & fert) to here // currently made directly at time of purchase
 
->rethought -(threshold handle) sysLE being requested by all users per second, it MUST be accessed from a table that updates only if prev_time is a second less. else it returns the table value. That table can also contain the varying decay %
+Done >(threshold handle) sysLE being requested by all users per second, it MUST be accessed from a table that updates only if prev_time is a second less. else it returns the table value. 
+	 >That table can also contain the varying decay %
 
 ::added avl_units in fruit 
 ::CLARIFICATION2 : num_units of fruits varies initially thru Fetchfruit, but after launch it stays constant

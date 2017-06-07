@@ -23,7 +23,7 @@ catTHR['farmer'] = 'thresholdF';
 
 setInterval(function(){
   decayHandle();
-  thresholdHandle();
+  // thresholdHandle(); //removed
 },1000);
 
 function decayHandle(){
@@ -49,28 +49,12 @@ function decayHandle(){
 
   },
   
-  error: function(){// ERROR NOT HANDLING ?
-    alert('user not in db'); 
+  error: function(){// Server Disconnected
+    alert('Cannot connect to the server'); 
   }
 
 
 });
-}
-function thresholdHandle(){
-
- $.ajax({
-  method: "POST",
-  url: "{{ route('thresholdHandle') }}",
-  // data: { 'name': "Johnny", 'location': "Boston" },
-})
- .success(function( data ) {
-  console.log("sysLE and THR");
-  $('#sysLE').val(parseInt(data['total']));
-  $('#thresholdGI').val(parseInt(data['thresholdGI']));
-  $('#thresholdFI').val(parseInt(data['thresholdFI']));
-  $('#thresholdF').val(parseInt(data['thresholdF']));
-});
-
 }
 
 function reqRedeem(){
@@ -116,12 +100,6 @@ function showredeemLE(val){
   <button onclick="reqRedeem()"> REDEEM</button>
 
 
-  <input type='number' id='sysLE' value=0 /> Sys LE
-
-  <input type='number' id='thresholdGI' value=0 /> Thr GI
-  <input type='number' id='thresholdFI' value=0 /> Thr FI        
-  <input type='number' id='thresholdF' value=0 /> Thr F
-  
   <!-- Returned data from server -->
   
 </pre>

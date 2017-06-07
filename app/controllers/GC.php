@@ -97,6 +97,7 @@ class GC extends \BaseController {
 			$price= (int)($input['avl_units'])*(int)($input['unit_price']);
 			$LE=$user->le;
 
+//review this-
 			$total=User::all()->sum('le');
 			$facGI = C::get('game.facGI');
 			$THR= $facGI* $total; //this factor may depend on number of users ?!

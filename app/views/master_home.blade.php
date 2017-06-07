@@ -69,12 +69,13 @@ function decayHandle(){
     
   },
   
-  error: function(){// ERROR NOT HANDLING ?
-    alert('user not in db'); 
+  error: function(){// Server Disconnected
+    alert('Cannot connect to the server'); 
   }
 
 });
 }
+
 function thresholdHandle(){
 
  $.ajax({
@@ -131,14 +132,13 @@ function insertTable(cellData,divID,black){
 
           <ul class="nav navbar-nav "> 
             <!-- We also have $user to be used -->
-            <!-- foreach loop here -->
+            <!-- common one- -->
             <li> <a class="headLink"  href="{{ URL::route('energy') }}">Energy</a> </li>
-            <li> <a class="headLink"  href="{{ URL::route('createProduct') }}">createProduct</a> </li>
-            <li> <a class="headLink"  href="{{ URL::route('listInvestments') }}">listInvestments</a> </li>
-            <li> <a class="headLink"  href="{{ URL::route('buyFruit') }}">buyFruit</a> </li>
-            <li> <a class="headLink"  href="{{ URL::route('buyProduct') }}">buyProduct</a> </li>
-            <li> <a class="headLink"  href="{{ URL::route('makeInvestment') }}">makeInvestment</a> </li>
-            <li> <a class="headLink"  href="{{ URL::route('fundingBar') }}">fundingBar</a> </li>
+            
+            <?php $user=Auth::user()->get();$catLinks = C::get('master.catLinks'); ?>
+            @foreach($catLinks[$user->category] as $linkName=>$title)
+            <li> <a class="headLink"  href="{{ URL::route($linkName) }}">{{$title}}</a> </li>
+            @endforeach
           </ul>
 
         </div>

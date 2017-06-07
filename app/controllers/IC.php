@@ -60,7 +60,7 @@ class IC extends \BaseController {
 			$num_units=$p->avl_units;
 		}
 		$price=$num_units* $buy_price;
-		$total=C::get('game.sysLE'); //CHECK IF THIS WORKS ALL TIME
+		$total=Game::sysLE(); //CHECK IF THIS WORKS ALL TIME
 		$THR= $total * C::get('game.facFI'); //this factor may depend on number of users ?!
 		
 		//Life Energy price check /successful here.
@@ -152,7 +152,7 @@ class IC extends \BaseController {
 		// $THR=$thrData['lowerTHR'];
 		
 		//SUM LE is costly, if it is slowing down, use UC::thresholdHandle2
-		$total=C::get('game.sysLE'); //CHECK IF THIS WORKS ALL TIME
+		$total=Game::sysLE(); //CHECK IF THIS WORKS ALL TIME
 		$THR= $total * C::get('game.facFI'); //this factor may depend on number of users ?!
 		 //Life Energy price check /successful here.
 		if($LE - $price > $THR)

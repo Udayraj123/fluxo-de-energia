@@ -21,8 +21,8 @@ function ajaxer(){
     $('#LE').val(parseInt(le));
   },
   
-  error: function(){// ERROR NOT HANDLING ?
-    alert('user not in db'); 
+  error: function(){// Server Disconnected
+    alert('Error connecting to the server'); 
   }
 });
 }

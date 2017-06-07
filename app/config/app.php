@@ -16,8 +16,8 @@ return array(
 
 	'aliases' => array(
 		'myAlia'=>'Config::get("game.baseQual")',
-		'Func'				=> 	'Helpers\Functions',
 		'C' => 'Config',
+		'Game'			=> 'Helpers\Game',
 		'App'               => 'Illuminate\Support\Facades\App',
 		'Artisan'           => 'Illuminate\Support\Facades\Artisan',
 		'Auth'              => 'Illuminate\Support\Facades\Auth',
@@ -60,7 +60,6 @@ return array(
 		'PDF'               => 'Barryvdh\DomPDF\Facade',
 		'PDF1'              => 'Barryvdh\Snappy\Facades\SnappyPdf',
 		'Image'             => 'Barryvdh\Snappy\Facades\SnappyImage',
-		'Helper'			=> 'Helpers\Helper',
 
 		),
 

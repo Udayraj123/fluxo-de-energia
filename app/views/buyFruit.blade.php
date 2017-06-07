@@ -28,7 +28,7 @@ god.jpg
 				$('#RET').val(parseInt(data['RET']));
 			},
 
-  			error: function(){// ERROR NOT HANDLING ?
+  			error: function(){// Server Disconnected
   				X=data;	
   				alert('error updating bp, check type X in console'); 
   			}

@@ -1,8 +1,10 @@
 <?php
 class UC extends \BaseController {
-
-
-//static is required to call fn within the class
+  public static function sumLE(){
+    // if($prev_time)
+    return User::all()->sum('le');
+  }
+//static is required to call fn within the class or outside
   public static function swap($user1, $user2){
     $cat1=$user1->category;
     $cat2=$user2->category;
@@ -33,8 +35,8 @@ class UC extends \BaseController {
 
 
 //this does the swapping
-        public static function thresholdCheck($common,$user){
-
+        public static function thresholdCheck($user){
+          $common = Common::where('category',$user->category)->first();
           $diff1=$user->le - $common->lowerTHR;
           $diff2=$common->upperTHR - $user->le;
           $cat=$user->category;
@@ -75,55 +77,20 @@ class UC extends \BaseController {
 //the personalized function
      public static function thresholdHandle2(){
       $user=Auth::user()->get();
-      $t=C::get('game.minRefreshRate');
-      $time=time();
       $cat=$user->category;
-      $common = Common::where('category',$cat)->first();
       
       //this swaps characters !
-      $msg=UC::thresholdCheck($common,$user);
-
-      if($time - $common->prev_time < $t){
-        $sysLE = $common->sysLE;
-        $upperTHR = $common->upperTHR;
-        $lowerTHR = $common->lowerTHR;
-      }
-      else{
-          $f0= C::get('game.facGM'); //F yeah mode
-          $f1= C::get('game.facGI');
-          $f2= C::get('game.facFI');
-          $f3= C::get('game.facF');
-          if($cat=='god'){$fac1=$f0;$fac2=$f1;}
-          if($cat=='investor'){$fac1=$f1;$fac2=$f2;}
-          if($cat=='farmer'){$fac1=$f2;$fac2=$f3;}
-          $sysLE= C::get('game.sysLE');
-          $upperTHR=$sysLE*$fac1;
-          $lowerTHR=$sysLE*$fac2;
-          //uodate in table
-          $common->sysLE=$sysLE;
-          $common->upperTHR=$upperTHR;
-          $common->lowerTHR=$lowerTHR;
-          $common->prev_time=$time; $common->save();
-        }
+      $msg=UC::thresholdCheck($user);
+      $thresholds  = Game::thresholdsFor($cat);
     //Send this data to the graph.
-        return array('sysLE'=>$sysLE,'upperTHR'=>$upperTHR,'lowerTHR'=>$lowerTHR,'msg'=>$msg,'active_cat'=>$cat,'le'=>$user->le);
-      }
+      return array_merge($thresholds,['msg'=>$msg,'active_cat'=>$cat,'le'=>$user->le]);
+    }
 
-
-//the Common function
-      public function thresholdHandle(){
-        $total= C::get('game.sysLE');
-        $thresholdGI= C::get('game.facGI')* $total; 
-        $thresholdFI= C::get('game.facFI')* $total;
-        $thresholdF= C::get('game.facF')* $total;
-    //Send this data to the graph.
-        return array('total'=>$total,'thresholdGI'=>$thresholdGI,'thresholdFI'=>$thresholdFI,'thresholdF'=>$thresholdF);
-      }
 
 //Decays & Threshold => SIGMOID FUNCTION MUST
-      public function decayHandle(){
-        $user=Auth::user()->get();
-        $minRefreshRate=C::get('game.minRefreshRate');
+    public function decayHandle(){
+      $user=Auth::user()->get();
+      $minRefreshRate=C::get('game.minRefreshRate');
 
     	$active_cat = $user->category; // Not Null in table
     	$char= $user->$active_cat; //required for decay value ?!
@@ -140,7 +107,7 @@ class UC extends \BaseController {
     else return array('le'=>0,'decay'=>0);
 
 	    //Update decay-
-    $new_decay=C::get('game.facDecay')[$active_cat] * C::get('game.sysLE');
+    $new_decay=C::get('game.facDecay')[$active_cat] * Game::sysLE();
     if($new_decay>0)$char->decay=$new_decay; $char->save();
 
     	//TODO : rectify this bad condition 
@@ -153,7 +120,8 @@ class UC extends \BaseController {
   }
 
 
-  public function login($id=42){$user=User::find($id); if($user){Auth::user()->login($user); } else return C::get('debug.login'); }
+  public function login($id=42){$user=User::find($id); if($user){Auth::user()->login($user); return View::make('goback');} else 
+  return View::make('admin.login'); }
 
   public function logout(){$user= Auth::user()->get(); if($user){echo $user->username." logged out"; Auth::user()->logout(); 
   return Redirect::back(); }

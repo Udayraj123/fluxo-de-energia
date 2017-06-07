@@ -12,8 +12,6 @@
 | and give it the Closure to execute when that URI is requested.
 |
 */
-// Route::post('queue/offmail', function() { return Queue::marshal(); });
-
 //any url will do like thresholdHandle as we are accessing by name
 
 
@@ -36,13 +34,13 @@ Route::group(array('before' => 'user'), function()
 {
 	//filter checks existence of user & its category
 	Route::get('/main',array('as'=>'energy',function(){return View::make('main')->with('user',Auth::user()->get());}));
+	Route::get('/logout', ['as' => 'logout', 'uses' => 'UC@logout']);
 //remove
 	Route::get('/',array('as'=>'home',function(){return View::make('home')->with('user',Auth::user()->get());}));
+	
 	Route::post('/redeemLife', ['as' => 'redeemLife', 'uses' => 'UC@redeemLife']);
 	Route::post('/decayHandle', ['as' => 'decayHandle', 'uses' => 'UC@decayHandle']); //gives user le & decay
-	Route::post('/thresholdHandle', ['as' => 'thresholdHandle', 'uses' => 'UC@thresholdHandle']); //gives current Thresholds.
 	Route::post('/thresholdHandle2', ['as' => 'thresholdHandle2', 'uses' => 'UC@thresholdHandle2']); //gives current Thresholds.
-	Route::get('/logout', ['as' => 'logout', 'uses' => 'UC@logout']);
 });
 
 	// For rest it checks LE above THR
@@ -74,14 +72,12 @@ Route::group(array('before' => 'investor'), function()
 
 Route::group(array('before' => 'god'), function()	{
 
+	Route::get('selfProducts', ['as' => 'selfProducts', 'uses' => 'GC@selfProducts']); 	//this gives FUNDING BAR
 	Route::get('/fundingBar', ['as' => 'fundingBar', function(){
 		$user=Auth::user()->get();
 		$products = $user->god->products;
 		return View::make('fundingBar')->with('products',$products);
 	}]);
-
-	Route::get('selfProducts', ['as' => 'selfProducts', 'uses' => 'GC@selfProducts']); 	//this gives FUNDING BAR
-	
 	Route::get('/createProduct', function(){
 		$user=Auth::user()->get();
 		$bp=json_encode(C::get('game.basePrices'));
@@ -97,6 +93,7 @@ Route::group(array('before' => 'god'), function()	{
 Route::group(array('before' => 'farmer'), function()
 {
 
+	Route::get('/showLand', ['as' => 'showLand', 'uses' => 'FC@showLand'] );
 	Route::get('/buyProduct',array('as'=>'buyProduct', function(){$user=Auth::user()->get();return View::make('buyProduct')
 		->with('boughtProducts',$user->farmer->products)
 		->with('products',Product::where('being_funded',0)
@@ -107,7 +104,6 @@ Route::group(array('before' => 'farmer'), function()
 	Route::post('/buyProduct', ['as' => 'buyProduct', 'uses' => 'FC@buyProduct'] );
 	Route::post('/productPriceHandle', ['as' => 'productPriceHandle', 'uses' => 'FC@productPriceHandle'] );
 	
-	Route::get('/showLand', ['as' => 'showLand', 'uses' => 'FC@showLand'] );
 	
 	Route::post('/getStates', ['as' => 'getStates', 'uses' => 'FC@getStates'] );
 	Route::post('/applyPurch', ['as' => 'applyPurch', 'uses' => 'FC@applyPurch'] );

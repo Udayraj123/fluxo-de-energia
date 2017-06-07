@@ -134,7 +134,7 @@ class IC extends \BaseController {
 			$num_units=$p->avl_units;
 		}
 		$price=$num_units* $buy_price;
-		$total=Config::get('game.sysLE'); //CHECK IF THIS WORKS ALL TIME
+		$total=Game::sysLE()//CHECK IF THIS WORKS ALL TIME
 		$THR= $total * Config::get('game.facF'); //this factor may depend on number of users ?!
 		
 		//Life Energy price check /successful here.
@@ -222,7 +222,7 @@ class IC extends \BaseController {
 		echo " bid_price ".$bid_price;
 		$price= $num_shares * $bid_price;
 
-		$total=Config::get('game.sysLE'); //CHECK IF THIS WORKS ALL TIME
+		$total=Game::sysLE()//CHECK IF THIS WORKS ALL TIME
 		$THR= $total * Config::get('game.facFI'); //this factor may depend on number of users ?!
 		//Life Energy price check /successful here.
 		if($LE - $price > $THR)

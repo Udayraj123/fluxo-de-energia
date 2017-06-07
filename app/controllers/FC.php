@@ -135,7 +135,8 @@ class FC extends \BaseController {
 	$num_lands= count($sel_lands);
 
 //num_units is initialized by num_lands & is capped by avl_units. 
-	//it is the final number of selected lands. Which should be maximal
+	//it is the final number of selected lands. Which should be maximal 
+	// 8 June : num_units be changed if fert on already fert land (see below)
 	$num_units=$num_lands;
 	if($num_units>$avl_units){
 		$num_units=$avl_units;
@@ -189,7 +190,7 @@ class FC extends \BaseController {
 
 				//A bug here > 
 				//Fruit was created since seed, Should not be null, should be unique
-				$f= Fruit::where('seed_id',$l->seed_id)->where('launched',0)->first();//->get(); //this can be first() if bugs
+				$f= Fruit::where('seed_id',$l->seed_id)->where('launched',0)->first();
 				$f->num_units++; 			// INCREMENT FRUIT NUM HERE WHOSE LAUNCHED=0
 				$f->save();
 
@@ -204,12 +205,15 @@ class FC extends \BaseController {
 				$l=Land::find($id);
 				if($l->fert_id>0){
 					array_splice($sel_lands, $i,1);
+
 				$num_lands--; //this will fit in below.
+				$num_units--; //added 8 June
 			}
 		}
 
 		$maxFertSeeds= C::get('game.maxFertSeeds');
 		if($num_lands > $maxFertSeeds){
+			//break
 			array_splice($sel_lands, $maxFertSeeds);
 		}
 
@@ -227,7 +231,7 @@ class FC extends \BaseController {
 		}
 
 		$pch->avl_units -= $num_units; 		 $pch->save();
-
+		return View::make('goback');
 	}
 
 
@@ -469,7 +473,7 @@ public function showLand(){
 			$num_units=$p->avl_units;
 		}
 		$price=$num_units* $buy_price;
-		$total=C::get('game.sysLE'); //CHECK IF THIS WORKS ALL TIME
+		$total=Game::sysLE(); //CHECK IF THIS WORKS ALL TIME
 		$THR= $total * C::get('game.facF'); //this factor may depend on number of users ?!
 		
 

@@ -1,7 +1,6 @@
 <?php
 return [
 'facDecay' => array("god" => 1*(0.1*0.1/60),"investor" =>(0.1*0.01/60),"farmer" =>5*(0.1*0.001/60)),
-'catTables' => array("god" => "God","investor" => "Investor","farmer" => "Farmer"),
 'iniLE' => array("god" => 1000000,"investor" => 500000,"farmer" => 40000),
 'stored_LE' => array("god" => 100000,"investor" => 50000,"farmer" => 4000),
 'numGods'=>5,
@@ -12,12 +11,11 @@ return [
 
 'basePrices' => array("seed" => 500,"fertilizer" => 2000,"land" => 7000),
 
-//thresholds
+//thresholds - better kept separate than in array now
 'facGM' => 0.09, //F yeah mode
-'facGI' => 0.05,
-'facFI' => 0.005,//this factor may depend on number of users ?!
-'facF' => 0.0005,
-'sysLE'=>User::all()->sum('le'),
+'facGI' => 0.005,
+'facFI' => 0.0005,//this factor may depend on number of users ?!
+'facF' => 0.00005,
 
 // 'commonGod'=>Common::where('category','god')->first(),
 // 'commonInvestor'=>Common::where('category','investor')->first(),
@@ -50,7 +48,7 @@ return [
 
 'seedGT' =>5 * 50,//50 quality shall have 5 min	//GT=seedGT/q;more qual, less GT. quality ranges from 1 to 100.
 'maxGT'  =>999,//minutes. this is returned for unused lands in ajax req 
-'maxFertSeeds' => 3,
+'maxFertSeeds' => 3,//
 'maxQual' => 100,
 'baseQual'=>50,
 'seedQual'=>0.8, // *ly for GT ?!
