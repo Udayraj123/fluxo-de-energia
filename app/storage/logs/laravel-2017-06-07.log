@@ -1,6 +1,0 @@
-[2017-06-07 02:18:01] production.ERROR: exception 'InvalidArgumentException' with message 'Command "server.php" is not defined.' in /home/udayraj/Desktop/MyLara/new/newlife/vendor/symfony/console/Application.php:529
-Stack trace:
-#0 /home/udayraj/Desktop/MyLara/new/newlife/vendor/symfony/console/Application.php(197): Symfony\Component\Console\Application->find('server.php')
-#1 /home/udayraj/Desktop/MyLara/new/newlife/vendor/symfony/console/Application.php(124): Symfony\Component\Console\Application->doRun(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
-#2 /home/udayraj/Desktop/MyLara/new/newlife/artisan(59): Symfony\Component\Console\Application->run()
-#3 {main} [] []
