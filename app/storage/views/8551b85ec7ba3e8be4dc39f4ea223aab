@@ -79,7 +79,7 @@ function thresholdHandle(){
 
  $.ajax({
   method: "POST",
-  url: "<?php echo route('thresholdHandle2'); ?>",
+  url: "<?php echo route('thresholdHandle'); ?>",
   // data: { 'name': "Johnny", 'location': "Boston" },
 })
  .success(function( data ) {

@@ -1,0 +1,4 @@
+[2017-06-09 23:17:40] production.WARNING: 404 for URL: http://localhost:8000/favicon.ico [] []
+[2017-06-09 23:57:18] production.WARNING: 404 for URL: http://localhost:8000/resetAllUsers [] []
+[2017-06-09 23:57:42] production.WARNING: 404 for URL: http://localhost:8000/home [] []
+[2017-06-09 23:57:45] production.WARNING: 404 for URL: http://localhost:8000/energy [] []

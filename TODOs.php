@@ -2,11 +2,6 @@
 """
 7 June : 
 So the plan is : Try not doing it casually, give it finite time and finish the backend first.
-Today : 
-  List of places to put Events .
-	> Well, if we look at the functions calling on usual actions, the book keeping done is unique*, so events not there is OK.
-	> Nope >> Use them when you get the feel of
-
   List Major coding left :
 	1. Transitions
 		>Think of their stable movements
@@ -15,11 +10,25 @@ Today :
 		>selfProducts
 		>Home Page Graphs
   
-
 Get : What is maxFertSeeds for ?
 Later : Write test files !
 """
 TodayDos :
+Discovered the need of notifications !
+> The game is hard to play without knowing the updates. (Though tables are there, I see notifs is required.)
+> Events will come handy here.
+> Indicator Arrows for Level Up/Down warnings.
+
+TodO::
+Decays & Threshold => SIGMOID FUNCTION MUST
+::TRANSITIONS & WARNINGS IN FILTERS ?
+	>> Yeah its req. Gave bugs during transacts.
+	>> Adding Reloads
+Resolve-> Even inside filter we are doing that sum
+
+TodO2::  Ajax to refresh lands in farmer land
+
+
 Done >> master.blade.php should have a Links array (stored in game.php) to populate Navigation links;
 Done >> sumLE was already improved. Just had to put it into Game::
 
@@ -28,9 +37,6 @@ AllToDos:
 //Land Menu TODO - applyPurch(fert) This shall count in the plant_time as well as 'fert_time'
 //create Product TODO - RFTs need to be updated with ajax along with the ones in makeInvestment. Else its too static for gods
 7 Oct
->Then remaining is TRANSITION. THATS ALL !
-TODO :: filter if land/fert already applied
-TodO:: Ajax to refresh lands in farmer land
 TODO(think) - * $p->bid_price can be eliminated as of now as it only updates the redundant bid_price in invm.
 
 2Oct
@@ -39,15 +45,11 @@ TODO->later make GT logarithmic so that qual=10 & qual = 50 are not 5 times diff
 
 SEPT : 
 High-
-::TRANSITIONS & WARNINGS IN FILTERS ?decay_facG
--> :: filter if land/fert already applied
--> >> can reduce SUM(le) operations by keeping time()-updated_time > 30sec for each user req (thru filters.php)
--> Even inside filter we are doing that sum
 ->(think) - * $p->bid_price can be eliminated as of now as it only updates the redundant bid_price in invm.
 ->(think) Can we check ET/GT thru filters? yeah, but think once again.
 
 Bug >
--> : farmers buyProduct shall check expiry !' : 
+-> : farmers buyProduct shall check expiry ! : 
 		Log >> Current LE = 41472. Buy price = -23968342.960167 Num= 10Success. Now LE = 479408331.20333
 TODO : modified checkRGT now
 
@@ -59,7 +61,10 @@ Clarification :le will increase in FetchFruit! (->- visually show how much LE in
 
 	*/
 Later: 
-Decays & Threshold => SIGMOID FUNCTION MUST
+//later use push to show more messages
+// notifs.push(messages[m]);
+$('#msg').html(messages[m]);
+
 Do later- calcStorage LE detailed function (also show it on front end)
 Do later & NOT NOW!- Soon, confirm that backend rechecks whatever from frontends js.
 //seed GT shall later also depend on its sub-type
@@ -75,9 +80,12 @@ it should be prev_GT
 ELse
 We shall keep a RGT column which gets divided on fert apply. and thats what gets updated & checked everytime.
 -but it wil require a prev_time just like user->le. => Do it that way then
+	//TODO : rectify this bad condition 
+$minLE=C::get('game.minLE');
+if($user->le - $decay*$time_passed > $minLE)
 
-"""
-
+Done:: filter if land/fert already applied
+Done -> >> can reduce SUM(le) operations by keeping time()-updated_time > 30sec for each user req (Nope - thru filters.php)
 Done::->  if($p->launched) shall be corrected to  $p->launched==1 since -1 is also getting here.
 Done::-> change this types to array_key_exists- if(!(array_key_exists('num_shares', $input) && array_key_exists('product_id', $input))) return "Input not read.";
 
@@ -281,8 +289,6 @@ TODO-
 
 	if($p->avl_shares)$p->being_funded=0;		         <-- Whats correct place to update this?
 
-	Decays & Threshold => SIGMOID FUNCTION MUST
-	REDIRECTS : Character transitions,create product makeinvestment,etc buy/make functions redirect after submit 
 
 
 >>>THese may not be required here, since we are updating them thru calcBidPrice / calcSellPrice etc

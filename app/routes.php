@@ -31,16 +31,19 @@ Route::get ('/resetFruits', ['as' => 'resetFruits', 'uses' => 'admin@resetFruits
 
 
 Route::group(array('before' => 'user'), function()
+	//user filter checks existence of user & its category
 {
-	//filter checks existence of user & its category
+	//aliases
 	Route::get('/main',array('as'=>'energy',function(){return View::make('main')->with('user',Auth::user()->get());}));
+	Route::get('/energy',array('as'=>'energy1',function(){return View::make('main')->with('user',Auth::user()->get());}));
+
 	Route::get('/logout', ['as' => 'logout', 'uses' => 'UC@logout']);
 //remove
 	Route::get('/',array('as'=>'home',function(){return View::make('home')->with('user',Auth::user()->get());}));
 	
 	Route::post('/redeemLife', ['as' => 'redeemLife', 'uses' => 'UC@redeemLife']);
 	Route::post('/decayHandle', ['as' => 'decayHandle', 'uses' => 'UC@decayHandle']); //gives user le & decay
-	Route::post('/thresholdHandle2', ['as' => 'thresholdHandle2', 'uses' => 'UC@thresholdHandle2']); //gives current Thresholds.
+	Route::post('/thresholdHandle', ['as' => 'thresholdHandle', 'uses' => 'UC@thresholdHandle']); //gives current Thresholds.
 });
 
 	// For rest it checks LE above THR

@@ -148,10 +148,10 @@ class IC extends \BaseController {
 		echo " bid_price ".$bid_price;
 		$price= $num_shares * $bid_price;
 
-		// $thrData=(UC::thresholdHandle2());
+		// $thrData=(UC::thresholdHandle());
 		// $THR=$thrData['lowerTHR'];
 		
-		//SUM LE is costly, if it is slowing down, use UC::thresholdHandle2
+		//SUM LE is costly, if it is slowing down, use UC::thresholdHandle
 		$total=Game::sysLE(); //CHECK IF THIS WORKS ALL TIME
 		$THR= $total * C::get('game.facFI'); //this factor may depend on number of users ?!
 		 //Life Energy price check /successful here.

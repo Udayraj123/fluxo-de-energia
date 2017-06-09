@@ -1,20 +1,10 @@
 <?php
 class UC extends \BaseController {
-  public static function sumLE(){
-    // if($prev_time)
-    return User::all()->sum('le');
-  }
+
 //static is required to call fn within the class or outside
-  public static function swap($user1, $user2){
-    $cat1=$user1->category;
-    $cat2=$user2->category;
-    $user1->category= $cat2;
-    $user2->category= $cat1;
-    $user1->save();
-    $user2->save();
-  }
 
 /*
+>> Almost the same working until we find a conceptual flaw
 //TRANSITIONS INVOLVE
     - that ETA will be calc in seconds : notification starts at 60secs
     
@@ -32,42 +22,12 @@ class UC extends \BaseController {
         - the above might require a game.transitionTime
 */
 
-
-
-//this does the swapping
-        public static function thresholdCheck($user){
-          $common = Common::where('category',$user->category)->first();
-          $diff1=$user->le - $common->lowerTHR;
-          $diff2=$common->upperTHR - $user->le;
-          $cat=$user->category;
-          if($diff1<=0){
-            //will cost a query  
-            if($cat=='god') $user2=User::where('category','investor')->orderBy('le','desc')->first();
-            else if($cat=='investor') $user2=User::where('category','farmer')->orderBy('le','desc')->first();
-            if($cat!='farmer'){
-              $common2 = Common::where('category',$user2->category)->first();
-              if($user2->le > $common2->upperTHR)return 4;
-            }
-  //UC::swap($user,$user2);
-   //CHECK : is changing category reflected everywhere ?
-            // TODO :-  NEED TO REDIRECT/RELOAD ATLEAST ! 
-            return 2; //level down
-          }
-          if($diff2<=0){
-          //SWAP only if somebody is below THR, will stay notified until somebody already 
-            if($cat=='god') return 5;//F yeah
-            return 3; //level up
-          }
-          $notifTime=C::get('game.notifTime');
-          if($diff1/($user->$cat->decay)<= $notifTime) return 1; //warning
-        else return 0; //clean
-      }
-
       public function redeemLife(){
         $user = Auth::user()->get();
         $redeemLE = Input::get('redeemLE');
         if($redeemLE > $user->stored_LE)
          $redeemLE = $user->stored_LE;
+       //LE_change
        $user->le += $redeemLE; $user->stored_LE -= $redeemLE; $user->save(); 
 
        $stored_LE=$user->stored_LE;
@@ -75,15 +35,15 @@ class UC extends \BaseController {
      }
 
 //the personalized function
-     public static function thresholdHandle2(){
+     public static function thresholdHandle(){
       $user=Auth::user()->get();
       $cat=$user->category;
       
       //this swaps characters !
-      $msg=UC::thresholdCheck($user);
-      $thresholds  = Game::thresholdsFor($cat);
+      $catThresholds  = Game::thresholdsFor($cat);
+      $msg=Game::thresholdCheck($catThresholds,$user);
     //Send this data to the graph.
-      return array_merge($thresholds,['msg'=>$msg,'active_cat'=>$cat,'le'=>$user->le]);
+      return array_merge($catThresholds,['msg'=>$msg,'active_cat'=>$cat,'le'=>$user->le]);
     }
 
 
@@ -113,19 +73,22 @@ class UC extends \BaseController {
     	//TODO : rectify this bad condition 
     $minLE=C::get('game.minLE');
     if($user->le - $decay*$time_passed > $minLE)
-      if($time_passed>=$minRefreshRate) {	$user->le -= $decay*$time_passed;	    	$user->save();}
-    
-    $user->save();
-    return array('le'=>$user->le,'decay'=>$decay,'active_cat'=>$active_cat);
-  }
+      if($time_passed>=$minRefreshRate) {	
+         //LE_change
+        $user->le -= $decay*$time_passed;	    	$user->save();
+      }
+
+      $user->save();
+      return array('le'=>$user->le,'decay'=>$decay,'active_cat'=>$active_cat);
+    }
 
 
-  public function login($id=42){$user=User::find($id); if($user){Auth::user()->login($user); return View::make('goback');} else 
-  return View::make('admin.login'); }
+    public function login($id=42){$user=User::find($id); if($user){Auth::user()->login($user); return View::make('goback');} else 
+    return View::make('admin.login'); }
 
-  public function logout(){$user= Auth::user()->get(); if($user){echo $user->username." logged out"; Auth::user()->logout(); 
-  return Redirect::back(); }
-  else echo "Already logged out <BR>".C::get('debug.login'); } } 
+    public function logout(){$user= Auth::user()->get(); if($user){echo $user->username." logged out"; Auth::user()->logout(); 
+    return Redirect::back(); }
+    else echo "Already logged out <BR>".C::get('debug.login'); } } 
 
 
 #*** Admin Panel REQUIRED => in case light goes off OR server stops respondin, the decay will still go on due to timestamp stuff. !

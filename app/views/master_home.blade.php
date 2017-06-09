@@ -27,7 +27,7 @@
 
 <body background="@yield('bgsource')" style="background-repeat:no-repeat;background-size: cover;" >
   <script type="text/javascript">
-  var p =Math.pow(10,3); //precision
+  var p =Math.pow(10,3); //(x*p)/p precision of all calculations here
 
   var messages=[
   'Clean',
@@ -49,7 +49,6 @@ function decayHandle(){
   $.ajax({
     method: "POST",
     url: "{{ route('decayHandle') }}",
-  // data: { 'name': "Johnny", 'location': "Boston" },
   success: function( data ) {
     var le=parseInt(data['le']);
     var decay=parseInt(data['decay']);
@@ -62,7 +61,7 @@ function decayHandle(){
     upperTHR=$('#upperTHR').val();
     
     var eta=(le-lowerTHR)/decay;
-    $('#ETA').val(Math.round(eta*p)/p);
+    $('#ETA').val(Math.round(eta/60*p)/p);
 
     LEwidth=(le-lowerTHR)/(upperTHR-lowerTHR)*100+'%';
     $('#LEwidth').width(LEwidth);
@@ -80,7 +79,7 @@ function thresholdHandle(){
 
  $.ajax({
   method: "POST",
-  url: "{{ route('thresholdHandle2') }}",
+  url: "{{ route('thresholdHandle') }}",
   // data: { 'name': "Johnny", 'location': "Boston" },
 })
  .success(function( data ) {
@@ -93,6 +92,7 @@ $('#active_cat').html(data['active_cat'].toString());
 m=data['msg'];
 //later use push to show more messages
 // notifs.push(messages[m]);
+
 $('#msg').html(messages[m]);
 });
 
