@@ -25,9 +25,6 @@ TodayDos :
 		How to highlight profits - update colors (use spl bootstrap template)
 
 Decays & Threshold => SIGMOID FUNCTION MUST
-# >Ajax for bid price? -> IMPLEMENT NOW 	
-
-
 
 
 Done > Makeinvestment page : Limit by avl_shares,  ajax the bid price
