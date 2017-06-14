@@ -19,7 +19,6 @@ TodayDos :
 
 //13 June 
 >Give GUI to the receipts : Notifs of Purchase & each LE Update : like a bank statement
-> Makeinvestment page : Limit by avl_shares,  ajax the bid price
 >Fetch Fruit : here we also increase Farmers energy a bit    
 <Think> How to order the purchases - by sales.
 		Decide order of prods shown for makeInvestment
@@ -31,6 +30,7 @@ Decays & Threshold => SIGMOID FUNCTION MUST
 
 
 
+Done > Makeinvestment page : Limit by avl_shares,  ajax the bid price
 Done >> master.blade.php should have a Links array (stored in game.php) to populate Navigation links;
 Done >> sumLE was already improved. Just had to put it into Game::
 NOPE - Think ::TRANSITIONS & WARNINGS IN FILTERS ? 

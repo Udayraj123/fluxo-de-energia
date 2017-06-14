@@ -58,7 +58,6 @@ progressGroup+
 		</div>
 	</div>
 </div>
-<!-- 
 <div class="row"  style="background:#66ff66;border-radius:10px;margin:5%0%0%2%;opacity:0.85">
 	<div class="col-md-6">
 		<div id="detailFundings" class="container" style="overflow-y:auto;height:75%;background:#66ff66;border-radius:10px;width:100%;opacity:0.85">
@@ -67,7 +66,7 @@ progressGroup+
 			</div>
 		</div>
 	</div>
-</div> -->
+</div> 
 
 
 <script type="text/javascript">
@@ -79,8 +78,8 @@ progressGroup+
 	var preProg=['id','product','name','total_shares'];
 	var postProg=['avl_shares','FT'];
 	var firstRow=['#','id','product','name','total_shares','Fundings','avl_shares','FT'];//being funded
-	var firstRow2=['#','id','product','name','total_shares','avl_shares','Fundings','FT'];//launched
 	// From backend = ['id', 'category', 'name', 'total_shares', 'avl_shares', 'FT', ];
+	var firstRow2=['#','id','product','name','total_shares','avl_shares','Fundings','FT'];//launched
 	var counter=1;
 	cellData.push(firstRow);
 	cellData2.push(firstRow2);

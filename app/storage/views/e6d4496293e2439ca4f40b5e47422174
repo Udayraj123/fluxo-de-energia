@@ -23,6 +23,8 @@ god.jpg
 			success: function(data) {
 				console.log(data);
 				$('#bid_price').val(parseInt(data['bid_price']));
+				$('#avl_shares').val(parseInt(data['avl_shares']));
+				$('#num_shares').attr('max',data['avl_shares']);
 				$('#RFT').val(parseInt(data['RFT']));
 			},
 
@@ -60,26 +62,32 @@ god.jpg
 								</option>
 								<?php endforeach; ?>
 							</select>
-						</td> </tr><tr><td><br><br>
+						</td> </tr>
+						<tr><td><br><br>
+							<label>bid_price : </td><td><input disabled="true" type='number' id='bid_price' value=0 /></label><br>
+						</td></tr>
+						<tr><td><br><br>
+							<label>RFT : </td><td><input disabled="true" type='number' id='RFT' value=0 /></label><br>
+						</td></tr>
+						<tr><td><br><br>
+							<label>avl_shares : </td><td><input disabled="true" type='number' id='avl_shares' value=0 /></label><br>
+						</td></tr>
+						<tr><td><br><br>
+							<label>num_shares : </td><td><input type='number' name='num_shares' id='num_shares' max=100 min=0 value=10 /></label><br>
+						</td></tr>
+						<tr><td><br><br>
+						&nbsp;&nbsp;<div> <input type='submit' value="SAVE" /> </div>
+					</td></tr>
+					<?php echo Form::close(); ?>
 
-						<label>bid_price : </td><td><input disabled="true" type='number' id='bid_price' value=1472 /></label><br>
-					</td></tr><tr><td><br><br>
-					<label>RFT : </td><td><input disabled="true" type='number' id='RFT' value=5 /></label><br>
-				</td></tr><tr><td><br><br>
-				<label>num_shares : </td><td><input type='number' name='num_shares' value=10 /></label><br>
-			</td></tr><tr><td><br><br>
-			&nbsp;&nbsp;<div> <input type='submit' value="SAVE" /> </div>
-		</td></tr>
-		<?php echo Form::close(); ?>
+				</table>
+			</div>
 
-	</table>
-</div>
+			<!-- /.box-header -->
 
-<!-- /.box-header -->
-
-</div>
-</div>
-<!-- /.box-body -->
+		</div>
+	</div>
+	<!-- /.box-body -->
 </div>
 <!-- /.box -->
 </div>

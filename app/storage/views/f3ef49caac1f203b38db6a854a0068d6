@@ -57,7 +57,7 @@ function decayHandle(){
     lowerTHR=$('#lowerTHR').val();
     upperTHR=$('#upperTHR').val();
     var eta=(le-lowerTHR)/decay;
-    $('#ETA').val(Math.round(eta/60*p)/p + 's');
+    $('#ETA').val(Math.round(eta/60*p)/p + ' s');
 
     LEwidth=(le-lowerTHR)/(upperTHR-lowerTHR)*100+'%';
     $('#LEwidth').width(LEwidth);

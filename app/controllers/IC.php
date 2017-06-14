@@ -114,7 +114,7 @@ class IC extends \BaseController {
 		if(!$p || $p->being_funded!=1 || !$p->god)return array('bid_price'=>0,'RFT'=>0);;
 		$bid_price= $this->calcBidPrice($p);
 		$RFT = Game::getRFT($p);
-		return array('bid_price'=>$bid_price,'RFT'=>$RFT);
+		return array('bid_price'=>$bid_price,'RFT'=>$RFT,'avl_shares'=>$p->avl_shares);
 	}
 	public function makeInvestment(){
 		$products=Product::where('being_funded',1) 

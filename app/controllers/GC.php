@@ -13,13 +13,11 @@ class GC extends \BaseController {
 	public function fundingBar(){
 
 		$user=Auth::user()->get();
-		$ps = Product::where('god_id',$user->god->id);
+		$ps = Product::where('god_id',$user->god->id); //user->god_id isn't working ?!
 		$fundingBarFields=['id', 'category', 'name', 'total_shares', 'avl_shares', 'FT', ];
 		
 		$funding_products = $ps->where('being_funded',1)->select($fundingBarFields)->get();
 		$prev_products = $ps->where('being_funded',0)->select($fundingBarFields)->get();
-		Log::info($funding_products);
-		
 		
 //seems heavy-2
 		$Info="Funding Details Here...";
@@ -41,7 +39,6 @@ class GC extends \BaseController {
 		}
 		$funding_products = $funding_products?		$funding_products->toArray()	:	[];
 		$prev_products	  =    $prev_products?		$prev_products->toArray()		:	[];
-		Log::info($funding_products);
 		return View::make('fundingBar')->with([
 			'funding_products'=>$funding_products,
 			'prev_products'=>$prev_products
