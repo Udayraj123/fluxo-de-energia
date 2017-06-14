@@ -9,7 +9,7 @@ use Illuminate\Auth\UserTrait;
 use Illuminate\Auth\UserInterface;
 use Illuminate\Auth\Reminders\RemindableTrait;
 use Illuminate\Auth\Reminders\RemindableInterface;
-
+use Product;
 class God extends Eloquent implements UserInterface {
 
     use UserTrait;
@@ -24,6 +24,9 @@ class God extends Eloquent implements UserInterface {
 
     function products() {
         return $this->hasMany('Product');
+    }
+    function funding_products() {
+        return Product::where('god_id',$this->id)->where('being_funded',1);
     }
 
 } 

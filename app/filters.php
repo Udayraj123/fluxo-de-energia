@@ -41,26 +41,15 @@ Route::filter('no-cache',function($route, $request, $response){
 */
 
 //GOod-
+
 Route::filter('user', function() {
-    $user= Auth::user()->get();
-    if (!$user || !$user->category) {
+    if (Auth::user()->guest()) {
         return C::get('debug.login');
     }
 });
-
 function logBackIn(){
     $user= Auth::user()->get();
     return "Not allowed. $user->username $user->category <BR>".C::get('debug.login');
-}
-
-function checkLE($factor){
-    $user= Auth::user()->get();
-    $total=User::all()->sum('le'); 
-    
-//this is a transform shield to protect boundary transactions
-    return $user->le >= $factor * $total;
-
-
 }
 
 Route::filter('god', function() {
@@ -70,7 +59,7 @@ Route::filter('god', function() {
         return logBackIn();
     }
     
-    // if(checkLE(C::get('game.facGI'))!=1)return C::get('debug.reset');
+    
 
 });
 
@@ -80,7 +69,6 @@ Route::filter('investor', function() {
     if (!($user->investor && $user->category=='investor')) {
         return logBackIn();
     }
-    // if(checkLE(C::get('game.facFI'))!=1)return C::get('debug.reset');
     
 });
 
@@ -90,8 +78,7 @@ Route::filter('farmer', function() {
     if (!($user->farmer && $user->category=='farmer')) {
         return logBackIn();
     }
-    // if(checkLE(C::get('game.facF'))!=1)return C::get('debug.reset');
-
+    
 });
 
 
@@ -111,11 +98,6 @@ Route::filter('guest', function()
     if (Auth::check()) return Redirect::to('/');
 });
 
-Route::filter('auth.user', function() {
-    if (Auth::user()->guest()) {
-        return Redirect::guest('misc/login');
-    }
-});
 /*
 |--------------------------------------------------------------------------
 | CSRF Protection Filter

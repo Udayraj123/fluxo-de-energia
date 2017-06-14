@@ -35,6 +35,7 @@ god.jpg
   		});
 
 	}
+	setInterval("getUC()",{{C::get('game.msRefreshRate')}});
 </script>
 
 <div class="row"  style="background:#66ff66;border-radius:10px;width:30%;margin:5%0%0%2%;opacity:0.85">
@@ -54,7 +55,7 @@ god.jpg
 							<label for="product_id"> Product  : &nbsp;&nbsp;&nbsp; </label>
 						</td>
 						<td>
-							<select class="form-control" name='product_id' id='product_id'>
+							<select class="form-control" name='product_id' onchange="getUC()" id='product_id'>
 								@foreach ($products as $prod)
 								<option value="{{ $prod->id }}">{{ $prod->god->user->username or 'GOD'}}'s'  {{ $prod->category }} {{ $prod->name }} id: ({{ $prod->id }})</option>
 								@endforeach
@@ -72,7 +73,7 @@ god.jpg
 		
 		{{ Form::close() }}
 	</table>
-<button onclick="getUC()" >get buy_price</button><br>
+
 </div>
 
 <!-- /.box-header -->

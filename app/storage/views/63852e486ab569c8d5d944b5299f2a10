@@ -105,6 +105,10 @@
     var check=0;
     var t=states.length;
     var tableContainer=document.getElementById(divID);
+    if(t==0){
+      tableContainer.innerHTML="<span class='box box-warning'>NO LAND! Buy from the <a href='<?php echo route('buyProduct'); ?>'>store</a>! </span>";
+      return;
+    }
     var table1= document.createElement('table');
     table1.cellSpacing="40";//check class
     var tableHeight=t/4+1,tableWidth=4;
@@ -122,7 +126,7 @@
         cellCount++;
       }
     }
-    tableContainer.innerHTML="";
+    tableContainer.innerHTML="";// erase old land, put new one
     tableContainer.appendChild(table1);
   }
 

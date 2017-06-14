@@ -22,73 +22,73 @@ class UC extends \BaseController {
         - the above might require a game.transitionTime
 */
 
-      public function redeemLife(){
-        $user = Auth::user()->get();
-        $redeemLE = Input::get('redeemLE');
-        if($redeemLE > $user->stored_LE)
-         $redeemLE = $user->stored_LE;
+        public function redeemLife(){
+          $user = Auth::user()->get();
+          $redeemLE = Input::get('redeemLE');
+          if($redeemLE > $user->stored_LE)
+           $redeemLE = $user->stored_LE;
        //LE_change
-       $user->le += $redeemLE; $user->stored_LE -= $redeemLE; $user->save(); 
+         $user->le += $redeemLE; $user->stored_LE -= $redeemLE; $user->save(); 
 
-       $stored_LE=$user->stored_LE;
-       return array('respLE'=>$redeemLE,'stored_LE'=>$stored_LE);
-     }
+         $stored_LE=$user->stored_LE;
+         return array('respLE'=>$redeemLE,'stored_LE'=>$stored_LE);
+       }
 
-//the personalized function
-     public static function thresholdHandle(){
-      $user=Auth::user()->get();
-      $cat=$user->category;
-      
+//the display function
+       public static function thresholdHandle(){
+
+        $user=Auth::user()->get();
       //this swaps characters !
-      $catThresholds  = Game::thresholdsFor($cat);
-      $msg=Game::thresholdCheck($catThresholds,$user);
-    //Send this data to the graph.
-      return array_merge($catThresholds,['msg'=>$msg,'active_cat'=>$cat,'le'=>$user->le]);
-    }
+        $catThresholds  = Game::thresholdsFor($user->category);
+        $msg=Game::thresholdCheck($catThresholds,$user); //will already swap the user.
+        $reload=C::get('game.reloads')[$msg];
+
+        $user=Auth::user()->get(); //get the updated user.
+        return array_merge($catThresholds,['reload'=>$reload,'msg'=>$msg,'active_cat'=>$user->category,'le'=>$user->le]);
+      }
 
 
 //Decays & Threshold => SIGMOID FUNCTION MUST
-    public function decayHandle(){
-      $user=Auth::user()->get();
-      $minRefreshRate=C::get('game.minRefreshRate');
+      public function decayHandle(){
+        $user=Auth::user()->get();
+        $minRefreshRate=C::get('game.minRefreshRate');
+        if(!$user->prev_time){
+          $user->prev_time=time();$user->save();
+        }
+        $active_cat = $user->category; // Not Null in table
+        $char= $user->$active_cat; //required for decay value ?!
+        
+        $time_passed = time()-$user->prev_time;
+        if($time_passed>=$minRefreshRate){
+         $user->prev_time=time();
+         $user->save();
 
-    	$active_cat = $user->category; // Not Null in table
-    	$char= $user->$active_cat; //required for decay value ?!
-
-    	if(!$user->prev_time){
-    		$user->prev_time=time();$user->save();
-    	}
-    	$time_passed = time()-$user->prev_time;
-      if($time_passed>=$minRefreshRate)
-       $user->prev_time=time();$user->save();
-
-     if($char->decay)
-      $decay = $char->decay;
-    else return array('le'=>0,'decay'=>0);
 
 	    //Update decay-
-    $new_decay=C::get('game.facDecay')[$active_cat] * Game::sysLE();
-    if($new_decay>0)$char->decay=$new_decay; $char->save();
+        $new_decay=C::get('game.facDecay')[$active_cat] * Game::sysLE();
+        if($new_decay>0) 
+        //just to make sure decay is nonzero if LE above minLE
+          $char->decay=$new_decay; 
 
-    	//TODO : rectify this bad condition 
-    $minLE=C::get('game.minLE');
-    if($user->le - $decay*$time_passed > $minLE)
-      if($time_passed>=$minRefreshRate) {	
-         //LE_change
-        $user->le -= $decay*$time_passed;	    	$user->save();
+        if($user->le - $char->decay*$time_passed <= C::get('game.minLE'))
+          $char->decay=C::get('game.zeroLE');
+          $char->save();
+
+          $user->le -= $char->decay*$time_passed;	    	
+          $user->save();
+        }
+        return array('reload'=>'0','le'=>$user->le,'decay'=>$char->decay,'active_cat'=>$active_cat);
       }
 
-      $user->save();
-      return array('le'=>$user->le,'decay'=>$decay,'active_cat'=>$active_cat);
-    }
 
+      public function login($id=42){$user=User::find($id); if($user){Auth::user()->login($user); return View::make('goback');} else 
+      return View::make('admin.login'); }
 
-    public function login($id=42){$user=User::find($id); if($user){Auth::user()->login($user); return View::make('goback');} else 
-    return View::make('admin.login'); }
-
-    public function logout(){$user= Auth::user()->get(); if($user){echo $user->username." logged out"; Auth::user()->logout(); 
-    return Redirect::back(); }
-    else echo "Already logged out <BR>".C::get('debug.login'); } } 
+      public function logout(){
+        $user= Auth::user()->get(); if($user){echo $user->username." logged out"; Auth::user()->logout(); 
+        return Redirect::route('login'); 
+      }
+      else echo "Already logged out <BR>".C::get('debug.login'); } } 
 
 
 #*** Admin Panel REQUIRED => in case light goes off OR server stops respondin, the decay will still go on due to timestamp stuff. !

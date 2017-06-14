@@ -1,70 +1,89 @@
 <?php
 namespace Helpers;
 use \App\Models;
-use C,User,Common,Log;
+use C,User,Common,Log,Session;
 
 class Game
 {
-	public static function swap($user1, $user2){
-	  $cat1=$user1->category;
-	  $cat2=$user2->category;
-	  $user1->category= $cat2;
-	  $user2->category= $cat1;
-	  $user1->save();
-	  $user2->save();
+	public static function getRFT($p){
+		//may change this created at to created_time later.
+			$time_elapsed= (time()-strtotime($p->created_at))/60; //Minutes
+		  	$RFT = $p->FT - $time_elapsed; //Minutes
+		  	return $RFT;
 	}
+	public static function launchProd($p){
+            $p->being_funded=0; 
+            $p->launched_at=time(); 
+            $p->save(); //time is over now          <-- What's correct place to update this?
 
-
-
+	}
+	public static function swap($user1, $user2){
+		if(C::get('game.swapon')){
+			$cat1=$user1->category;
+			$cat2=$user2->category;
+			$user1->category= $cat2;
+			$user2->category= $cat1;
+			$user1->save();
+			$user2->save();
+			Log::info('Swapped '.$cat1.' user with '.$cat2.' user');
+		}
+	}
 	//this does the swapping
-	        public static function thresholdCheck($catThresholds,$user){
-	          $diff1=$user->le - $catThresholds['lowerTHR'];
-	          $diff2=$catThresholds['upperTHR'] - $user->le; 
-	          $cat=$user->category;
-	          if($diff1<=0){
+	public static function thresholdCheck($catThresholds,$user){
+		$diff1=$user->le - $catThresholds['lowerTHR'];
+		$diff2=$catThresholds['upperTHR'] - $user->le; 
+		$cat=$user->category;
+		if($diff1<=0){
 	            //will cost a query  
-	            if($cat!='farmer'){
-	              $user2=User::where('category',($cat=='investor'?'farmer':'investor'))->orderBy('le','desc')->first();
-	              $common2 = Common::where('category',$user2->category)->first();
-	              if($user2->le > $common2->upperTHR)
-	                return 4; //normal Swap
-	                // UC::swap($user,$user2);
-	              else{
-	              //Stuck - giveE option here.
-	              }
+			if($cat!='farmer'){
+				$user2=User::where('category',($cat=='investor'?'farmer':'investor'))->orderBy('le','desc')->first();
+				$common2 = Common::where('category',$user2->category)->first();
+				if($user2->le > $common2->upperTHR){
+					Game::swap($user,$user2);
+	                return 'swap_down'; //normal Swap down
 	            }
 	            else{
+	            	//No one to swap with.
+	              //Stuck - giveE option here.
+	            	Log::info('stuck user' ,$user2->name);
+		            return 'stuck_wait'; //level down but no swap
+		        }
+		    }
+		    else{
 	              //farmer with too low E. No decay. If don't play good, will die.
-	            }
-	            // TODO :-  NEED TO REDIRECT/RELOAD ATLEAST ! 
-	            return 2; //level down.
-	          }
-	          if($diff2<=0){
-	          //SWAP only if somebody is below THR, will stay notified until somebody already 
-	            if($cat=='god') return 5;//F yeah
-	            return 3; //level up
-	          }
-	          $notifTime=C::get('game.notifTime');
-	          if($diff1/($user->$cat->decay)<= $notifTime) return 1; //warning
-	        else return 0; //clean
-	      }
-
-
-	public static function sysLE(){
-		return Game::thresholdsFor('god')['sysLE'];
-	}
-
-	public static function thresholdsFor($cat){
-		$t=C::get('game.minRefreshRate'); 
-		$time=time();
-		$common = Common::where('category',$cat)->first();
-
-		if($time - $common->prev_time < $t){
-			$sysLE = $common->sysLE;
-			$upperTHR = $common->upperTHR;
-			$lowerTHR = $common->lowerTHR;
+		    	return 'warn_die';
+		    }
 		}
-		else{
+		else if($diff2<=0){
+          //SWAP only if somebody is below THR, will stay notified until somebody already 
+            if($cat=='god') return 'f_yeah';//F yeah top level
+
+            return 'class_topper'; //level up candidate
+        }
+
+        $notifTime=C::get('game.notifTime');
+        
+        if($diff1/floatval($user->$cat->decay)<= $notifTime) 
+	          return 'warning_down'; //warning
+        else return 'clean'; //clean
+    }
+
+
+    public static function sysLE(){
+    	return Game::thresholdsFor('god')['sysLE'];
+    }
+
+    public static function thresholdsFor($cat){
+    	$t=C::get('game.minRefreshRate'); 
+    	$time=time();
+    	$common = Common::where('category',$cat)->first();
+
+    	if($time - $common->prev_time < $t){
+    		$sysLE = $common->sysLE;
+    		$upperTHR = $common->upperTHR;
+    		$lowerTHR = $common->lowerTHR;
+    	}
+    	else{
 			//update after refreshrate
 		    $f0= C::get('game.facGM'); //F yeah mode
 		    $f1= C::get('game.facGI');

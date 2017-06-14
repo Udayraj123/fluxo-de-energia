@@ -51,7 +51,7 @@ Route::group(array('before' => 'user'), function()
 //but post requests are not redirected
 Route::group(array('before' => 'investor'), function()
 {
-	Route::get('/makeInvestment',array('as'=>'makeInvestment',function(){return View::make('makeInvestment') ->with('products',Product::where('being_funded',1) ->where('avl_shares','>',0) ->orderBy('id','desc') ->get());}));
+	Route::get('/makeInvestment',array('as'=>'makeInvestment','uses'=>'IC@makeInvestment'));
 	
 	Route::get('/listInvestments',array('as'=>'listInvestments',function(){
 		$user=Auth::user()->get(); return View::make('listInvestment') ->with('products',$user->investor->products);
@@ -64,7 +64,7 @@ Route::group(array('before' => 'investor'), function()
 		->with('fruits',Fruit::where('launched',1)->where('avl_units','>',0) 
 			->orderBy('id','desc') ->get());})); //latest first
 
-	Route::post('/makeInvestment', ['as' => 'makeInvestment', 'uses' => 'IC@makeInvestment']);
+	Route::post('/makeInvestment', ['as' => 'makeInvestment', 'uses' => 'IC@postmakeInvestment']);
 	Route::post('/buyFruit', ['as' => 'buyFruit', 'uses' => 'IC@buyFruit'] );
 	Route::post('/bidHandle', ['as' => 'bidHandle', 'uses' => 'IC@bidHandle']);
 	Route::post('/priceHandle', ['as' => 'priceHandle', 'uses' => 'IC@priceHandle']);
@@ -76,17 +76,12 @@ Route::group(array('before' => 'investor'), function()
 Route::group(array('before' => 'god'), function()	{
 
 	Route::get('selfProducts', ['as' => 'selfProducts', 'uses' => 'GC@selfProducts']); 	//this gives FUNDING BAR
-	Route::get('/fundingBar', ['as' => 'fundingBar', function(){
-		$user=Auth::user()->get();
-		$products = $user->god->products;
-		return View::make('fundingBar')->with('products',$products);
-	}]);
+	Route::get('/fundingBar', ['as' => 'fundingBar', 'uses'=>'GC@fundingBar']);
 	Route::get('/createProduct', function(){
 		$user=Auth::user()->get();
-		$bp=json_encode(C::get('game.basePrices'));
+		
 		return View::make('createProd')
 		->with(C::get('game.baseCIs'))
-		->with('k',$bp )
 		->with('products',$user->god->products()->orderBy('id','desc')->get())
 		;
 	});
@@ -97,17 +92,11 @@ Route::group(array('before' => 'farmer'), function()
 {
 
 	Route::get('/showLand', ['as' => 'showLand', 'uses' => 'FC@showLand'] );
-	Route::get('/buyProduct',array('as'=>'buyProduct', function(){$user=Auth::user()->get();return View::make('buyProduct')
-		->with('boughtProducts',$user->farmer->products)
-		->with('products',Product::where('being_funded',0)
-			->where('avl_units','>',0)
-			->orderBy('id','desc')
-			->get());
-		;}));
-	Route::post('/buyProduct', ['as' => 'buyProduct', 'uses' => 'FC@buyProduct'] );
+	Route::get('/buyProduct',array('as'=>'buyProduct', 'uses'=>'FC@buyProduct'));
+	Route::post('/buyProduct', ['as' => 'buyProduct', 'uses' => 'FC@postbuyProduct'] );
 	Route::post('/productPriceHandle', ['as' => 'productPriceHandle', 'uses' => 'FC@productPriceHandle'] );
 	
-	
+	//make these ajax!
 	Route::post('/getStates', ['as' => 'getStates', 'uses' => 'FC@getStates'] );
 	Route::post('/applyPurch', ['as' => 'applyPurch', 'uses' => 'FC@applyPurch'] );
 	Route::post('/launchFruit', ['as' => 'launchFruit', 'uses' => 'FC@launchFruit'] );

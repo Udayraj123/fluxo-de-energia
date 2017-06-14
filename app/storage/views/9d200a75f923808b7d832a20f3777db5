@@ -26,13 +26,14 @@ god.jpg
 				$('#RET').val(parseInt(data['RET']));
 			},
 
-  			error: function(){// ERROR NOT HANDLING ?
+  			error: function(){// Server Disconnected
   				X=data;	
   				alert('error updating bp, check type X in console'); 
   			}
   		});
 
 	}
+	setInterval("getUC()",<?php echo C::get('game.msRefreshRate'); ?>);
 </script>
 
 <div class="row"  style="background:#66ff66;border-radius:10px;width:30%;margin:5%0%0%2%;opacity:0.85">
@@ -53,7 +54,7 @@ god.jpg
 							<label for="product_id"> Product  : &nbsp;&nbsp;&nbsp; </label>
 						</td>
 						<td>
-							<select class="form-control" name='product_id' id='product_id'>
+							<select class="form-control" name='product_id' onchange="getUC()" id='product_id'>
 								<?php foreach($products as $prod): ?>
 								<option value="<?php echo $prod->id; ?>"><?php echo isset($prod->god->user->username) ? $prod->god->user->username : 'GOD'; ?>'s'  <?php echo $prod->category; ?> <?php echo $prod->name; ?> id: (<?php echo $prod->id; ?>)</option>
 								<?php endforeach; ?>
@@ -72,7 +73,7 @@ god.jpg
 		<?php echo Form::close(); ?>
 
 	</table>
-<button onclick="getUC()" >get buy_price</button><br>
+
 </div>
 
 <!-- /.box-header -->

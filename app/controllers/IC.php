@@ -2,7 +2,7 @@
 class IC extends \BaseController {
 //redeem LE will be accessible anywhere i.e. UC.php
 
-/* buy Fruit here */
+	/* buy Fruit here */
 	public function calcFruitPrice($p){ //$p is fruit here
 		if(!($p->ET>0 && $p->avl_units>0))return 0; //division by zero
 		$time_elapsed= (time()-($p->launched_at))/60; //Minutes
@@ -60,7 +60,7 @@ class IC extends \BaseController {
 			$num_units=$p->avl_units;
 		}
 		$price=$num_units* $buy_price;
-		$total=Game::sysLE(); //CHECK IF THIS WORKS ALL TIME
+		$total=Game::sysLE(); 
 		$THR= $total * C::get('game.facFI'); //this factor may depend on number of users ?!
 		
 		//Life Energy price check /successful here.
@@ -89,35 +89,42 @@ class IC extends \BaseController {
 
 	public function calcBidPrice($p){
 		if(!($p->FT>0 && $p->total_shares>0))return 0;
-		$time_elapsed= (time()-strtotime($p->created_at))/60; //Minutes
-	  	$RFT = $p->FT - $time_elapsed; //Minutes
-	  	if($RFT<=0){
-            $p->being_funded=0; $p->save(); //time is over now          <-- What's correct place to update this?
-            return 0;
-        }
+		$RFT = Game::getRFT($p);
+		if($RFT<=0){
+	  		//Nope - Launching is in control of god?
+	  		// Launch automatically to be fair.
+			Game::launchProd($p);
+			return 0;
+		}
 
-        $loss=  $p->god->decay * $p->FT;
-        $base_share=($p->total_cost/$p->total_shares)*(1-C::get('game.godPercent'));
-        $godReturns = C::get('game.godReturns');
-        $bid_price= $base_share + $godReturns*($loss/$p->total_shares)*($time_elapsed/$p->FT);
+		$loss=  $p->god->decay * $p->FT;
+		$base_share=($p->total_cost/$p->total_shares)*(1-C::get('game.godPercent'));
+		$godReturns = C::get('game.godReturns');
+		$time_elapsed= (time()-strtotime($p->created_at))/60; //Minutes
+		$bid_price= $base_share + $godReturns*($loss/$p->total_shares)*($time_elapsed/$p->FT);
 
 		$p->bid_price=$bid_price; $p->save(); //update bid price here ?!
 
 		return  $bid_price;
 	}
-		
+
 	public function bidHandle(){
 		$id=(int)Input::get('product_id');
 		$p = Product::find($id);
 		if(!$p || $p->being_funded!=1 || !$p->god)return array('bid_price'=>0,'RFT'=>0);;
 		$bid_price= $this->calcBidPrice($p);
-		//may change this created at to created_time later.
-		$time_elapsed= (time()-strtotime($p->created_at))/60; //Minutes
-		$RFT = $p->FT - $time_elapsed; //Minutes
+		$RFT = Game::getRFT($p);
 		return array('bid_price'=>$bid_price,'RFT'=>$RFT);
 	}
-		//from POST request by Investor
 	public function makeInvestment(){
+		$products=Product::where('being_funded',1) 
+		->where('avl_shares','>',0) 
+		->orderBy('id','desc') ->get();
+		return View::make('makeInvestment') 
+		->with('products',$products);
+	}
+		//from POST request by Investor
+	public function postmakeInvestment(){
 		$input = Input::except('_token');
 		if(!(array_key_exists('num_shares', $input) && array_key_exists('product_id', $input))) return "Input not read.";
 		
@@ -129,9 +136,12 @@ class IC extends \BaseController {
 		if(!$p)return "prod not found";
 		if($p->being_funded==0)								return "(FT is over) Product is not being funded. <BR>";  
 
-		if(!$p->avl_shares){$p->being_funded=0; $p->save(); return "0 avl shares";
+		if(!$p->avl_shares){
+			//Over funding is not currently supported. 
+			Game::launchProd($p);
+			return "0 avl shares";
 		//shares are over now          <-- What's correct place to update this?
-	}
+		}
 		$god=$p->god; //accessed to increase god LE
 		if(!$god)											return "This product doesn't have an owner!"; //you may safe delete this products
 		
@@ -152,7 +162,7 @@ class IC extends \BaseController {
 		// $THR=$thrData['lowerTHR'];
 		
 		//SUM LE is costly, if it is slowing down, use UC::thresholdHandle
-		$total=Game::sysLE(); //CHECK IF THIS WORKS ALL TIME
+		$total=Game::sysLE(); 
 		$THR= $total * C::get('game.facFI'); //this factor may depend on number of users ?!
 		 //Life Energy price check /successful here.
 		if($LE - $price > $THR)

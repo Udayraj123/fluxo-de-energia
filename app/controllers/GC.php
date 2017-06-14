@@ -10,6 +10,43 @@ class GC extends \BaseController {
 		
 
 	}
+	public function fundingBar(){
+
+		$user=Auth::user()->get();
+		$ps = Product::where('god_id',$user->god->id);
+		$fundingBarFields=['id', 'category', 'name', 'total_shares', 'avl_shares', 'FT', ];
+		
+		$funding_products = $ps->where('being_funded',1)->select($fundingBarFields)->get();
+		$prev_products = $ps->where('being_funded',0)->select($fundingBarFields)->get();
+		Log::info($funding_products);
+		
+		
+//seems heavy-2
+		$Info="Funding Details Here...";
+		foreach ($funding_products as $i=>$prod){
+			$Percentages=[];
+			$InvestorNames=[];
+			foreach ($prod->investors as $inv)
+			{
+				$num_shares=	Investment::where('investor_id',$inv->id)
+				->where('product_id',$prod->id)
+				->sum('num_shares');
+				$total_shares=$prod->total_shares;
+				$Percentages[] = $num_shares/$total_shares*100;
+				$InvestorNames[] = Helper::getShortName($inv->user->username);
+			}
+			$funding_products[$i]['InvestorNames']=$InvestorNames;
+			$funding_products[$i]['Percentages']=$Percentages;
+			$funding_products[$i]['Info']=$Info;
+		}
+		$funding_products = $funding_products?		$funding_products->toArray()	:	[];
+		$prev_products	  =    $prev_products?		$prev_products->toArray()		:	[];
+		Log::info($funding_products);
+		return View::make('fundingBar')->with([
+			'funding_products'=>$funding_products,
+			'prev_products'=>$prev_products
+			]);
+	}
 //More to come- sale stats
 	public function selfProducts(){
 		$user=Auth::user()->get();

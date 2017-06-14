@@ -18,6 +18,7 @@ return array(
 		'myAlia'=>'Config::get("game.baseQual")',
 		'C' => 'Config',
 		'Game'			=> 'Helpers\Game',
+		'Helper'			=> 'Helpers\Helper',
 		'App'               => 'Illuminate\Support\Facades\App',
 		'Artisan'           => 'Illuminate\Support\Facades\Artisan',
 		'Auth'              => 'Illuminate\Support\Facades\Auth',

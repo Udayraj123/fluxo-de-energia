@@ -16,6 +16,9 @@ function round(x,p){
  return parseFloat((Math.round(x2*m))/m);
 }
 
+function reloadPage(){
+  window.location.href += "";
+}
 var catTHR=[];
 catTHR['god'] = 'thresholdGI';
 catTHR['investor'] = 'thresholdFI';
@@ -24,7 +27,7 @@ catTHR['farmer'] = 'thresholdF';
 setInterval(function(){
   decayHandle();
   // thresholdHandle(); //removed
-},1000);
+},{{C::get('game.msRefreshRate')}});
 
 function decayHandle(){
   $.ajax({
@@ -46,11 +49,13 @@ function decayHandle(){
     $('#ETA').val(eta);
     $('#ETAmin').val(etam);
     $('#currTHR').val(currTHR);
+if(data['reload']=='1')
+  reloadPage();
 
   },
   
   error: function(){// Server Disconnected
-    alert('Cannot connect to the server'); 
+    //alert('Cannot connect to the server'); 
   }
 
 

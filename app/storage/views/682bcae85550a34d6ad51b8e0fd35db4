@@ -22,7 +22,7 @@ god.jpg
     var c2=<?php echo $c2; ?>;
     var c3=<?php echo $c3; ?>;
     var c4=<?php echo $c4; ?>;
-    var k = <?php echo $k; ?>;//direct dictionary it is ! {"seed" : 500,"fertilizer" : 2000,"land" : 7000};
+    var k = <?php echo json_encode(C::get('game.basePrices'));; ?>;//direct dictionary it is ! {"seed" : 500,"fertilizer" : 2000,"land" : 7000};
     function getUC(){
 
         var ET=document.getElementById('ET').value;
@@ -44,10 +44,10 @@ god.jpg
      t.value=u.value*n.value;
      console.log(u.value);
  }
- setInterval("update()",1000);
+ setInterval("update()",<?php echo C::get('game.msRefreshRate'); ?>);
 
  function updateProdList(){
-//make a function in GC to return the products array
+//make a function in GC to retu   rn the products array
 
 }
 
@@ -157,7 +157,7 @@ god.jpg
     currRow.push('<?php echo $p->total_units; ?>');
     currRow.push('<?php echo $p->unit_price; ?>');
     currRow.push('<?php echo $p->ET; ?>');
-    x=new Date(1000*<?php echo $p->launched_at; ?>);
+    x=new Date(1000*<?php echo isset($p->launched_at) ? $p->launched_at : '1'; ?>);
     currRow.push(x.toLocaleTimeString());
     <?php endif; ?>
 

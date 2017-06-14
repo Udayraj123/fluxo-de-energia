@@ -13,7 +13,7 @@ god.jpg
 
 @section('bodyContent') 
 <script type="text/javascript"> 
-  setInterval("takeFromAbove()",1000);
+  setInterval("takeFromAbove()",{{C::get('game.msRefreshRate')}});
 
   function takeFromAbove(){
     sysLE=parseInt($('#sysLE').html());
@@ -170,7 +170,8 @@ god.jpg
     // be fetched from a server
     var data = [], totalPoints = 100;
 
-// THis is what server shall send - array of previous 100 records
+// Nope - THis is what server shall send - array of previous 100 records
+// Server shall send only current LE. Frontend will keep pushing the data
 function getRandomData() {
   if (data.length > 0)
     data = data.slice(1);

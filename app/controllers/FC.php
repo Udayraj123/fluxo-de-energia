@@ -300,95 +300,86 @@ return $state;
 }
 
 
-//The land menu 'View' goes from here-
 public function showLand(){
 	$user= Auth::user()->get(); 
 	$farmer=$user->farmer;
 	$L = $farmer->lands;
-		$purchases = $farmer->purchases; //->where('product is seed or fert') //not req
-		$fruits=	 $farmer->fruits;
+	$purchases = $farmer->purchases; //->where('product is seed or fert') //not req
+	$fruits=	 $farmer->fruits;
 	//Convert following into return array('key'=>'val'); to be handled by ajax
 	//this shall be obtained from ajax since land updates with time
 
-			//test for comparing
-		foreach ($fruits as $l)
-			// if($l->num_units>0 && $l->launched==0)
-			echo " Fruit $l->id ($l->num_units,$l->launched) &emsp; ";
-		echo "<BR>";
-		foreach ($L as $l)$this->checkGT($l->id);
+	foreach ($L as $l)$this->checkGT($l->id);
 
-		return View::make('showLand')
-		->with('purchases',$purchases)
-		->with('fruits',$fruits)
-		->with('c1',C::get('game.fruitC1'))
-		->with('c2',C::get('game.fruitC2'))
-		->with('c3',C::get('game.fruitC3'))
-		->with('c4',C::get('game.fruitC4'))
-		->with('seedGT',C::get('game.seedGT'))
-		->with('fruitBP',C::get('game.fruitBP'));
-	}
+	return View::make('showLand')
+	->with(C::get('game.fruitCIs'))
+	->with('purchases',$purchases)
+	->with('fruits',$fruits)
+	->with('seedGT',C::get('game.seedGT'))
+	->with('fruitBP',C::get('game.fruitBP'));
+}
 
 
 
-	public function QueryPractice(){
+public function QueryPractice(){
 
 		//Helper functions- Func is alias for config/classes/Functions.php
 		// echo Func::add('a');
 
-		$f2=Farmer::find(1);
+	$f2=Farmer::find(1);
 
-		echo $f2->user->username." is having following property<BR><BR>";
-		echo "<BR>Lands<BR>";
-		foreach ($f2->lands as $l => $f) {
-			echo $l." ".$f."<BR><BR>";
-			echo $f->purchase."<_seed <BR><BR>";
-		}
-		echo "<BR>Fruits<BR>";
+	echo $f2->user->username." is having following property<BR><BR>";
+	echo "<BR>Lands<BR>";
+	foreach ($f2->lands as $l => $f) {
+		echo $l." ".$f."<BR><BR>";
+		echo $f->purchase."<_seed <BR><BR>";
+	}
+	echo "<BR>Fruits<BR>";
 
-		foreach ($f2->fruits as $l => $f) {
-			echo $l." ".$f."<BR><BR>";
-		}
+	foreach ($f2->fruits as $l => $f) {
+		echo $l." ".$f."<BR><BR>";
+	}
 
-		echo "<BR>Purchases<BR>";
-		foreach ($f2->purchases as $l => $f) {
-			echo $l." ".$f."<BR><BR>";
-		}
-		return;
+	echo "<BR>Purchases<BR>";
+	foreach ($f2->purchases as $l => $f) {
+		echo $l." ".$f."<BR><BR>";
+	}
+	return;
 
 
-		print_r($f2->purchase->product->god->products
-			()->select('category','avl_units')->lists('category')
+	print_r($f2->purchase->product->god->products
+		()->select('category','avl_units')->lists('category')
 			// ()->where('category','land')->select('category','avl_units')->lists('category')
 			// ()->where('category','land')->get(['category','avl_units'])
 	// ->filter(function($item){return $item->category=='land';})->values()->lists('avl_units')
-			);
+		);
 
 // echo ($f2->purchases->filter(function($item){return $item->product->category=='seed';}));//->values());
-		echo "<BR>";
-		echo "<BR>";
+	echo "<BR>";
+	echo "<BR>";
 
-		$k=$f2->fruits()->select('quality_factor','id');
-		$k2=$f2->purchases;
-		foreach ($k2 as $iterator_key => $kp) {
-			$k3=$kp->fruits();
-			print_r($k3->lists('id'));
-			echo "<BR>$iterator_key<BR>";
-		}
-		echo "<BR>";
-		echo "<BR>";
-		print_r($k->lists('id'));
+	$k=$f2->fruits()->select('quality_factor','id');
+	$k2=$f2->purchases;
+	foreach ($k2 as $iterator_key => $kp) {
+		$k3=$kp->fruits();
+		print_r($k3->lists('id'));
+		echo "<BR>$iterator_key<BR>";
 	}
-	public function testFruitRel(){
+	echo "<BR>";
+	echo "<BR>";
+	print_r($k->lists('id'));
+}
+public function testFruitRel(){
 	// return "lets check if fruit relates to its farmer";
 
 
-		$f=Fruit::find(2);
-		return $this->QueryPractice();
+	$f=Fruit::find(2);
+	return $this->QueryPractice();
 
-		$f=Farmer::find(15);
-		foreach ($f->purchases as $p) {
-			$v=$p->farmer->user->username;
-			$v2=$p->product->category;
+	$f=Farmer::find(15);
+	foreach ($f->purchases as $p) {
+		$v=$p->farmer->user->username;
+		$v2=$p->product->category;
 
 			$v3=$p->purchases;//->where('farmer_id',1);
 			var_dump($v3);
@@ -441,8 +432,17 @@ public function showLand(){
         return array('buy_price'=>$buy_price,'RET'=>$RET);
 
     }
-
     public function buyProduct(){
+    	$user=Auth::user()->get();
+    	return View::make('buyProduct')
+    	->with('boughtProducts',$user->farmer->products)
+    	->with('products',Product::where('being_funded',0)
+    		->where('avl_units','>',0)
+    		->orderBy('id','desc')
+    		->get());
+    }
+
+    public function postbuyProduct(){
 			//request comes here from listProducts-
     	echo "lets go. ";
     	$flag =0;
@@ -473,7 +473,7 @@ public function showLand(){
 			$num_units=$p->avl_units;
 		}
 		$price=$num_units* $buy_price;
-		$total=Game::sysLE(); //CHECK IF THIS WORKS ALL TIME
+		$total=Game::sysLE(); 
 		$THR= $total * C::get('game.facF'); //this factor may depend on number of users ?!
 		
 

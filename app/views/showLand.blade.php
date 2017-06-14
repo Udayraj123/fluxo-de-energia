@@ -17,7 +17,7 @@
     var quality=document.getElementById('quality_factor').value;
     return bp*(c1*quality+c2*GT+c3*ET)*(1+c4*Tol);
   }
-  setInterval(function(){$('#unit_price').val(getUC());},1000);
+  setInterval(function(){$('#unit_price').val(getUC());},{{C::get('game.msRefreshRate')}});
   
 
 </script>
@@ -103,6 +103,10 @@
     var check=0;
     var t=states.length;
     var tableContainer=document.getElementById(divID);
+    if(t==0){
+      tableContainer.innerHTML="<span class='box box-warning'>NO LAND! Buy from the <a href='{{route('buyProduct')}}'>store</a>! </span>";
+      return;
+    }
     var table1= document.createElement('table');
     table1.cellSpacing="40";//check class
     var tableHeight=t/4+1,tableWidth=4;
@@ -120,7 +124,7 @@
         cellCount++;
       }
     }
-    tableContainer.innerHTML="";
+    tableContainer.innerHTML="";// erase old land, put new one
     tableContainer.appendChild(table1);
   }
 

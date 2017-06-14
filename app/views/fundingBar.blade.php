@@ -78,52 +78,27 @@ progressGroup+
 	var InvestorNames=[];
 	var Percentages=[];
 	var currRow=[];
+	var preProg=['id','product','name','total_shares'];
+	var postProg=['avl_shares','FT'];
 	var firstRow=['#','id','product','name','total_shares','Fundings','avl_shares','FT'];//being funded
 	var firstRow2=['#','id','product','name','total_shares','avl_shares','Fundings','FT'];//launched
-	var counter=0;
+	// From backend = ['id', 'category', 'name', 'total_shares', 'avl_shares', 'FT', ];
+	var counter=1;
 	cellData.push(firstRow);
 	cellData2.push(firstRow2);
-	
-	@foreach ($products as $prod)
-	currRow=[];
-	counter++;
-	currRow.push(counter.toString());
-	currRow.push('{{ $prod->id }}');
-	currRow.push('{{ $prod->category }}');
-	currRow.push('{{ $prod->name }}');
-	currRow.push('{{ $prod->total_shares }}');
-
-	//Change The following-
-	InvestorNames=[];
-	Percentages=[] //Length of InvestorNames = Percentages
-	Info="Funding Details Here..."
-
-	@foreach ($prod->investors as $inv)
-	{{
-		$invms=	Investment::where('investor_id',$inv->id)->where('product_id',$prod->id)->get();
-		$num_shares=0;
-		foreach ($invms as $i) {
-			$num_shares += $i->num_shares;
+	funding_products = {{json_encode($funding_products)}};
+	for (var i = 0; i < funding_products.length; i++) {
+		cr = funding_products[i];
+		currRow=[counter++];
+		for (var i = 1; i < preProg.length; i++) {
+			currRow.push(cr[preProg[i]])
 		}
-		$total_shares=$prod->total_shares;
-		$percentage = $num_shares/$total_shares*100;
-	}}
-		InvestorNames.push('U'+'{{ $inv->user->username }}'.substr(4));//variables used later
-		p1={{ $percentage }}
-		Percentages.push(p1);
-	@endforeach //cool !
-
-	currRow.push(makeProgress(InvestorNames,Percentages,"{{ $prod->id}}",Info) );
-	currRow.push('{{ $prod->avl_shares }}');
-	currRow.push('{{ $prod->FT }}');
-	@if($prod->being_funded==1)
-	cellData.push(currRow);
-	@else
-	//launched or expired
-	cellData2.push(currRow);
-	@endif
-	@endforeach
-
+		currRow.push(makeProgress(cr.InvestorNames,cr.Percentages,cr.id,cr.Info));
+		for (var i = 1; i < postProg.length; i++) {
+			currRow.push(cr[postProg[i]])
+		}
+		cellData.push(currRow);
+	}
 	insertTable(cellData,"myFundings",1);
 	// insertTable(cellData2,"detailFundings",1);
 	

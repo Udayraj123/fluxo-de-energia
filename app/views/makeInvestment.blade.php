@@ -28,13 +28,14 @@ god.jpg
 				$('#RFT').val(parseInt(data['RFT']));
 			},
 
-  			error: function(){// Server Disconnected
+  			error: function(data){// Server Disconnected
   				X=data;	
   				alert('error updating bp, check type X in console'); 
   			}
   		});
 
 	}
+	setInterval("getUC()",{{C::get('game.msRefreshRate')}});
 </script>
 <br>
 <div class="row"  style="background:#66ff66;border-radius:10px;width:30%;margin:5%0%0%2%;opacity:0.85">
@@ -54,7 +55,7 @@ god.jpg
 							<label for="product_id"> Product Type  : &nbsp;&nbsp;&nbsp; </label>
 						</td>
 						<td>
-							<select class="form-control" name='product_id' id='product_id'>
+							<select class="form-control" onchange="getUC()" name='product_id' id='product_id'>
 								@foreach ($products as $prod)
 								<option value="{{ $prod->id }}">{{ $prod->god->user->username or 'GOD'}}'s'  {{ $prod->category }} {{ $prod->name }} id: ({{ $prod->id }})
 								</option>
@@ -72,7 +73,6 @@ god.jpg
 		</td></tr>
 		{{ Form::close() }}
 	</table>
-<button onclick="getUC()" >get bid_price</button><br>
 </div>
 
 <!-- /.box-header -->
@@ -101,9 +101,10 @@ god.jpg
 <script type="text/javascript">
 	var cellData=[];
 	var currRow=[];
-	var firstRow=['#','id','product','Owner','name','description','bid price','quality','FT'];
+	var firstRow=['#','id','product','Owner','name','description','bid price','quality','FT','RFT'];
 	var counter=0;
 	cellData.push(firstRow);
+	
 	@foreach ($products as $prod)
 	currRow=[];
 	counter++;
@@ -116,6 +117,7 @@ god.jpg
 	currRow.push('{{ $prod->bid_price }}');
 	currRow.push('{{ $prod->quality }}');
 	currRow.push('{{ $prod->FT }}');
+	currRow.push('{{ Game::getRFT($prod) }}');
 	cellData.push(currRow);
 	@endforeach
 

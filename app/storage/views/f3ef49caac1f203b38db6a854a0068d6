@@ -29,52 +29,49 @@
   <script type="text/javascript">
   var p =Math.pow(10,3); //(x*p)/p precision of all calculations here
 
-  var messages=[
-  'Clean',
-  'Warning Down',
-  'Level Down',
-  'Level Up',
-  'Some one found to <b> switch </b>',
-  'F yeah !',
-  ];
+  var messages=<?php echo json_encode(C::get('game.notifHTMLs'));; ?>
 
 
 //merge these two MUCH MUCH LATER
 setInterval(function(){
   decayHandle();
   thresholdHandle();
-},1000);
+},<?php echo C::get('game.msRefreshRate'); ?>);
+
+function reloadPage(){
+  window.location.href += "";
+}
 
 function decayHandle(){
   $.ajax({
     method: "POST",
     url: "<?php echo route('decayHandle'); ?>",
-  success: function( data ) {
-    var le=parseInt(data['le']);
-    var decay=parseInt(data['decay']);
-    $('#le').val(le);
-    
-    $('#decay').val(decay);
+    success: function( data ) {
+      var le=parseInt(data['le']);
+      var decay=parseInt(data['decay']);
+      $('#le').val(le);
+
+      $('#decay').val(decay);
 
     //these val() can be moved into thresholdHandle()
     lowerTHR=$('#lowerTHR').val();
     upperTHR=$('#upperTHR').val();
-    
     var eta=(le-lowerTHR)/decay;
-    $('#ETA').val(Math.round(eta/60*p)/p);
+    $('#ETA').val(Math.round(eta/60*p)/p + 's');
 
     LEwidth=(le-lowerTHR)/(upperTHR-lowerTHR)*100+'%';
     $('#LEwidth').width(LEwidth);
     
+    if(data['reload']=='1')
+      reloadPage();
   },
   
   error: function(){// Server Disconnected
-    alert('Cannot connect to the server'); 
+    //alert('Cannot connect to the server'); 
   }
 
 });
 }
-
 function thresholdHandle(){
 
  $.ajax({
@@ -83,16 +80,21 @@ function thresholdHandle(){
   // data: { 'name': "Johnny", 'location': "Boston" },
 })
  .success(function( data ) {
+
   $('#sysLE').html(parseInt(data['sysLE']));
   $('#upperTHR').val(parseInt(data['upperTHR']));
   $('#lowerTHR').val(parseInt(data['lowerTHR']));
 //<!-- We also have $user to be used -->
+// console.log(data);
 $('#active_cat').html(data['active_cat'].toString());
 
 m=data['msg'];
 //later use push to show more messages
 // notifs.push(messages[m]);
 $('#msg').html(messages[m]);
+
+if(data['reload']=='1')
+  reloadPage();
 });
 
 }
@@ -144,29 +146,70 @@ function insertTable(cellData,divID,black){
       </div>
       <div class="col-md-2"> 
         Notification :
-        <ul> <li id="msg"> </li> </ul>
+        <p id="msg"> </p>
       </div>
       <div class="col-md-6">
-        <p> 
-          Lower  <input  readonly="readonly" disabled id='lowerTHR' value=0 /> 
-          &emsp;&emsp;&emsp;
-          User le        <input readonly="readonly" disabled id='le' value=0 >&emsp;
-          decay <input readonly="readonly" disabled id='decay' value=0 /> 
-          ETA  <input readonly="readonly" disabled  id='ETA' value=0 />&emsp;
 
-          <i class="nav navbar-right">
-            Upper  <input readonly="readonly" disabled id='upperTHR' value=0 /> 
-          </i>
-        </p>
-        <div class="progress" style="height:10px;" >
-          <div id="LEwidth" class="progress-bar" style="width: 20%"></div>
-        </div>
-
+        <div class="gap"><br></div>
         <div class="row">
-          Stored_LE <input readonly="readonly" disabled id='stored_LE' value=0 /> 
+          <div class="col-md-2" >
+            <div class="input-group">
+              <div class="input-group-btn">
+                <button class="btn btn-sm bg-purple ">Lower</button>
+              </div> 
+              <input  readonly="readonly" disabled id='lowerTHR' value=0 /> 
+            </div>
+          </div>
+          <div class="col-md-2" >
+            <div class="input-group">
+              <div class="input-group-btn">
+                <button class="btn btn-sm bg-purple ">User le</button>
+              </div>        <input readonly="readonly" disabled id='le' value=0 >
+            </div>
+          </div>
+
+          <div class="col-md-2" >
+            <div class="input-group">
+              <div class="input-group-btn">
+                <button class="btn btn-sm bg-purple ">decay</button>
+              </div> 
+              <input readonly="readonly" disabled id='decay' value=0 /> 
+            </div>
+          </div>
+          <div class="col-md-2" >
+            <div class="input-group">
+              <div class="input-group-btn">
+                <button class="btn btn-sm bg-purple ">ETA</button>
+              </div>  
+              <input readonly="readonly" disabled  id='ETA' value=0 />
+            </div>
+          </div>
+
+          <div class="col-md-2" >
+              <div class="input-group">
+                <div class="input-group-btn">
+                  <button class="btn btn-sm bg-purple ">Upper</button>
+                </div>  
+                <input readonly="readonly" disabled id='upperTHR' value=0 /> 
+              </div>
+          </div>  
+          <div class="col-md-2" >
+            <div class="input-group">
+              <div class="input-group-btn">
+                <button class="btn btn-sm bg-purple ">Stored_LE</button>
+              </div> 
+              <input readonly="readonly" disabled id='stored_LE' value=0 /> 
+            </div> 
+          </div> 
+        </div>
+        <div class="gap"><br></div>
+        
+        <div class="row">
+          <div class="progress" style="height:10px;" >
+            <div id="LEwidth" class="progress-bar" style="width: 20%"></div>
+          </div>
         </div>
       </div>
-
     </div>
 
   </nav>

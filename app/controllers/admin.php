@@ -61,12 +61,21 @@ class admin extends \BaseController {
 		$ni=$ng+C::get('game.numInvs');
 		
 		$stored_LE=C::get('game.stored_LE');
-		
+		$models = ['Farmer','God','Investor'];
 		foreach ($users as $c=> $u) {
 			
 			if($c <$ng)$u->category='god';
 			else if($c <=$ni)$u->category='investor';
 			else $u->category='farmer';
+			foreach ($models as $m) {
+				if($m::where('user_id',$u->id)->count()==0){
+					echo ".";
+					$f=new $m();
+					$f->user_id=$u->id;
+					$f->save();
+				}
+			}
+
 			$u->prev_time =$t;
 			$u->le=$ini[$u->category];
 			$u->stored_LE=$stored_LE[$u->category];

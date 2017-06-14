@@ -23,7 +23,7 @@ god.jpg
     var c2={{ $c2 }};
     var c3={{ $c3 }};
     var c4={{ $c4 }};
-    var k = {{$k}};//direct dictionary it is ! {"seed" : 500,"fertilizer" : 2000,"land" : 7000};
+    var k = {{json_encode(C::get('game.basePrices'));}};//direct dictionary it is ! {"seed" : 500,"fertilizer" : 2000,"land" : 7000};
     function getUC(){
 
         var ET=document.getElementById('ET').value;
@@ -45,10 +45,10 @@ god.jpg
      t.value=u.value*n.value;
      console.log(u.value);
  }
- setInterval("update()",1000);
+ setInterval("update()",{{C::get('game.msRefreshRate')}});
 
  function updateProdList(){
-//make a function in GC to return the products array
+//make a function in GC to retu   rn the products array
 
 }
 
@@ -156,7 +156,7 @@ god.jpg
     currRow.push('{{ $p->total_units }}');
     currRow.push('{{ $p->unit_price }}');
     currRow.push('{{ $p->ET }}');
-    x=new Date(1000*{{ $p->launched_at }});
+    x=new Date(1000*{{ $p->launched_at or '1'}});
     currRow.push(x.toLocaleTimeString());
     @endif
 
