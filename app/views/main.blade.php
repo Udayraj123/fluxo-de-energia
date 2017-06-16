@@ -46,7 +46,7 @@ god.jpg
       var now=parseInt(data['stored_LE']);
       console.log("Now stored_LE ",now);
 
-      $('#stored_LE').val(now);
+      $('#stored_LE').val(now); //update above one.
       $('#stored_LE_slide').attr("max",now);
 
     });

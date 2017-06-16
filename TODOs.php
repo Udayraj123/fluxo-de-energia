@@ -13,19 +13,27 @@ List Major coding left :
 Get : What is maxFertSeeds for ?
 Later : Write test files !
 """
+// Imidil
+// Cloben G
+
 TodayDos :
+// 14 June 
+Now: Realised the workflow again - First make it fully functional, then add the GUI complexity. 
+	Currently just redirect back
+	>But still, the functioning of json arrays needs to be added - in listInvestments, buyFruit (tally with buyProduct)
+REDIRECTS : Character transitions,create product makeinvestment,etc buy/make functions redirect after submit 
+
 //make a function in GC to return the products array
 //RFT - may change this created at to created_time later.
 
-//13 June 
->Give GUI to the receipts : Notifs of Purchase & each LE Update : like a bank statement
->Fetch Fruit : here we also increase Farmers energy a bit    
-<Think> How to order the purchases - by sales.
+Later >Give GUI to the receipts : Notifs of Purchase & each LE Update : like a bank statement
+Later >Fetch Fruit : here we also increase Farmers energy a bit    
+<Thru Practical> How to order the purchases - by sales.
 		Decide order of prods shown for makeInvestment
 		How to highlight profits - update colors (use spl bootstrap template)
 
-Decays & Threshold => SIGMOID FUNCTION MUST
-
+Nope if - only To keep the gap, itd be complicated - Decay = function (SIGMOID(time),Threshold)
+/**********	**********	**********	**********	********************	**********	**********/
 
 Done > Makeinvestment page : Limit by avl_shares,  ajax the bid price
 Done >> master.blade.php should have a Links array (stored in game.php) to populate Navigation links;
@@ -47,7 +55,7 @@ Easy way to convert array in views:
 
 	> Notif I am choosing state based currently. If required, can add a new database just for that,
 	> Events will come handy here.
-
+/**********	**********	********************	**********	**********/
 AllToDos: 
 12Oct
 //Land Menu TODO - applyPurch(fert) This shall count in the plant_time as well as 'fert_time'
@@ -69,7 +77,6 @@ Bug >
 Log >> Current LE = 41472. Buy price = -23968342.960167 Num= 10Success. Now LE = 479408331.20333
 TODO : modified checkRGT now
 
-REDIRECTS : Character transitions,create product makeinvestment,etc buy/make functions redirect after submit 
 AntiHackDos: 
 	#>Check if quality slider is under range at backend
 

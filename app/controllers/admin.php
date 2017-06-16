@@ -30,6 +30,7 @@ class admin extends \BaseController {
 	}
 
 	public function updateUsers(){
+		//occur no LE loss. Run before letting them join in.
 		if(!$this->checkID())return;
 		$users=User::all();
 		$t=time();

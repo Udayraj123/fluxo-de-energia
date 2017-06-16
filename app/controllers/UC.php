@@ -48,7 +48,6 @@ class UC extends \BaseController {
       }
 
 
-//Decays & Threshold => SIGMOID FUNCTION MUST
       public function decayHandle(){
         $user=Auth::user()->get();
         $minRefreshRate=C::get('game.minRefreshRate');

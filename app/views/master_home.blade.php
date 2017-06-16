@@ -195,7 +195,7 @@ function insertTable(cellData,divID,black){
           <div class="col-md-2" >
             <div class="input-group">
               <div class="input-group-btn">
-                <button class="btn btn-sm bg-purple ">Stored_LE</button>
+                <button class="btn btn-sm bg-purple ">Stored LE</button>
               </div> 
               <input readonly="readonly" disabled id='stored_LE' value=0 /> 
             </div> 
