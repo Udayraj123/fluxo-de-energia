@@ -47,9 +47,45 @@ class UC extends \BaseController {
         return array_merge($catThresholds,['reload'=>$reload,'msg'=>$msg,'active_cat'=>$user->category,'le'=>$user->le]);
       }
 
+      //---------------------------------------------------------------------
+      public function leDifference()
+      {
+        // $user=Auth::user()->get();
+        // $user->LE_diff=$user->le-$user->prev_LE;
+        // $user->change_percent=(float)$user->LE_diff/$user->prev_LE*100.0;
+        // $user->prev_LE_time=time();
+        // $user->prev_LE=$user->le;
+        // $rowSQL=mysql_query("SELECT MAX(change_percent) AS max FROM 'users';");
+        // $row=mysql_fetch_array($rowSQL);
+        $users=DB::table('users')->get();
+        // log::info($users->category);
+        foreach ($users as $user)
+        {
+          $user->LE_diff=$user->le-$user->prev_LE;
+          if($user->prev_LE!=0)
+            {$user->change_percent=(float)$user->LE_diff/$user->prev_LE*100.0;}
+          $user->prev_LE_time=time();
+          $user->prev_LE=$user->le;
+        }
+        $rowSQL=mysql_query("SELECT MAX(change_percent) AS max FROM 'users';");
+        $row=mysql_fetch_array($rowSQL);
+        $top_change=$row['max'];
+        // log::info($top_change);
+      }
+      //---------------------------------------------------------------------
 
       public function decayHandle(){
+        //------------------------------------------------------------------------------------------------
         $user=Auth::user()->get();
+        if (($user->prev_time-$user->prev_LE_time)%60==0)//&&(($user->prev_time-$user->prev_LE_time)%60<=5))
+        {
+          $this->leDifference();
+        }
+        if($u->highest_LE<$u->le)
+          $u->highest_LE=$u->le;
+        Log::info('test');
+
+        //------------------------------------------------------------------------------------------------
         $minRefreshRate=C::get('game.minRefreshRate');
         if(!$user->prev_time){
           $user->prev_time=time();$user->save();
@@ -73,15 +109,9 @@ class UC extends \BaseController {
           $char->decay=C::get('game.minDecay');
         $char->save();
 
-        if($user->is_moderator == 1){
-          $user->le = C::get('game.iniLE')[$user->category];
-        }
-        else 
-          $user->le -= $char->decay*$time_passed;	    	
+        $user->le -= $char->decay*$time_passed;	    	
         $user->save();
       }
-
-
       return array('reload'=>'0','le'=>$user->le,'decay'=>$char->decay,'active_cat'=>$active_cat);
     }
 

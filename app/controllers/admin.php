@@ -80,6 +80,9 @@ class admin extends \BaseController {
 				}
 			}
 
+			//----------------------------------------------------------------
+			$u->prev_LE_time=time();
+			//----------------------------------------------------------------
 			$u->prev_time =$t;
 			$u->le=$ini[$u->category];
 			$u->stored_LE=$stored_LE[$u->category];
