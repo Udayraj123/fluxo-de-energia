@@ -165,7 +165,7 @@ public function postCreateProduct(){
 			$p->being_funded=1;
 		// $p->create_time=time(); -> this might be used later.
 			foreach(array_keys($input) as $field){
-			$p->$field=$input[$field]; 				// if(property_exists($p,$field))
+			$p->$field=Game::e($input[$field]); 				// if(property_exists($p,$field))
 			echo $field." :".$input[$field];
 			if($p->$field)echo " added.";echo "<br>";			
 		}
@@ -174,7 +174,8 @@ public function postCreateProduct(){
 		echo "Re: unit_price:".$unitPrice."<BR>";
 		$p->total_cost = $unitPrice * $p->avl_units;
 		$p->avl_shares = $p->total_shares;
-		$p->bid_price = $p->total_cost/$p->total_shares;
+
+		$p->bid_price = (1-C::get('game.godPercent'))*$p->total_cost/$p->total_shares;
 		$p->save();
 		$user->le -= $p->total_cost;
 		$user->save();
@@ -189,7 +190,7 @@ public function postCreateProduct(){
 
 
 /*
-
+ 
 
 //no need of below code now
 	// 	$cat=$input['category'];

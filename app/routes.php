@@ -29,7 +29,6 @@ Route::get ('/resetProducts/{launch?}', ['as' => 'resetProducts', 'uses' => 'adm
 Route::get ('/resetFruits', ['as' => 'resetFruits', 'uses' => 'admin@resetFruits']);
 
 
-
 Route::group(array('before' => 'user'), function()
 	//user filter checks existence of user & its category
 {
@@ -62,6 +61,11 @@ Route::group(array('before' => 'investor'), function()
 
 });
 
+//gets invester details -----------------------------------------------
+
+Route::post('/getInvDetail',['as' => 'getInvDetail', 'uses' => 'IC@getInvDetail']);
+
+//---------------------------------------------------------------------
 
 
 Route::group(array('before' => 'god'), function()	{

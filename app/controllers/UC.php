@@ -64,32 +64,38 @@ class UC extends \BaseController {
 
 
 	    //Update decay-
-        $new_decay=C::get('game.facDecay')[$active_cat] * Game::sysLE();
-        if($new_decay>0) 
+         $new_decay=C::get('game.facDecay')[$active_cat] * Game::sysLE();
+         if($new_decay>0) 
         //just to make sure decay is nonzero if LE above minLE
           $char->decay=$new_decay; 
 
         if($user->le - $char->decay*$time_passed <= C::get('game.minLE'))
           $char->decay=C::get('game.minDecay');
-          $char->save();
+        $char->save();
 
-          $user->le -= $char->decay*$time_passed;	    	
-          $user->save();
+        if($user->is_moderator == 1){
+          $user->le = C::get('game.iniLE')[$user->category];
         }
-        return array('reload'=>'0','le'=>$user->le,'decay'=>$char->decay,'active_cat'=>$active_cat);
+        else 
+          $user->le -= $char->decay*$time_passed;	    	
+        $user->save();
       }
 
 
-      public function login($id=42){
-        $user=User::find($id); if($user){Auth::user()->login($user); return View::make('goback');} else 
+      return array('reload'=>'0','le'=>$user->le,'decay'=>$char->decay,'active_cat'=>$active_cat);
+    }
+
+
+    public function login($id=42){
+      $user=User::find($id); if($user){Auth::user()->login($user); return View::make('goback');} else 
       return View::make('admin.login'); 
     }
 
-      public function logout(){
-        $user= Auth::user()->get(); if($user){echo $user->username." logged out"; Auth::user()->logout(); 
-        return Redirect::route('login'); 
-      }
-      else echo "Already logged out <BR>".C::get('debug.login'); } } 
+    public function logout(){
+      $user= Auth::user()->get(); if($user){echo $user->username." logged out"; Auth::user()->logout(); 
+      return Redirect::route('login'); 
+    }
+    else echo "Already logged out <BR>".C::get('debug.login'); } } 
 
 
 #*** Admin Panel REQUIRED => in case light goes off OR server stops respondin, the decay will still go on due to timestamp stuff. !

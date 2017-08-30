@@ -62,14 +62,15 @@ class admin extends \BaseController {
 		$ini=C::get('game.iniLE');
 		$ng=C::get('game.numGods');
 		$ni=$ng+C::get('game.numInvs');
-		
+		$landPrice = C::get('game.basePrices')['land'];
 		$stored_LE=C::get('game.stored_LE');
 		$models = ['Farmer','God','Investor'];
+
 		foreach ($users as $c=> $u) {
-			
 			if($c <$ng)$u->category='god';
 			else if($c <=$ni)$u->category='investor';
 			else $u->category='farmer';
+
 			foreach ($models as $m) {
 				if($m::where('user_id',$u->id)->count()==0){
 					echo ".";
@@ -82,9 +83,61 @@ class admin extends \BaseController {
 			$u->prev_time =$t;
 			$u->le=$ini[$u->category];
 			$u->stored_LE=$stored_LE[$u->category];
+			$u->is_moderator=0;
 			$u->save();
 		}
 
+		//Outside For Loop
+		$mg=C::get('game.modGs');
+		$mi=C::get('game.modIs');
+		$mf=C::get('game.modFs');
+		User::where('category','god')->take($mg)->update(['is_moderator'=>1]);
+		User::where('category','investor')->take($mi)->update(['is_moderator'=>1]);
+		User::where('category','farmer')->take($mf)->update(['is_moderator'=>1]);
+
+		$gid = User::where('is_moderator',1)->where('category','god')->first()->god->id;
+		$default_land = Product::where('god_id',$gid)->where('avl_units','>',60)->where('category','land')->first();
+		if(!$default_land){
+			DB::table('products')->insert([
+				'god_id'=> $gid,
+				'category'=>'land',
+				'being_funded'=> -1, 'launched_at'=>time(),
+				'total_shares'=>50, 'avl_shares'=>0,
+				'quality'=>50,
+				'total_cost'=>100*$landPrice,
+				'unit_price'=>$landPrice,
+				'avl_units'=>100,
+				'ET'=>5,'FT'=>5,
+				]);
+			$default_land = Product::where('god_id',$gid)->where('avl_units','>',60)->where('category','land')->first();	
+		}
+
+		foreach ($users as $c=> $u) {
+// // Pasted from FC.php 30 Aug
+			$num_units = 1;
+			$buy_price = 0;
+			$pch = Purchase::where('farmer_id',$u->farmer->id)->where('product_id',$default_land->id)->first();
+			if(!$pch){
+				$pch = new Purchase();
+				$pch->farmer_id = $u->farmer->id;
+				$pch->product_id = $default_land->id;
+				$pch->num_units = $num_units;
+				$pch->avl_units = $num_units;
+				$pch->buy_price = $buy_price;
+				$pch->save();
+			}
+			$land= Land::where('farmer_id',$u->farmer->id)->where('purchase_id',$pch->id)->first();
+			if(!$land){
+				$land=new Land();
+				$land->farmer_id=$u->farmer->id;
+				$land->purchase_id=$pch->id;
+				// $land->planted_at=0;
+			}
+			//plain
+			$land->seed_id=-1;
+			$land->fert_id=-1;
+			$land->save();
+		}
 	}
 
 	public function resetProducts($launch=0){

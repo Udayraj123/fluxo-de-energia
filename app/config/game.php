@@ -6,6 +6,9 @@ return array(
 	'stored_LE' => array("god" => 100000,"investor" => 50000,"farmer" => 4000),
 	'numGods'=>5,
 	'numInvs'=>15,
+	'modGs'=>2,
+	'modIs'=>2,
+	'modFs'=>2,
 	'minLE' => 1000,
 	'minDecay' => '0.005',
 	'minRefreshRate'=>1,//seconds

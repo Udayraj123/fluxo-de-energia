@@ -1,19 +1,17 @@
-@extends('master_home')
-
 <!-- titles array -->
-@section('headContent')
+<?php $__env->startSection('headContent'); ?>
 <title>Energy</title>
-@stop
+<?php $__env->stopSection(); ?>
 
 <!-- bg sources array -->
-@section('bgsource')
+<?php $__env->startSection('bgsource'); ?>
 god.jpg
-@stop
+<?php $__env->stopSection(); ?>
 
 
-@section('bodyContent') 
+<?php $__env->startSection('bodyContent'); ?> 
 <script type="text/javascript"> 
-  setInterval("takeFromAbove()",{{C::get('game.msRefreshRate')}});
+  setInterval("takeFromAbove()",<?php echo C::get('game.msRefreshRate'); ?>);
 
   function takeFromAbove(){
 
@@ -36,7 +34,7 @@ god.jpg
   function reqRedeem(redeemLE){
     $.ajax({
       method: "POST",
-      url: "{{ route('redeemLife') }}",
+      url: "<?php echo route('redeemLife'); ?>",
       data: { 'redeemLE': redeemLE },
     })
     .success(function( data ) {
@@ -59,7 +57,7 @@ god.jpg
 function inv_detail(){
   $.ajax({
       method: "POST",
-      url: "{{ route('getInvDetail') }}",
+      url: "<?php echo route('getInvDetail'); ?>",
       //data: { '': redeemLE },
     })
     .success(function( data1 ) {
@@ -145,7 +143,7 @@ window.onload=inv_detail;
     <h3 class="box-title">Redeem Stored LE</h3>
   </div>
   <br>
-  <input type='range'  class="btn btn-danger" min="0" max="{{$user->stored_LE or 1}}" id="stored_LE_slide" oninput=" $('#redeemLE').val(this.value)" value=0 /> <input type='number' id='redeemLE' value=0 /> 
+  <input type='range'  class="btn btn-danger" min="0" max="<?php echo isset($user->stored_LE) ? $user->stored_LE : 1; ?>" id="stored_LE_slide" oninput=" $('#redeemLE').val(this.value)" value=0 /> <input type='number' id='redeemLE' value=0 /> 
   <button onclick="redeem()"  class="btn btn-danger"> REDEEM</button>
   <br>
 </div>
@@ -383,4 +381,5 @@ var interactive_plot = $.plot("#interactive_syst", [getLiveLE()], {
   });
 
 </script>
-@stop
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('master_home', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

@@ -1,9 +1,32 @@
 <?php
 class IC extends \BaseController {
 //redeem LE will be accessible anywhere i.e. UC.php
+	//---------------------------------------------------------------
+
+
+	public function getInvDetail(){
+		$user=Auth::user()->get();
+		log::info($user);
+		$inv = $user->investor;
+		// $inv=DB::table('investors')->where('user_id',$user->id)->first();
+		$is=$inv->investments;
+		$m=0;
+		foreach ($is as $i){
+			$m = (int)($i->bid_price) * (int)( $i->num_shares);
+			log::info($m);
+		}
+		
+		return $m ;
+
+	}
+
+
+
+
+	//---------------------------------------------------------------
 
 	/* buy Fruit here */
-	public function calcFruitPrice($p){ //$p is fruit here
+	public function calcFruitPrice	($p){ //$p is fruit here
 		if(!($p->ET>0 && $p->avl_units>0))return 0; //division by zero
 		$time_elapsed= (time()-($p->launched_at))/60; //Minutes
 	  	$RET = $p->ET - $time_elapsed; //Minutes
@@ -194,6 +217,7 @@ class IC extends \BaseController {
 			$i=new Investment();
 			$i->investor_id = $user->investor->id;
 			$i->product_id = $p->id;
+			$i->amt_ret = 0;
 			$i->num_shares = $num_shares;
 			$i->bid_price = $p->bid_price; //to be removed, but still need to show some other way
 			$i->save();	

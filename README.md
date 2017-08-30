@@ -7,11 +7,11 @@ The whole game is built on Laravel 4.2 .
 
 TODOs : 
 - [x] Test Run it
+- [x] Complete the UI
+- [x] Resolve Threshold Transitions
+- [x] Replace remaining post requests with Ajax calls
 - [ ] Add Migrations
-- [ ] Complete the UI
 - [ ] Refactor the code
-- [ ] Resolve Threshold Transitions
-- [ ] Replace remaining post requests with Ajax calls
 
 ⋅⋅* Currently use the game.sql file for setting up the database. Also make sure to modify the `app/config/database.php` file with correct credentials.
 

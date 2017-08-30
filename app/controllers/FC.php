@@ -427,6 +427,8 @@ public function testFruitRel(){
              //expiry time is over now : Game:: will take care of expiring it.          Done<-- What's correct place to update this?
 			return $removeResp;
 		}
+		$time_elapsed= (time()-(int)$p->launched_at)/60; //Minutes
+		
 		$loss=  $p->god->decay * $p->ET;
 		$num=$p->total_cost/$p->unit_price;
 		$godRecovery=C::get('game.godRecovery');
@@ -486,22 +488,34 @@ public function testFruitRel(){
 		//Farmer's le cut
 			$user->le -= $price;									$user->save();
 
-		#Distribute acc to shares among investors & gods
-			$god->user->le += C::get('game.godPercent') * $price;		$god->save();$god->user->save();
+
 			$total_shares = $p->total_shares;
+
+		#Distribute acc to shares among investors & gods
+			$total_investments = Investment::where('product_id',$p->id)->sum('num_shares');
+			
+			$remPercent = ( 1-C::get('game.godPercent') )*(1- $total_investments/ $total_shares);
+
+			$god->user->le += (C::get('game.godPercent')+$remPercent) * $price;		$god->save();$god->user->save();
+			// Update 30Aug :  God shud get for more than 51% shares that were left after FT
 			
 			$investors= $p->investors;
 			foreach ($investors as $inv) {
-				$invms=	Investment::where('investor_id',$inv->id)->where('product_id',$p->id)->get();
-				$num_shares=0;
 
+				$invms=	Investment::where('investor_id',$inv->id)->where('product_id',$p->id)->get();
+				$inv_num_shares=0;
 				foreach ($invms as $i) {
-					$num_shares += $i->num_shares;
+					$inv_num_shares += $i->num_shares;
+					$percentage = $i->num_shares/$total_shares;
+					$i->amt_ret += $percentage*$price;
 				}
 				
-			// $num_shares = $inv->pivot->num_shares; //We've not CLUbbed them, so discard this
-				$percentage = $num_shares/$total_shares;
-				$inv->user->le+= $percentage * $price;						$inv->save();$inv->user->save();
+				// Investment::where('investor_id',$inv->id)->sum('amt_ret');
+
+			// $inv_num_shares = $inv->pivot->num_shares; //We've not CLUbbed them, so discard this
+				$inv_total_perc = $inv_num_shares/$total_shares;
+				$inv->user->le += $inv_total_perc * $price;						$inv->save();$inv->user->save();
+
 			}
 			$p->save();
 
@@ -552,7 +566,7 @@ public function testFruitRel(){
 
 	}
 
-	else 								echo " Insufficient LE : $LE - $price < $THR ";
+	else 								echo " Insufficient LE : $LE - $price < $THR, decrease no of units ";
 	
 	return C::get('debug.goBack');
 }

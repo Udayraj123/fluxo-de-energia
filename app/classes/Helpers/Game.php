@@ -16,11 +16,10 @@ class Game
 		  }
 		  public static function getRET($p){
 		//may change this created at to created_time later.
-			$time_elapsed= (time()-strtotime($p->launched_at))/60; //Minutes
+			$time_elapsed= (time()-(int)$p->launched_at)/60; //Minutes
 		  	$RET = $p->ET - $time_elapsed; //Minutes
 		  	if($RET<0){
 // UPDATE * $p->being_funded= -1 stands for deleted
-		  		Log::info('expired '.$p->id);
 		  		$p->being_funded= -1; $p->save();
 		  	}
 		  	return $RET;
@@ -82,6 +81,12 @@ class Game
         else return 'clean'; //clean
     }
 
+
+    public static function e($message){
+    	$tagsToStrip = array('@<script[^>]*?>.*?</script>@si'); // you can add more
+    	$message = preg_replace($tagsToStrip, '', $message);
+    	return $message;
+    }
 
     public static function sysLE(){
     	return Game::thresholdsFor('god')['sysLE'];
