@@ -1,0 +1,221 @@
+<!-- Plugins contains flot, jQuery, fastclick -->
+<head>
+  <meta charset="utf-8"> <meta http-equiv="X-UA-Compatible" content="IE=edge">  
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  <!-- font awesome i.e. fa has icons -->
+  <!-- The style sheets depend on the contents in their folders -->
+  <script src="<?php echo URL::asset('./plugins/jQuery/jquery-2.2.3.min.js'); ?>"></script>
+  <script src="<?php echo URL::asset('./bootstrap/js/bootstrap.min.js'); ?>"></script>
+  <link rel="stylesheet" href="<?php echo URL::asset('font-awesome-4.3.0/css/font-awesome.min.css'); ?>" />
+  <link rel="stylesheet" href="<?php echo URL::asset('ionicons-2.0.1/css/ionicons.min.css'); ?>" />
+  <link rel="stylesheet" href="<?php echo URL::asset('dist/css/AdminLTE.min.css'); ?>" />
+  <link rel="stylesheet" href="<?php echo URL::asset('dist/css/skins/_all-skins.min.css'); ?>" />
+  <link rel="stylesheet" href="<?php echo URL::asset('bootstrap/css/bootstrap.min.css'); ?>" />
+
+  <?php echo $__env->yieldContent('headContent'); ?>
+  
+  <style type="text/css">
+  header input {
+    width: 100px;
+  }
+  .headLink{
+    color:red;
+    font-size: 15px;
+  }
+  </style>
+</head>
+
+<body background="<?php echo $__env->yieldContent('bgsource'); ?>" style="background-repeat:no-repeat;background-size: cover;" >
+  <script type="text/javascript">
+  var p =Math.pow(10,3); //(x*p)/p precision of all calculations here
+  
+  var messages=<?php echo json_encode(C::get('game.notifHTMLs'));; ?>
+
+
+//merge these two MUCH MUCH LATER
+setInterval(function(){
+  decayHandle();
+  thresholdHandle();
+},<?php echo C::get('game.msRefreshRate'); ?>);
+
+function reloadPage(){
+  window.location.href += "";
+}
+
+function decayHandle(){
+  $.ajax({
+    method: "POST",
+    url: "<?php echo route('decayHandle'); ?>",
+    success: function( data ) {
+      var le=parseInt(data['le']);
+      var decay=parseInt(data['decay']);
+      $('#le').val(le);
+
+      $('#decay').val(decay);
+
+    //these val() can be moved into thresholdHandle()
+    lowerTHR=$('#lowerTHR').val();
+    upperTHR=$('#upperTHR').val();
+    var eta=(le-lowerTHR)/decay;
+    $('#ETA').val(Math.round(eta/60*p)/p + ' m');
+
+    LEwidth=(le-lowerTHR)/(upperTHR-lowerTHR)*100+'%';
+    $('#LEwidth').width(LEwidth);
+    
+    if(data['reload']=='1')
+      reloadPage();
+  },
+  
+  error: function(){// Server Disconnected
+    //alert('Cannot connect to the server'); 
+  }
+
+});
+}
+function thresholdHandle(){
+
+ $.ajax({
+  method: "POST",
+  url: "<?php echo route('thresholdHandle'); ?>",
+  // data: { 'name': "Johnny", 'location': "Boston" },
+})
+ .success(function( data ) {
+
+  $('#sysLE').html(parseInt(data['sysLE']));
+  $('#upperTHR').val(parseInt(data['upperTHR']));
+  $('#lowerTHR').val(parseInt(data['lowerTHR']));
+//<!-- We also have $user to be used -->
+// console.log(data);
+$('#active_cat').html(data['active_cat'].toString());
+
+m=data['msg'];
+//later use push to show more messages
+// notifs.push(messages[m]);
+$('#msg').html(messages[m]);
+
+if(data['reload']=='1')
+  reloadPage();
+});
+
+}
+
+function insertTable(cellData,divID,black){
+  
+  var offset=0;
+  var tableContainer=document.getElementById(divID);
+  var table1= document.createElement('table');
+  table1.className="table table-bordered";
+  var tableHeight=cellData.length-offset,tableWidth=cellData[offset].length;
+
+  for(var i=offset;i<tableHeight;i++){
+    var current_row=table1.insertRow();
+    if(i==offset && black){
+      current_row.style="background:black;color:white";
+    }
+    for(var j=0; j<tableWidth;j++){
+      var current_col=current_row.insertCell();
+      current_col.innerHTML='<strong>'+cellData[i%tableHeight][j%tableWidth]+'</strong>';
+    }
+  }
+  tableContainer.appendChild(table1);
+}
+
+</script>
+
+<header class="main-header" style="background:#3399ff;opacity:0.85">
+  <span class="info-box-icon bg-aqua" style="opacity:0.85"> <i class="fa fa-fw fa-user"><div id="active_cat" align="center" style="font-size: 40%"></div></i></span>
+  <nav class="navbar navbar-static-top">
+    <div class="row">
+
+
+      <div class="col-md-3">
+        <div class="row">
+
+          <ul class="nav navbar-nav "> 
+            <!-- We also have $user to be used -->
+            <!-- common one- -->
+            <li> <a class="headLink"  href="<?php echo URL::route('energy'); ?>">Energy</a> </li>
+            
+            <?php $user=Auth::user()->get();$catLinks = C::get('master.catLinks'); ?>
+            <?php foreach($catLinks[$user->category] as $linkName=>$title): ?>
+            <li> <a class="headLink"  href="<?php echo URL::route($linkName); ?>"><?php echo $title; ?></a> </li>
+            <?php endforeach; ?>
+          </ul>
+
+        </div>
+      </div>
+      <div class="col-md-2"> 
+        Notification :
+        <p id="msg"> </p>
+      </div>
+      <div class="col-md-6">
+
+        <div class="gap"><br></div>
+        <div class="row">
+          <div class="col-md-2" >
+            <div class="input-group">
+              <div class="input-group-btn">
+                <button class="btn btn-sm bg-purple ">Lower</button>
+              </div> 
+              <input  readonly="readonly" disabled id='lowerTHR' value=0 /> 
+            </div>
+          </div>
+          <div class="col-md-2" >
+            <div class="input-group">
+              <div class="input-group-btn">
+                <button class="btn btn-sm bg-purple ">User le</button>
+              </div>        <input readonly="readonly" disabled id='le' value=0 >
+            </div>
+          </div>
+
+          <div class="col-md-2" >
+            <div class="input-group">
+              <div class="input-group-btn">
+                <button class="btn btn-sm bg-purple ">decay</button>
+              </div> 
+              <input readonly="readonly" disabled id='decay' value=0 /> 
+            </div>
+          </div>
+          <div class="col-md-2" >
+            <div class="input-group">
+              <div class="input-group-btn">
+                <button class="btn btn-sm bg-purple ">ETA</button>
+              </div>  
+              <input readonly="readonly" disabled  id='ETA' value=0 />
+            </div>
+          </div>
+
+          <div class="col-md-2" >
+            <div class="input-group">
+              <div class="input-group-btn">
+                <button class="btn btn-sm bg-purple ">Upper</button>
+              </div>  
+              <input readonly="readonly" disabled id='upperTHR' value=0 /> 
+            </div>
+          </div>  
+          <div class="col-md-2" >
+            <div class="input-group">
+              <div class="input-group-btn">
+                <button class="btn btn-sm bg-purple ">Stored LE</button>
+              </div> 
+              <input readonly="readonly" disabled id='stored_LE' value=0 /> 
+            </div> 
+          </div> 
+        </div>
+        <div class="gap"><br></div>
+        
+        <div class="row">
+          <div class="progress" style="height:10px;" >
+            <div id="LEwidth" class="progress-bar" style="width: 20%"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </nav>
+</header>
+
+<?php echo $__env->yieldContent('bodyContent'); ?>
+
+</body>
