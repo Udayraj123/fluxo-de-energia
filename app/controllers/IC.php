@@ -6,17 +6,26 @@ class IC extends \BaseController {
 
 	public function getInvDetail(){
 		$user=Auth::user()->get();
-		log::info($user);
+		//log::info($user);
 		$inv = $user->investor;
 		// $inv=DB::table('investors')->where('user_id',$user->id)->first();
 		$is=$inv->investments;
+		$inv_table=[];
 		$m=0;
 		foreach ($is as $i){
 			$m = (int)($i->bid_price) * (int)( $i->num_shares);
-			log::info($m.' '.$i->product_id);
+			
+			$currInv=[];
+			$currInv['pid']=$i->product_id;
+			$currInv['pname']=$i->product->name;
+			$currInv['pcategory']=$i->product->category;
+			$currInv['gname']=$i->product->god->user->username;
+			$currInv['invested']=$m;
+			$currInv['returned']=$i->amt_ret;
+			array_push($inv_table, $currInv);
 		}
 		
-		return $m ;
+		return $inv_table ;
 
 	}
 

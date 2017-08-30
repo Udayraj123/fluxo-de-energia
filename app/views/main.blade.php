@@ -55,19 +55,37 @@ god.jpg
   reqRedeem(0);
 </script>
 <script type="text/javascript">
-
-function inv_detail(){
-  $.ajax({
+function convertDictToArr(dict){
+  arr = [];
+  for (var d in dict){
+    arr.push(dict[d]);
+  }
+  return arr;
+}
+  function inv_detail(){
+    $.ajax({
       method: "POST",
       url: "{{ route('getInvDetail') }}",
       //data: { '': redeemLE },
     })
     .success(function( data1 ) {
-      console.log(data1);
-      $("#inv_investments").append(data1);  
+      // console.log(convertDictToArr(data1[0]));
+
+      var cellData=[];
+      var firstRow=['Product ID','Product Name','Product Category','God Name','Total Inserted', 'Total Received'];
+      var counter=0;
+      cellData.push(firstRow);
+      for(var i=0; i<data1.length ;i++){
+        cellData.push(convertDictToArr(data1[i]));
+      }    
+        insertTable(cellData,'inv_table',1);
+      
+
+
+      
     });
-}
-window.onload=inv_detail;
+  }
+  window.onload=inv_detail;
 </script>
 
 <div class="info-box bg-red" style="opacity:0.85;width:45%;margin:7%0%0%3%">
@@ -80,15 +98,6 @@ window.onload=inv_detail;
   </div>
   <!-- /.info-box-content -->
 </div> 
-
-<!-- ------------ -->
-
-<div id="invdetails">
-  <p id="inv_investments">The Amount You Have Invested in X is </p>
-  <p id="inv_recieved">The Amount You Have recieved from X is </p>
-</div>
-
-<!-- ------------ -->
 
 
 
@@ -153,6 +162,7 @@ window.onload=inv_detail;
 
 
 
+
 <!-- interactive chart -->
 <div class="col-md-4" style="width:40%;background:#3399ff;margin:-30%0%0%52%;opacity:0.9;border-radius:10px">
   <div class="row">
@@ -198,6 +208,13 @@ window.onload=inv_detail;
   </div> <!-- /.col -->
 </div>
 
+<!-- ------------ -->
+
+<div class="col-xs-6" id="inv_table">
+  
+</div>
+
+<!-- ------------ -->
 
 
 <script src="./plugins/fastclick/fastclick.js"></script>
@@ -381,6 +398,7 @@ var interactive_plot = $.plot("#interactive_syst", [getLiveLE()], {
       update();
     });
   });
+
 
 </script>
 @stop

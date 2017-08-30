@@ -1,3 +1,1 @@
-[2017-08-31 00:22:43] production.INFO: {"id":32,"username":"user1","category":"god","created_at":"2016-09-10 00:30:46","updated_at":"2017-08-31 00:22:42","remember_token":null,"prev_time":1504119162,"le":1000000,"stored_LE":100000,"highest_LE":500000,"is_moderator":1} [] []
-[2017-08-31 00:24:13] production.INFO: {"id":42,"username":"user11","category":"investor","created_at":"2016-09-10 00:32:24","updated_at":"2017-08-30 23:38:15","remember_token":"YiXFir38Krzq8IGNsQi4Lue9zUtEVCWdxLwniq0NroQdoQ4D3g8jjE72Dpbi","prev_time":1504116494,"le":500000,"stored_LE":50000,"highest_LE":500000,"is_moderator":0} [] []
-[2017-08-31 00:24:13] production.INFO: 1550 55 [] []
+[2017-08-31 02:11:57] production.WARNING: 404 for URL: http://localhost:8000/favicon.ico [] []
