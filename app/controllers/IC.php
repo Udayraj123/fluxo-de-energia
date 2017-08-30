@@ -13,7 +13,7 @@ class IC extends \BaseController {
 		$m=0;
 		foreach ($is as $i){
 			$m = (int)($i->bid_price) * (int)( $i->num_shares);
-			log::info($m);
+			log::info($m.' '.$i->product_id);
 		}
 		
 		return $m ;

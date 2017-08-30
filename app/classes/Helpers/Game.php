@@ -84,7 +84,7 @@ class Game
 
     public static function e($message){
     	$tagsToStrip = array('@<script[^>]*?>.*?</script>@si'); // you can add more
-    	$message = preg_replace($tagsToStrip, '', $message);
+    	$message = e(preg_replace($tagsToStrip, '', $message));
     	return $message;
     }
 

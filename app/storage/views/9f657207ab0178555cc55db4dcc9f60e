@@ -114,9 +114,6 @@ currRow=[];
 counter++;
 currRow.push(counter.toString());
 currRow.push('<?php echo $p->id; ?>');
-<?php
-Log::info($p->id);
-?>
 currRow.push('<?php echo $p->god->user->username; ?>');
 currRow.push('<?php echo $p->name; ?>');
 currRow.push('<?php echo $p->description; ?>');
