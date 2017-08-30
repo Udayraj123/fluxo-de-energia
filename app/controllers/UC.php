@@ -70,7 +70,7 @@ class UC extends \BaseController {
           $char->decay=$new_decay; 
 
         if($user->le - $char->decay*$time_passed <= C::get('game.minLE'))
-          $char->decay=C::get('game.zeroLE');
+          $char->decay=C::get('game.minDecay');
           $char->save();
 
           $user->le -= $char->decay*$time_passed;	    	
@@ -80,8 +80,10 @@ class UC extends \BaseController {
       }
 
 
-      public function login($id=42){$user=User::find($id); if($user){Auth::user()->login($user); return View::make('goback');} else 
-      return View::make('admin.login'); }
+      public function login($id=42){
+        $user=User::find($id); if($user){Auth::user()->login($user); return View::make('goback');} else 
+      return View::make('admin.login'); 
+    }
 
       public function logout(){
         $user= Auth::user()->get(); if($user){echo $user->username." logged out"; Auth::user()->logout(); 

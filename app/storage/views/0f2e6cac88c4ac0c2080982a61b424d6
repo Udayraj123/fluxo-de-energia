@@ -1,0 +1,93 @@
+<!-- titles array -->
+<?php $__env->startSection('headContent'); ?>
+<title>My Investments</title>
+<?php $__env->stopSection(); ?>
+
+<!-- bg sources array -->
+<?php $__env->startSection('bgsource'); ?>
+god.jpg
+<?php $__env->stopSection(); ?>
+
+
+<?php $__env->startSection('bodyContent'); ?> 
+
+<script type="text/javascript">
+	var X;
+	function getUC(){
+		var product_id=document.getElementById('product_id').value;
+		//send ajax here.
+		$.ajax({
+			method: "POST",
+			url: "<?php echo route('bidHandle'); ?>",
+			data: {'product_id':product_id},
+			success: function(data) {
+				console.log(data);
+				$('#bid_price').val(parseInt(data['bid_price']));
+				$('#RFT').val(parseInt(data['RFT']));
+			},
+
+  			error: function(){// Server Disconnected
+  				X=data;	
+  				alert('error updating bp, check type X in console'); 
+  			}
+  		});
+
+	}
+</script>
+<br>
+<div class="row"  style="background:#66ff66;border-radius:10px;margin:5%2%0%2%;opacity:0.85">
+	<div class="col-md-6">
+		<div id="myInvestments" class="container" style="overflow-y:auto;height:75%;background:#66ff66;border-radius:10px;width:100%;opacity:0.85">
+			<div class="box-header with-border">
+				<h3 class="box-title"> Your Investments </h3>
+			</div>
+		</div>
+	</div>
+
+	<div class="col-md-6">
+		<div id="detailInvesments" class="container" style="overflow-y:auto;height:75%;background:#66ff66;border-radius:10px;width:100%;opacity:0.85">
+			<div class="box-header with-border">
+				<h3 class="box-title"> Product Performance </h3>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<script type="text/javascript">
+	var cellData=[];
+	var cellData2=[];
+	var currRow=[];
+	var firstRow=['#','id','product','Owner','num_shares','bought for','quality','FT','name','description'];
+	var firstRow2=['#','id','product','name','num_shares','bought for','sell returns'];
+	var counter=0;
+	cellData.push(firstRow);
+	cellData2.push(firstRow);
+	<?php foreach($products as $prod): ?>
+	currRow=[];
+	counter++;
+	currRow.push(counter.toString());
+	currRow.push('<?php echo $prod->id; ?>');
+	currRow.push('<?php echo $prod->category; ?>');
+	currRow.push('<?php echo $prod->god->user->username; ?>');
+	currRow.push('<?php echo $prod->pivot->num_shares; ?>');
+	currRow.push('<?php echo $prod->pivot->bid_price; ?>');
+	currRow.push('<?php echo $prod->quality; ?>');
+	currRow.push('<?php echo $prod->FT; ?>');
+	currRow.push('<?php echo $prod->name; ?>');
+	currRow.push('<?php echo $prod->description; ?>');
+	<?php if($prod->being_funded==1): ?>
+	cellData.push(currRow);
+	<?php else: ?>
+	//launched or expired
+	cellData2.push(currRow);
+	<?php endif; ?>
+	<?php endforeach; ?>
+
+	insertTable(cellData,"myInvestments",1);
+	insertTable(cellData2,"detailInvesments",1);
+	
+</script>
+
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('master_home', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

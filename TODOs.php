@@ -1,10 +1,22 @@
 <?php
 """
+26 August 
+Shall investment be in the God n not product??
+	- Nope, that's complicating it and making it just like vsm
+	- Also the code is established already to even think about that.
+	>> This is the point where the Game differs from VSM.
+	- And in reality there must be an analogy where people invest in the product and not company
+
+Current procedure is an investor when buys the shares, they will automatically cash out when the product expires.
+
+Things from below to cover today - selfProducts - Nope, its merged in createProd, newsBoard
+start on Test files.
+
 7 June : 
 So the plan is : Try not doing it casually, give it finite time and finish the backend first.
 List Major coding left :
 1. Transitions
->Think of their stable movements
+> Think of their stable movements
 2. Ajax fill
 3. Frontend :
 >selfProducts
@@ -13,10 +25,19 @@ List Major coding left :
 Get : What is maxFertSeeds for ?
 Later : Write test files !
 """
-// Imidil
-// Cloben G
 
 TodayDos :
+// 26 June
+Thinking of Practical requirements : 
+	> Need to list Variety in products
+	> Converted ETs & FTs from 5 min to 60 Minutes. Kept seed GTs to 5 mins
+	> Add progress bar for Launching Products
+
+Working on farmer side :
+// UPDATE * $p->being_funded= -1 stands for deleted
+>buyProd : 
+	If buy_price is -1, front end removes that expired product
+
 // 14 June 
 Now: Realised the workflow again - First make it fully functional, then add the GUI complexity. 
 	Currently just redirect back
@@ -28,7 +49,7 @@ REDIRECTS : Character transitions,create product makeinvestment,etc buy/make fun
 
 Later >Give GUI to the receipts : Notifs of Purchase & each LE Update : like a bank statement
 Later >Fetch Fruit : here we also increase Farmers energy a bit    
-<Thru Practical> How to order the purchases - by sales.
+<Thru Practical> How to reorder the purchases - by sales.
 		Decide order of prods shown for makeInvestment
 		How to highlight profits - update colors (use spl bootstrap template)
 

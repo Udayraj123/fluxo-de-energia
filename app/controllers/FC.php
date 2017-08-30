@@ -14,16 +14,6 @@ class FC extends \BaseController {
 		}
 	}
 	
-	public function productPriceHandle(){
-		$id=(int)Input::get('product_id');
-		$p = Product::find($id);
-		if(!$p || $p->being_funded!=0 || !$p->god)return array('buy_price'=>0,'RET'=>0);;
-		return $this->calcBuyPrice($p);
-		// $time_elapsed= (time()-$p->launched_at)/60; //Minutes
-		// $RET = $p->ET - $time_elapsed; //Minutes
-	}
-
-
 	public function calcStorageLE($fruit){
 		$maxQual=C::get('game.maxQual');
 		$storage_fac=C::get('game.storage_fac');
@@ -411,59 +401,74 @@ public function testFruitRel(){
 
 
 	/** buy product here -***/
+	
+	public function productPriceHandle(){
+		$id=(int)Input::get('product_id');
+		$p = Product::find($id);
+		if(!$p || $p->being_funded!=0)
+			return array('buy_price'=>0,'RET'=>0);;
+		return $this->calcBuyPrice($p);
+	}
+
 
 //ajax on this too
 	public function calcBuyPrice($p){
-		if(!($p->ET>0 && $p->total_cost>0))
-			return array('buy_price'=>0,'RET'=>0);
-		$time_elapsed= (time()-($p->launched_at))/60; //Minutes
-	  	$RET = $p->ET - $time_elapsed; //Minutes
-	  	if($RET<=0){
-	  		// echo "$RET = $p->ET - ($time_elapsed= (time()-($p->launched_at))/60<BR>";
-            $p->being_funded= -1; $p->save(); //expiry time is over now          <-- What's correct place to update this?
-            return array('buy_price'=>0,'RET'=>0);
-        }
-        $loss=  $p->god->decay * $p->ET;
-        $num=$p->total_cost/$p->unit_price;
-        $godRecovery=C::get('game.godRecovery');
-        $buy_price= $p->unit_price + $godRecovery*($loss)/($num)*($time_elapsed)/($p->ET);
+		$removeResp = array('buy_price'=>-1,'RET'=>-1);
+		if(!($p->ET>0 && $p->total_cost>0))//Invalid product
+		{
+			Log::info('Invalid Prod, Debug em');
+			Log::info($p);
+
+			return $removeResp;
+		}
+
+		$RET = Game::getRET($p) ;
+		if($RET<=0){
+             //expiry time is over now : Game:: will take care of expiring it.          Done<-- What's correct place to update this?
+			return $removeResp;
+		}
+		$loss=  $p->god->decay * $p->ET;
+		$num=$p->total_cost/$p->unit_price;
+		$godRecovery=C::get('game.godRecovery');
+		$buy_price= $p->unit_price + $godRecovery*($loss)/($num)*($time_elapsed)/($p->ET);
         // echo "Buy price = ".$buy_price."<BR>";
         // return  $buy_price;
-        return array('buy_price'=>$buy_price,'RET'=>$RET);
+		return array('buy_price'=>$buy_price,'RET'=>$RET);
 
-    }
-    public function buyProduct(){
-    	$user=Auth::user()->get();
-    	return View::make('buyProduct')
-    	->with('boughtProducts',$user->farmer->products)
-    	->with('products',Product::where('being_funded',0)
-    		->where('avl_units','>',0)
-    		->orderBy('id','desc')
-    		->get());
-    }
+	}
+	public function buyProduct(){
+		$user=Auth::user()->get();
+		
+		return View::make('buyProduct')
+		->with('boughtProducts',$user->farmer->products)
+		->with('products',
+			Product::where('being_funded',0)->where('avl_units','>',0)
+			->orderBy('id','desc')
+			->get());
+	}
 
-    public function postbuyProduct(){
+	public function postbuyProduct(){
 			//request comes here from listProducts-
-    	echo "lets go. ";
-    	$flag =0;
-    	$input = Input::except('_token');
-    	if(!($input['num_units'] && $input['product_id']))
-    		return "Input not read.";
-    	$num_units = (int)($input['num_units']);
+		echo "lets go. ";
+		$flag =0;
+		$input = Input::except('_token');
+		if(!($input['num_units'] && $input['product_id']))
+			return "Input not read.";
+		$num_units = (int)($input['num_units']);
 
-    	$user = Auth::user()->get();
-    	$LE=$user->le; echo "Current LE = ".$LE."<BR>";
+		$user = Auth::user()->get();
+		$LE=$user->le; echo "Current LE = ".$LE."<BR>";
 
 //maybe put this into a function
-    	$p=Product::find($input['product_id']);
-    	if(!$p)							return "prod not found";
-    	if(!$p->being_funded==0)		return "(being_funded!=0 : $p->being_funded)Product is not being sold. <BR>";
-    	if(!$p->avl_units){
-    		$p->being_funded=-1;$p->save(); return "0 avl units";
+		$p=Product::find($input['product_id']);
+		if(!$p)							return "prod not found";
+		if(!$p->being_funded==0)		return "(being_funded!=0 : $p->being_funded)Product is not being sold. <BR>";
+		if(!$p->avl_units){
+			$p->being_funded= -1;$p->save(); 
+			return "0 avl units";
 			//expired. place to update this?
-    	}
-		if(!$p->god)					return "This product doesn't have an owner!"; //
-
+		}
+		// Shouldn't happen :  if(!$p->god)					return "This product doesn't have an owner!"; //
 		$god=$p->god; //accessed to increase god LE
 		$d=$this->calcBuyPrice($p);// RFT positive check here. 
 		$buy_price= $d['buy_price'];
@@ -473,12 +478,9 @@ public function testFruitRel(){
 			$num_units=$p->avl_units;
 		}
 		$price=$num_units* $buy_price;
-		$total=Game::sysLE(); 
-		$THR= $total * C::get('game.facF'); //this factor may depend on number of users ?!
-		
-
+		$thr = Game::thresholdsFor($user->category);
 		//Life Energy price check /successful here.
-		if($LE - $price > $THR) {
+		if($LE - $price > $thr['lowerTHR']){
 		// product's avl shares cut
 			$p->avl_units -= $num_units; 						$p->save();
 		//Farmer's le cut
@@ -510,7 +512,7 @@ public function testFruitRel(){
 			$pch->product_id = $p->id;
 			$pch->num_units = $num_units;
 
-			$pch->avl_units = $num_units; //added on 8Oct, should have been since long!
+			$pch->avl_units = $num_units; //This is for storing Quantity of Land/Seed/Fert // added on 8Oct, should have been since long!
 
 			$pch->buy_price = $buy_price;// $prod_price; //should be $buy_price !
 			$pch->save();
@@ -545,12 +547,14 @@ public function testFruitRel(){
 
 
 		echo $pch->id." Success. Now LE = ".$user->le;
-
+		$args = $pch;
+		Event::fire('bought_product',$args);
 
 	}
 
-	else 								return " Insufficient LE : $LE - $price < $THR ";
-
+	else 								echo " Insufficient LE : $LE - $price < $THR ";
+	
+	return C::get('debug.goBack');
 }
 
 

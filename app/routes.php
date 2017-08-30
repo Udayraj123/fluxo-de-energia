@@ -52,20 +52,11 @@ Route::group(array('before' => 'user'), function()
 Route::group(array('before' => 'investor'), function()
 {
 	Route::get('/makeInvestment',array('as'=>'makeInvestment','uses'=>'IC@makeInvestment'));
-	
-	Route::get('/listInvestments',array('as'=>'listInvestments',function(){
-		$user=Auth::user()->get(); return View::make('listInvestment') ->with('products',$user->investor->products);
-	}));
-
-	Route::get('/buyFruit', array('as'=>'buyFruit',function(){
-		$user=Auth::user()->get();
-		return View::make('buyFruit')
-		->with('boughtFruits',$user->investor->fruits)
-		->with('fruits',Fruit::where('launched',1)->where('avl_units','>',0) 
-			->orderBy('id','desc') ->get());})); //latest first
+	Route::get('/listInvestments',array('as'=>'listInvestments','uses'=>'IC@listInvestments'));
+	Route::get('/buyFruit',array('as'=>'buyFruit','uses'=>'IC@buyFruit'));
 
 	Route::post('/makeInvestment', ['as' => 'makeInvestment', 'uses' => 'IC@postmakeInvestment']);
-	Route::post('/buyFruit', ['as' => 'buyFruit', 'uses' => 'IC@buyFruit'] );
+	Route::post('/buyFruit', ['as' => 'buyFruit', 'uses' => 'IC@postBuyFruit'] );
 	Route::post('/bidHandle', ['as' => 'bidHandle', 'uses' => 'IC@bidHandle']);
 	Route::post('/priceHandle', ['as' => 'priceHandle', 'uses' => 'IC@priceHandle']);
 
@@ -74,19 +65,10 @@ Route::group(array('before' => 'investor'), function()
 
 
 Route::group(array('before' => 'god'), function()	{
-
-	Route::get('selfProducts', ['as' => 'selfProducts', 'uses' => 'GC@selfProducts']); 	//this gives FUNDING BAR
+	// Route::get('selfProducts', ['as' => 'selfProducts', 'uses' => 'GC@selfProducts']); 	
 	Route::get('/fundingBar', ['as' => 'fundingBar', 'uses'=>'GC@fundingBar']);
-	Route::get('/createProduct', function(){
-		$user=Auth::user()->get();
-		
-		return View::make('createProd')
-		->with(C::get('game.baseCIs'))
-		->with('products',$user->god->products()->orderBy('id','desc')->get())
-		;
-	});
-
-	Route::post('/createProduct', ['as' => 'createProduct', 'uses' => 'GC@createProduct']);
+	Route::get('/createProduct', ['as'=>'createProduct','uses'=>'GC@createProduct']);
+	Route::post('/createProduct', ['as' => 'createProduct', 'uses' => 'GC@postCreateProduct']);
 });
 Route::group(array('before' => 'farmer'), function()
 {

@@ -83,113 +83,104 @@ class GC extends \BaseController {
 					if(!$invt->user){echo "nope "; continue;}
 					echo $invt->user->username;
 					echo "(";
-					echo $invm->num_shares;
-					echo " ";
-					echo $invm->num_shares * $invm->bid_price;
-					echo ")  ";
-				}
+						echo $invm->num_shares;
+						echo " ";
+						echo $invm->num_shares * $invm->bid_price;
+						echo ")  ";
+}
 
-				echo "<br>";
-				echo "<br> purchases- ";
-				$allpurch=$product->purchases()->orderBy('farmer_id')->get();
-				foreach($allpurch as $purch){
-					$farmer= $purch->farmer;
-					if(!$farmer->user){echo "nope "; continue;}
-					echo $farmer->user->username;
-					echo "(num ";
-					echo $purch->num_units;
-					echo " cost : ";
-					echo $purch->num_units * $purch->buy_price;
-					echo " > ";
-					echo $purch->avl_units;
-					echo ")  ";	
-				}
-				echo "--<BR><BR>";
-			}
+echo "<br>";
+echo "<br> purchases- ";
+$allpurch=$product->purchases()->orderBy('farmer_id')->get();
+foreach($allpurch as $purch){
+	$farmer= $purch->farmer;
+	if(!$farmer->user){echo "nope "; continue;}
+	echo $farmer->user->username;
+	echo "(num ";
+		echo $purch->num_units;
+		echo " cost : ";
+		echo $purch->num_units * $purch->buy_price;
+		echo " > ";
+		echo $purch->avl_units;
+		echo ")  ";	
+}
+echo "--<BR><BR>";
+}
 
-			else {
-				echo " &emsp; Funding over For the product, show sell stats using purchases here.<br>";
-			}
+else {
+	echo " &emsp; Funding over For the product, show sell stats using purchases here.<br>";
+}
 
-		}
-	}
-	public function check($user,$input){
+}
+}
+public function transactionCheck($user,$input){
 		//FT ET positive check
 		//$input['avl_units']
 
-		if(!(array_key_exists('avl_units', $input)&&$input['category']&& $input['unit_price'] && $input['FT']>0 && $input['ET']>0 ))
-		{
-			echo "avl_units/category/unit_price/FT not ready";
-			return false;
+	if(!(array_key_exists('avl_units', $input)&&$input['category']&& $input['unit_price'] && $input['FT']>0 && $input['ET']>0 ))
+	{
+		echo "avl_units/category/unit_price/FT not ready";
+		return false;
+	}
+	else {
+		$category = $input['category'];
+		if(!($category=="seed" ||$category=="fertilizer" ||$category=="land")){
+			echo "Wrong category ";			return false;
 		}
-		else {
-			$category = $input['category'];
-			// var_dump($category);
-			if(!($category=="seed" ||$category=="fertilizer" ||$category=="land")){
-				echo "Wrong category ";			return false;
-			}
-			$price= (int)($input['avl_units'])*(int)($input['unit_price']);
-			$LE=$user->le;
-
-//review this-
-			$total=User::all()->sum('le');
-			$facGI = C::get('game.facGI');
-			$THR= $facGI* $total; //this factor may depend on number of users ?!
-
+		$price= (int)($input['avl_units'])*(int)($input['unit_price']);
+		$LE=$user->le;
+		$thr = Game::thresholdsFor($user->category);
 		//Life Energy price check
-			if($LE - $price > $THR)
-			{
-				$user->le -= $price;
-				$user->save();
-				return true;
-			}
-			else {
-				echo "LOW LE $LE <BR>";
-				return false;}
-			}
-		}
+		return ($LE - $price > $thr['lowerTHR']);
+	}
+}
 
 
-		public function getBasePrice($quality,$FT,$ET,$Tol,$type){
+public function getBasePrice($quality,$FT,$ET,$Tol,$type){
 	# quality, product_type, ini_sysLE
-			$c1=C::get('game.baseC1');
-			$c2=C::get('game.baseC2');
-			$c3=C::get('game.baseC3');
-			$c4=C::get('game.baseC4');
-			$bps=C::get('game.basePrices');
-			$bp=$bps[$type];
-			return $bp*($c1*$quality + $c2*$FT + $c3*$ET)*(1 + $c4*$Tol);
-		}
+	$c=Config::get('game.baseCIs');
+	$bps=Config::get('game.basePrices');
+	$bp=$bps[$type];
+	return $bp*($c['c1']*$quality + $c['c2']*$FT + $c['c3']*$ET)*(1 + $c['c4']*$Tol);
+}
 
-		public function createProduct(){
+public function createProduct(){
+	$user=Auth::user()->get();
+
+	return View::make('createProd')
+	->with(C::get('game.baseCIs'))
+	->with('products',$user->god->products()->orderBy('id','desc')->get());
+}
+public function postCreateProduct(){
 		//from POST submit request by God
 		$input = Input::except('_token','Tol'); //,'unit_price' too ! but it is disabled
 		//THOUGH it might get vulnerable if they send unit_price as input in request
 		$user= Auth::user()->get();		 
 		echo "Current LE = ".$user->le."<BR>";
 
-		if( $this->check($user,$input) ){ //THIS WILL ALREADY REDUCE GOD'S LE, make sure the product gets Added/
-		$p = new Product();
-		$p->god_id = $user->god->id;
-		$p->being_funded=1;
+		//Nope - THIS WILL ALREADY REDUCE GOD'S LE, make sure the product gets Added/
+		if( $this->transactionCheck($user,$input) ){ 
+			$p = new Product();
+			$p->god_id = $user->god->id;
+			$p->being_funded=1;
 		// $p->create_time=time(); -> this might be used later.
-		foreach(array_keys($input) as $field){
+			foreach(array_keys($input) as $field){
 			$p->$field=$input[$field]; 				// if(property_exists($p,$field))
 			echo $field." :".$input[$field];
 			if($p->$field)echo " added.";echo "<br>";			
 		}
-		$p->unit_price = $this->getBasePrice($p->quality,$p->FT,$p->ET,Input::get('Tol'),$p->category);
-		echo "Re: unit_price:".$p->unit_price."<BR>";
-		$p->total_cost = $p->unit_price * $p->avl_units;
+		$unitPrice = $this->getBasePrice($p->quality,$p->FT,$p->ET,Input::get('Tol'),$p->category);
+		$p->unit_price = $unitPrice;
+		echo "Re: unit_price:".$unitPrice."<BR>";
+		$p->total_cost = $unitPrice * $p->avl_units;
 		$p->avl_shares = $p->total_shares;
 		$p->bid_price = $p->total_cost/$p->total_shares;
 		$p->save();
-
+		$user->le -= $p->total_cost;
 		$user->save();
-		echo "Now LE = ".$user->le."<BR>";
-
 		$p->save();
 
+		echo "Now LE = ".$user->le."<BR>";
 	}
 	else return "Transaction Failed.";
 } 

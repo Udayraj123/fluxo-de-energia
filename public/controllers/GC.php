@@ -111,13 +111,10 @@ class GC extends \BaseController {
 
 		public function getBasePrice($quality,$FT,$ET,$Tol,$type){
 	# quality, product_type, ini_sysLE
-			$c1=Config::get('game.baseC1');
-			$c2=Config::get('game.baseC2');
-			$c3=Config::get('game.baseC3');
-			$c4=Config::get('game.baseC4');
+			$c=Config::get('game.baseCIs');
 			$bps=Config::get('game.basePrices');
 			$bp=$bps[$type];
-			return $bp*($c1*$quality + $c2*$FT + $c3*$ET)*(1 + $c4*$Tol);
+			return $bp*($c[1-1]*$quality + $c[2-1]*$FT + $c[3-1]*$ET)*(1 + $c[4-1]*$Tol);
 		}
 
 		public function createProduct(){

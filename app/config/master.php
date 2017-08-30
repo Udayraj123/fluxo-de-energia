@@ -4,7 +4,7 @@ return [
 	"god" => [
 	'createProduct'=>'createProduct',
 	'fundingBar'=>'fundingBar',
-	'selfProducts'=>'selfProducts',
+	// 'selfProducts'=>'selfProducts',
 	],
 	"investor" => [
 	'listInvestments'=>'listInvestments',

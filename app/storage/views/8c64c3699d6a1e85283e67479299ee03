@@ -1,18 +1,16 @@
-@extends('master_home')
-
-@section('bodyContent')
+<?php $__env->startSection('bodyContent'); ?>
 
 <!-- titles array -->
-@section('headContent')
+<?php $__env->startSection('headContent'); ?>
 <title>Buy Product</title>
-@stop
+<?php $__env->stopSection(); ?>
 
 <!-- bg sources array -->
-@section('bgsource')
+<?php $__env->startSection('bgsource'); ?>
 god.jpg
-@stop
+<?php $__env->stopSection(); ?>
 
-@section('bodyContent') 
+<?php $__env->startSection('bodyContent'); ?> 
 <script type="text/javascript">
 var X;
 function getUC(){
@@ -20,7 +18,7 @@ function getUC(){
 		//send ajax here.
 		$.ajax({
 			method: "POST",
-			url: "{{ route('productPriceHandle') }}",
+			url: "<?php echo route('productPriceHandle'); ?>",
 			data: {'product_id':product_id},
 			success: function(data) {
 				// console.log(data);
@@ -42,7 +40,7 @@ function getUC(){
   		});
 
 	}
-	setInterval("getUC()",{{C::get('game.msRefreshRate')}});
+	setInterval("getUC()",<?php echo C::get('game.msRefreshRate'); ?>);
 	</script>
 
 	<div class="row"  style="background:#66ff66;border-radius:10px;width:30%;margin:5%0%0%2%;opacity:0.85">
@@ -55,7 +53,8 @@ function getUC(){
 				<div class="form-group">
 
 					<table style="width:100%">
-						{{ Form::open(array('url' => route("buyProduct"))) }}
+						<?php echo Form::open(array('url' => route("buyProduct"))); ?>
+
 						<tr>
 
 							<td>
@@ -63,9 +62,9 @@ function getUC(){
 							</td>
 							<td>
 								<select class="form-control" name='product_id' onchange="getUC()" id='product_id'>
-									@foreach ($products as $prod)
-									<option value="{{ $prod->id }}">{{ $prod->god->user->username or 'GOD'}}'s'  {{ $prod->category }} {{ $prod->name }} id: ({{ $prod->id }})</option>
-									@endforeach
+									<?php foreach($products as $prod): ?>
+									<option value="<?php echo $prod->id; ?>"><?php echo isset($prod->god->user->username) ? $prod->god->user->username : 'GOD'; ?>'s'  <?php echo $prod->category; ?> <?php echo $prod->name; ?> id: (<?php echo $prod->id; ?>)</option>
+									<?php endforeach; ?>
 								</select>
 							</td> </tr><tr><td><br><br>
 
@@ -78,7 +77,8 @@ function getUC(){
 				&nbsp;&nbsp;<div> <input type='submit' value="SAVE" /> </div>
 			</td></tr>
 
-			{{ Form::close() }}
+			<?php echo Form::close(); ?>
+
 		</table>
 
 	</div>
@@ -109,45 +109,46 @@ var currRow=[];
 var firstRow=['#','id','From','Product','description','num_units','avl_units','buy_price','quality','ET','bought_at'];
 var counter=0;
 cellData.push(firstRow);
-@foreach ($boughtProducts as $p)
+<?php foreach($boughtProducts as $p): ?>
 currRow=[];
 counter++;
 currRow.push(counter.toString());
-currRow.push('{{ $p->id }}');
-currRow.push('{{ $p->god->user->username }}');
-currRow.push('{{ $p->name }}');
-currRow.push('{{ $p->description }}');
-currRow.push('{{ $p->pivot->num_units }}');
-currRow.push('{{ $p->pivot->avl_units }}');
-currRow.push('{{ $p->pivot->buy_price }}');
-currRow.push('{{ $p->quality }}');
-currRow.push('{{ $p->ET }}');
-currRow.push('{{ $p->pivot->created_at }}');
+currRow.push('<?php echo $p->id; ?>');
+currRow.push('<?php echo $p->god->user->username; ?>');
+currRow.push('<?php echo $p->name; ?>');
+currRow.push('<?php echo $p->description; ?>');
+currRow.push('<?php echo $p->pivot->num_units; ?>');
+currRow.push('<?php echo $p->pivot->avl_units; ?>');
+currRow.push('<?php echo $p->pivot->buy_price; ?>');
+currRow.push('<?php echo $p->quality; ?>');
+currRow.push('<?php echo $p->ET; ?>');
+currRow.push('<?php echo $p->pivot->created_at; ?>');
 cellData.push(currRow);
-@endforeach
+<?php endforeach; ?>
 
 var cellData=[];
 var firstRow=['#','id','From','Product','name','description', 'quality','ET','created_at'];
 var counter=0;
 cellData.push(firstRow);
-@foreach ($products as $p)
+<?php foreach($products as $p): ?>
 currRow=[];
 counter++;
 currRow.push(counter.toString());
-currRow.push('{{ $p->id }}');
-currRow.push('{{ $p->god->user->username }}');
-currRow.push('{{ $p->category }}');
-currRow.push('{{ $p->name }}');
-currRow.push('{{ $p->description }}');
-currRow.push('{{ $p->quality }}');
-currRow.push('{{ $p->ET }}');
-currRow.push('{{ $p->created_at }}');
+currRow.push('<?php echo $p->id; ?>');
+currRow.push('<?php echo $p->god->user->username; ?>');
+currRow.push('<?php echo $p->category; ?>');
+currRow.push('<?php echo $p->name; ?>');
+currRow.push('<?php echo $p->description; ?>');
+currRow.push('<?php echo $p->quality; ?>');
+currRow.push('<?php echo $p->ET; ?>');
+currRow.push('<?php echo $p->created_at; ?>');
 cellData.push(currRow);
-@endforeach
+<?php endforeach; ?>
 
 insertTable(cellData,"boughtProducts",1);
 
 </script>
 
 
-@stop
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('master_home', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

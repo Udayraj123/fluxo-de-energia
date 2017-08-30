@@ -5,15 +5,15 @@
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- font awesome i.e. fa has icons -->
   <!-- The style sheets depend on the contents in their folders -->
-  <script src="{{ URL::asset('./plugins/jQuery/jquery-2.2.3.min.js') }}"></script>
-  <script src="{{ URL::asset('./bootstrap/js/bootstrap.min.js') }}"></script>
-  <link rel="stylesheet" href="{{ URL::asset('font-awesome-4.3.0/css/font-awesome.min.css') }}" />
-  <link rel="stylesheet" href="{{ URL::asset('ionicons-2.0.1/css/ionicons.min.css') }}" />
-  <link rel="stylesheet" href="{{ URL::asset('dist/css/AdminLTE.min.css') }}" />
-  <link rel="stylesheet" href="{{ URL::asset('dist/css/skins/_all-skins.min.css') }}" />
-  <link rel="stylesheet" href="{{ URL::asset('bootstrap/css/bootstrap.min.css') }}" />
+  <script src="<?php echo URL::asset('./plugins/jQuery/jquery-2.2.3.min.js'); ?>"></script>
+  <script src="<?php echo URL::asset('./bootstrap/js/bootstrap.min.js'); ?>"></script>
+  <link rel="stylesheet" href="<?php echo URL::asset('font-awesome-4.3.0/css/font-awesome.min.css'); ?>" />
+  <link rel="stylesheet" href="<?php echo URL::asset('ionicons-2.0.1/css/ionicons.min.css'); ?>" />
+  <link rel="stylesheet" href="<?php echo URL::asset('dist/css/AdminLTE.min.css'); ?>" />
+  <link rel="stylesheet" href="<?php echo URL::asset('dist/css/skins/_all-skins.min.css'); ?>" />
+  <link rel="stylesheet" href="<?php echo URL::asset('bootstrap/css/bootstrap.min.css'); ?>" />
 
-  @yield('headContent')
+  <?php echo $__env->yieldContent('headContent'); ?>
   
   <style type="text/css">
   header input {
@@ -26,17 +26,18 @@
   </style>
 </head>
 
-<body background="@yield('bgsource')" style="background-repeat:no-repeat;background-size: cover;" >
+<body background="<?php echo $__env->yieldContent('bgsource'); ?>" style="background-repeat:no-repeat;background-size: cover;" >
   <script type="text/javascript">
   var p =Math.pow(10,3); //(x*p)/p precision of all calculations here
   
-  var messages={{ json_encode(C::get('game.notifHTMLs')); }}
+  var messages=<?php echo json_encode(C::get('game.notifHTMLs'));; ?>
+
 
 //merge these two MUCH MUCH LATER
 setInterval(function(){
   decayHandle();
   thresholdHandle();
-},{{C::get('game.msRefreshRate')}});
+},<?php echo C::get('game.msRefreshRate'); ?>);
 
 function reloadPage(){
   window.location.href += "";
@@ -45,7 +46,7 @@ function reloadPage(){
 function decayHandle(){
   $.ajax({
     method: "POST",
-    url: "{{ route('decayHandle') }}",
+    url: "<?php echo route('decayHandle'); ?>",
     success: function( data ) {
       var le=parseInt(data['le']);
       var decay=parseInt(data['decay']);
@@ -76,7 +77,7 @@ function thresholdHandle(){
 
  $.ajax({
   method: "POST",
-  url: "{{ route('thresholdHandle') }}",
+  url: "<?php echo route('thresholdHandle'); ?>",
   // data: { 'name': "Johnny", 'location': "Boston" },
 })
  .success(function( data ) {
@@ -134,12 +135,12 @@ function insertTable(cellData,divID,black){
           <ul class="nav navbar-nav "> 
             <!-- We also have $user to be used -->
             <!-- common one- -->
-            <li> <a class="headLink"  href="{{ URL::route('energy') }}">Energy</a> </li>
+            <li> <a class="headLink"  href="<?php echo URL::route('energy'); ?>">Energy</a> </li>
             
             <?php $user=Auth::user()->get();$catLinks = C::get('master.catLinks'); ?>
-            @foreach($catLinks[$user->category] as $linkName=>$title)
-            <li> <a class="headLink"  href="{{ URL::route($linkName) }}">{{$title}}</a> </li>
-            @endforeach
+            <?php foreach($catLinks[$user->category] as $linkName=>$title): ?>
+            <li> <a class="headLink"  href="<?php echo URL::route($linkName); ?>"><?php echo $title; ?></a> </li>
+            <?php endforeach; ?>
           </ul>
 
         </div>
@@ -215,6 +216,6 @@ function insertTable(cellData,divID,black){
   </nav>
 </header>
 
-@yield('bodyContent')
+<?php echo $__env->yieldContent('bodyContent'); ?>
 
 </body>

@@ -1,31 +1,30 @@
-@extends('master')
-
-@section('bodyContent')
+<?php $__env->startSection('bodyContent'); ?>
 <br>
 <script>
 
-var c1={{ $c1 }};
-var c2={{ $c2 }};
-var c3={{ $c3 }};
-var c4={{ $c4 }};
-var bp={{ $fruitBP }};
+  var c1=<?php echo $c1; ?>;
+  var c2=<?php echo $c2; ?>;
+  var c3=<?php echo $c3; ?>;
+  var c4=<?php echo $c4; ?>;
+  var bp=<?php echo $fruitBP; ?>;
 
-function getUC(){
-  var ET=document.getElementById('ET').value;
-  var GT=1;
-  var Tol=document.getElementById('Tol').value;
-  var quality=document.getElementById('quality_factor').value;
-  return bp*(c1*quality+c2*GT+c3*ET)*(1+c4*Tol);
-}
-setInterval(function(){$('#unit_price').val(getUC());},{{C::get('game.msRefreshRate')}});
-
+  function getUC(){
+    var ET=document.getElementById('ET').value;
+    var GT=1;
+    var Tol=document.getElementById('Tol').value;
+    var quality=document.getElementById('quality_factor').value;
+    return bp*(c1*quality+c2*GT+c3*ET)*(1+c4*Tol);
+  }
+  setInterval(function(){$('#unit_price').val(getUC());},<?php echo C::get('game.msRefreshRate'); ?>);
+  
 
 </script>
 <table border="1px" cellpadding="20px">
 
   <tr>
     <td>
-      {{ Form::open(array('url' => route("applyPurch"))) }}
+      <?php echo Form::open(array('url' => route("applyPurch"))); ?>
+
       <div id="Land">  </div>
     </td>
     <td>
@@ -33,21 +32,17 @@ setInterval(function(){$('#unit_price').val(getUC());},{{C::get('game.msRefreshR
 
       <pre>
         <label>CHOOSE SEED/FERT/LAND :   <select name='purchase_id' id='purchase_id'>
-          @foreach ($purchases as $purch)
-          @if($purch->avl_units>0 &&  $purch->product)
-          <option value="{{ $purch->id }}">({{$purch->avl_units}}){{ $purch->product->god->user->username or 'GOD'}}'s  {{ $purch->product->category }} {{ $purch->product->name }} ({{ $purch->id }})
+          <?php foreach($purchases as $purch): ?>
+          <?php if($purch->avl_units>0 &&  $purch->product): ?>
+          <option value="<?php echo $purch->id; ?>">(<?php echo $purch->avl_units; ?>)<?php echo isset($purch->product->god->user->username) ? $purch->product->god->user->username : 'GOD'; ?>'s  <?php echo $purch->product->category; ?> <?php echo $purch->product->name; ?> (<?php echo $purch->id; ?>)
           </option>
-          @endif
-          <?php
-          if(!$purch->product)
-            Log::info("No Owner for product ");
-          Log::info($purch);
-          ?>
-          @endforeach
+          <?php endif; ?>
+          <?php endforeach; ?>
         </select>
       </label>
       <label style="position: relative;left:40%;top: 100%"><input type="submit" value="Apply"/></label><br>
-      {{ Form::close() }}
+      <?php echo Form::close(); ?>
+
     </pre>
   </td>
 </tr>
@@ -55,17 +50,18 @@ setInterval(function(){$('#unit_price').val(getUC());},{{C::get('game.msRefreshR
 <tr>
   <td>
     <pre>
-      {{ Form::open(array('url' => route("launchFruit"))) }}
+      <?php echo Form::open(array('url' => route("launchFruit"))); ?>
+
       CHOOSE FRUIT STORAGE TO LAUNCH :
       <label>
         <select name='storage_id' id='storage_id'>
-          @foreach ($fruits as $l=>$f)
-          @if($f->num_units>0 && $f->launched==0)
-          <option value="{{ $f->id }}">
-            Fruit-{{$f->id}}{{$f->name}} of seed{{$f->seed_id}} ({{$f->num_units}}) 
+          <?php foreach($fruits as $l=>$f): ?>
+          <?php if($f->num_units>0 && $f->launched==0): ?>
+          <option value="<?php echo $f->id; ?>">
+            Fruit-<?php echo $f->id; ?><?php echo $f->name; ?> of seed<?php echo $f->seed_id; ?> (<?php echo $f->num_units; ?>) 
           </option>
-          @endif
-          @endforeach
+          <?php endif; ?>
+          <?php endforeach; ?>
 
         </select>
       </label>
@@ -78,7 +74,8 @@ setInterval(function(){$('#unit_price').val(getUC());},{{C::get('game.msRefreshR
       <label>unit_price: <input readonly="readonly" type='number' id='unit_price' name='unit_price' value="2000"/></label><br>
       <!-- Disabled ones are not sent, read only ones are sent -->
       <label style="position: relative;left:40%;top: 100%"><input type="submit" value="Deploy"/></label><br>
-      {{ Form::close() }}
+      <?php echo Form::close(); ?>
+
     </pre>
   </td>
   <td>
@@ -87,11 +84,11 @@ setInterval(function(){$('#unit_price').val(getUC());},{{C::get('game.msRefreshR
 </tr>
 </table>
 <script>
-var stateUnused=0,stateSeed=1,stateFert=2,stateFertSeed=3,stateFruit=4;
-var stateText = ['Unused','Seed ','Fert Only &nbsp','Fert & Seed','Fruit'];
-var colors = ['goldenrod','grey','blue','black','yellow','orange'];
+  var stateUnused=0,stateSeed=1,stateFert=2,stateFertSeed=3,stateFruit=4;
+  var stateText = ['Unused','Seed ','Fert Only &nbsp','Fert & Seed','Fruit'];
+  var colors = ['goldenrod','grey','blue','black','yellow','orange'];
 
-function makeBox(state,id,check){
+  function makeBox(state,id,check){
     // console.log("makeBox",state,id,check,(check?'':'un')+'checked');
     var Icon='<span style="font-size:30px;">&nbsp '+stateText[state]+'&nbsp</span>';
     var block= '<label ><input type="checkbox" '+(check?'':'un')+'checked name="land_ids[]" onclick="updateLands(this.id)" id="land'+id+'" value="'+id+'"/>'+Icon+'</label>';
@@ -109,7 +106,7 @@ function makeBox(state,id,check){
     var t=states.length;
     var tableContainer=document.getElementById(divID);
     if(t==0){
-      tableContainer.innerHTML="<span class='box box-warning'>NO LAND! Buy from the <a href='{{route('buyProduct')}}'>store</a>! </span>";
+      tableContainer.innerHTML="<span class='box box-warning'>NO LAND! Buy from the <a href='<?php echo route('buyProduct'); ?>'>store</a>! </span>";
       return;
     }
     var table1= document.createElement('table');
@@ -141,7 +138,7 @@ function makeBox(state,id,check){
     //send ajax here.
     $.ajax({
       method: "POST",
-      url: "{{ route('getStates') }}", // data: {'land_id':land_id},
+      url: "<?php echo route('getStates'); ?>", // data: {'land_id':land_id},
       success: function(data) {
         var states=data['states'];
         var landIDs=data['landIDs'];
@@ -173,10 +170,10 @@ function makeBox(state,id,check){
     alert('error updating RGT'); 
   }
 });
-}
-updateLands();
+  }
+  updateLands();
 
-function makeFetchable(land_id){
+  function makeFetchable(land_id){
   //THIS will make the land clickable & onclick will send an ajax to increase num_units in Fruits while cleaning the land
 
 //get that div box, change its onclick to call Fetch
@@ -189,7 +186,7 @@ function Fetch(land_id){
 ///SEND AJAX HERE to update fruit data & number & alter land SEED_ID = -1 (with backend check)
 $.ajax({
   method: "POST",
-  url: "{{ route('fetchFruit') }}", 
+  url: "<?php echo route('fetchFruit'); ?>", 
   data: {'land_id':land_id},
   success: function(data) {
 //here we also increase Farmer's energy a bit    
@@ -207,4 +204,6 @@ updateLands();
 
 </script>
 <br>
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('master', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

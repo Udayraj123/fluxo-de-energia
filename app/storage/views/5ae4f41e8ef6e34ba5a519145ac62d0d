@@ -1,0 +1,137 @@
+<!-- titles array -->
+<?php $__env->startSection('headContent'); ?>
+<title>Energy</title>
+<?php $__env->stopSection(); ?>
+
+<!-- bg sources array -->
+<?php $__env->startSection('bgsource'); ?>
+god.jpg
+<?php $__env->stopSection(); ?>
+
+
+<?php $__env->startSection('bodyContent'); ?> 
+
+<script type="text/javascript">
+	var X;
+	function getUC(){
+		var product_id=document.getElementById('product_id').value;
+		//send ajax here.
+		$.ajax({
+			method: "POST",
+			url: "<?php echo route('bidHandle'); ?>",
+			data: {'product_id':product_id},
+			success: function(data) {
+				console.log(data);
+				$('#bid_price').val(parseInt(data['bid_price']));
+				$('#avl_shares').val(parseInt(data['avl_shares']));
+				$('#num_shares').attr('max',data['avl_shares']);
+				$('#RFT').val(parseInt(data['RFT']));
+			},
+
+  			error: function(data){// Server Disconnected
+  				X=data;	
+  				alert('error updating bp, check type X in console'); 
+  			}
+  		});
+
+	}
+	setInterval("getUC()",<?php echo C::get('game.msRefreshRate'); ?>);
+</script>
+<br>
+<div class="row"  style="background:#66ff66;border-radius:10px;width:30%;margin:5%0%0%2%;opacity:0.85">
+	<div class="col-xs-12"  style="background:#66ff66;border-radius:10px;width:90%;margin:0%0%0%0%;opacity:0.85">
+		<div class="box box-primary"  style="background:#66ff66;border-radius:10px;width:100%;margin:0%0%0%5%;opacity:0.85">
+			<div class="box-header">
+				<h3 class="box-title" style="font-size:28px;opacity:1">Make Investment</h3>
+			</div>
+
+			<div class="form-group">
+
+				<table style="width:100%">
+					<?php echo Form::open(array('url' => route("makeInvestment"))); ?>
+
+					<tr>
+
+						<td>
+							<label for="product_id"> Product Type  : &nbsp;&nbsp;&nbsp; </label>
+						</td>
+						<td>
+							<select class="form-control" onchange="getUC()" name='product_id' id='product_id'>
+								<?php foreach($products as $prod): ?>
+								<option value="<?php echo $prod->id; ?>"><?php echo isset($prod->god->user->username) ? $prod->god->user->username : 'GOD'; ?>'s'  <?php echo $prod->category; ?> <?php echo $prod->name; ?> id: (<?php echo $prod->id; ?>)
+								</option>
+								<?php endforeach; ?>
+							</select>
+						</td> </tr>
+						<tr><td><br><br>
+							<label>bid_price : </td><td><input disabled="true" type='number' id='bid_price' value=0 /></label><br>
+						</td></tr>
+						<tr><td><br><br>
+							<label>RFT : </td><td><input disabled="true" type='number' id='RFT' value=0 /></label><br>
+						</td></tr>
+						<tr><td><br><br>
+							<label>avl_shares : </td><td><input disabled="true" type='number' id='avl_shares' value=0 /></label><br>
+						</td></tr>
+						<tr><td><br><br>
+							<label>num_shares : </td><td><input type='number' name='num_shares' id='num_shares' max=100 min=0 value=10 /></label><br>
+						</td></tr>
+						<tr><td><br><br>
+						&nbsp;&nbsp;<div> <input type='submit' value="SAVE" /> </div>
+					</td></tr>
+					<?php echo Form::close(); ?>
+
+				</table>
+			</div>
+
+			<!-- /.box-header -->
+
+		</div>
+	</div>
+	<!-- /.box-body -->
+</div>
+<!-- /.box -->
+</div>
+<!-- /.col -->
+</div>
+
+<div class="col-md-6">
+	<div id="productLaunched" class="container" style="overflow-y:auto;height:75%;background:#66ff66;border-radius:10px;width:100%;margin:-51%0%0%80%;opacity:0.85">
+		<div class="box-header with-border">
+			<h3 class="box-title"> Upcoming Products</h3>
+		</div>
+
+
+		
+	</div>
+</div>
+
+
+<script type="text/javascript">
+	var cellData=[];
+	var currRow=[];
+	var firstRow=['#','id','product','Owner','name','description','bid price','quality','FT','RFT'];
+	var counter=0;
+	cellData.push(firstRow);
+	
+	<?php foreach($products as $prod): ?>
+	currRow=[];
+	counter++;
+	currRow.push(counter.toString());
+	currRow.push('<?php echo $prod->id; ?>');
+	currRow.push('<?php echo $prod->category; ?>');
+	currRow.push('<?php echo $prod->god->user->username; ?>');
+	currRow.push('<?php echo $prod->name; ?>');
+	currRow.push('<?php echo $prod->description; ?>');
+	currRow.push('<?php echo $prod->bid_price; ?>');
+	currRow.push('<?php echo $prod->quality; ?>');
+	currRow.push('<?php echo $prod->FT; ?>');
+	currRow.push('<?php echo Game::getRFT($prod); ?>');
+	cellData.push(currRow);
+	<?php endforeach; ?>
+
+	insertTable(cellData,"productLaunched",1);
+	
+</script>
+
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('master_home', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

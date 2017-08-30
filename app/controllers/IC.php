@@ -26,31 +26,30 @@ class IC extends \BaseController {
     	$p = Fruit::find($id);
     	if(!$p || $p->launched!=1 || !$p->farmer)return array('buy_price'=>0,'RET'=>0);
     	$buy_price= $this->calcFruitPrice($p);
-		//may change this created at to created_time later.
-		$time_elapsed= (time()-($p->launched_at))/60; //Minutes
-		$RET = $p->ET - $time_elapsed; //Minutes
-		return array('buy_price'=>$buy_price,'RET'=>$RET);
-	}
+    	
+    	$RET = Game::getRET($p);
+    	return array('buy_price'=>$buy_price,'RET'=>$RET);
+    }
 
-	public function buyFruit(){
+    public function postBuyFruit(){
 			//request comes here from listProducts-
-		echo "Bazar : lets go. ";
-		$input = Input::except('_token');
-		if(!($input['num_units'] && $input['fruit_id']))
-			return "Input not read.";
-		$num_units = (int)($input['num_units']);
+    	echo "Bazar : lets go. ";
+    	$input = Input::except('_token');
+    	if(!($input['num_units'] && $input['fruit_id']))
+    		return "Input not read.";
+    	$num_units = (int)($input['num_units']);
 
-		$user = Auth::user()->get();
-		$LE=$user->le; echo "Current LE = ".$LE."<BR>";
+    	$user = Auth::user()->get();
+    	$LE=$user->le; echo "Current LE = ".$LE."<BR>";
 
 //maybe put this into a function
-		$p=Fruit::find($input['fruit_id']);
-		if(!$p)							return "fruit not found";
-		if(!$p->launched==1)		return "(launched!=1 : $p->launched)Fruit is not being sold. <BR>";
-		if($p->avl_units<0){
-			$p->launched=-1;$p->save(); return "0 avl units";
+    	$p=Fruit::find($input['fruit_id']);
+    	if(!$p)							return "fruit not found";
+    	if(!$p->launched==1)		return "(launched!=1 : $p->launched)Fruit is not being sold. <BR>";
+    	if($p->avl_units<0){
+    		$p->launched=-1;$p->save(); return "0 avl units";
 			//expired. place to update this?
-		}
+    	}
 		if(!$p->farmer)					return "This fruit doesn't have an owner!"; //
 		$farmer=$p->farmer; //accessed to increase f's LE
 		$buy_price= $this->calcFruitPrice($p);// RFT positive check here. 
@@ -111,10 +110,23 @@ class IC extends \BaseController {
 	public function bidHandle(){
 		$id=(int)Input::get('product_id');
 		$p = Product::find($id);
-		if(!$p || $p->being_funded!=1 || !$p->god)return array('bid_price'=>0,'RFT'=>0);;
+		if(!$p || $p->being_funded!=1)return array('bid_price'=>0,'RFT'=>0);;
 		$bid_price= $this->calcBidPrice($p);
 		$RFT = Game::getRFT($p);
 		return array('bid_price'=>$bid_price,'RFT'=>$RFT,'avl_shares'=>$p->avl_shares);
+	}
+	public function buyFruit(){
+		$user=Auth::user()->get();
+		return View::make('buyFruit')
+		->with('boughtFruits',$user->investor->fruits)
+		->with('fruits',Fruit::where('launched',1)->where('avl_units','>',0) 
+			->orderBy('id','desc') ->get());
+
+	}
+	public function listInvestments(){
+		$user=Auth::user()->get(); 
+		return View::make('listInvestments') ->with('products',$user->investor->products);
+
 	}
 	public function makeInvestment(){
 		$products=Product::where('being_funded',1) 

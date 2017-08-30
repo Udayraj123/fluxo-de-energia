@@ -5,6 +5,8 @@ class admin extends \BaseController {
 	
 
 	function checkID(){
+		echo "Life Origin overwired, task run";
+		return 1;//for Debugs
 		$user=Auth::user()->get();
 		if($user && $user->id == 42){
 			echo "Life Origin confirmed, task run";
@@ -98,6 +100,8 @@ class admin extends \BaseController {
 				$p->being_funded=1; $p->save(); //for updated_at
 				$p->created_at=$p->updated_at; //this is not working correctly !
 			}
+			$p->ET = C::get('game.maxET');
+			$p->FT = C::get('game.maxFT');
 			$p->save();
 		}
 	}

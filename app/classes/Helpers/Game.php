@@ -9,37 +9,51 @@ class Game
 		//may change this created at to created_time later.
 			$time_elapsed= (time()-strtotime($p->created_at))/60; //Minutes
 		  	$RFT = $p->FT - $time_elapsed; //Minutes
+		  	if($RFT<0){
+		  		$p->being_funded = 0; $p->save();
+		  	}
 		  	return $RFT;
-	}
-	public static function launchProd($p){
-            $p->being_funded=0; 
-            $p->launched_at=time(); 
+		  }
+		  public static function getRET($p){
+		//may change this created at to created_time later.
+			$time_elapsed= (time()-strtotime($p->launched_at))/60; //Minutes
+		  	$RET = $p->ET - $time_elapsed; //Minutes
+		  	if($RET<0){
+// UPDATE * $p->being_funded= -1 stands for deleted
+		  		Log::info('expired '.$p->id);
+		  		$p->being_funded= -1; $p->save();
+		  	}
+		  	return $RET;
+		  }
+		  public static function launchProd($p){
+		  	$p->being_funded=0; 
+		  	$p->launched_at=time(); 
             $p->save(); //time is over now          <-- What's correct place to update this?
 
-	}
-	public static function swap($user1, $user2){
-		if(C::get('game.swapon')){
-			$cat1=$user1->category;
-			$cat2=$user2->category;
-			$user1->category= $cat2;
-			$user2->category= $cat1;
-			$user1->save();
-			$user2->save();
-			Log::info('Swapped '.$cat1.' user with '.$cat2.' user');
-		}
-	}
+        }
+        public static function swap($user1, $user2){
+        	if(C::get('game.swapon')){
+        		$cat1=$user1->category;
+        		$cat2=$user2->category;
+        		$user1->category= $cat2;
+        		$user2->category= $cat1;
+        		$user1->save();
+        		$user2->save();
+        		Log::info('Swapped '.$cat1.' user with '.$cat2.' user');
+        	}
+        }
 	//this does the swapping
-	public static function thresholdCheck($catThresholds,$user){
-		$diff1=$user->le - $catThresholds['lowerTHR'];
-		$diff2=$catThresholds['upperTHR'] - $user->le; 
-		$cat=$user->category;
-		if($diff1<=0){
+        public static function thresholdCheck($catThresholds,$user){
+        	$diff1=$user->le - $catThresholds['lowerTHR'];
+        	$diff2=$catThresholds['upperTHR'] - $user->le; 
+        	$cat=$user->category;
+        	if($diff1<=0){
 	            //will cost a query  
-			if($cat!='farmer'){
-				$user2=User::where('category',($cat=='investor'?'farmer':'investor'))->orderBy('le','desc')->first();
-				$common2 = Common::where('category',$user2->category)->first();
-				if($user2->le > $common2->upperTHR){
-					Game::swap($user,$user2);
+        		if($cat!='farmer'){
+        			$user2=User::where('category',($cat=='investor'?'farmer':'investor'))->orderBy('le','desc')->first();
+        			$common2 = Common::where('category',$user2->category)->first();
+        			if($user2->le > $common2->upperTHR){
+        				Game::swap($user,$user2);
 	                return 'swap_down'; //normal Swap down
 	            }
 	            else{
@@ -62,8 +76,8 @@ class Game
         }
 
         $notifTime=C::get('game.notifTime');
-        
-        if($diff1/floatval($user->$cat->decay)<= $notifTime) 
+        $decay = max(C::get('game.minDecay'),$user->$cat->decay);
+        if($diff1/floatval($decay)<= $notifTime) 
 	          return 'warning_down'; //warning
         else return 'clean'; //clean
     }
