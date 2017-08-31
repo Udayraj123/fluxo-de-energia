@@ -5,6 +5,13 @@
 <!-- titles array -->
 @section('headContent')
 <title>Buy Product</title>
+<style type="text/css">
+.tablecontainer{
+	padding-right: 30px;
+	padding-left: 30px;
+	background:#66ff66;border-radius:10px;opacity:0.85;
+}
+</style>
 @stop
 
 <!-- bg sources array -->
@@ -61,6 +68,7 @@ function getUC(){
 			});
 		});
 	});
+
 	</script>
 	<!-- ------------------------- -->
 
@@ -83,23 +91,24 @@ function getUC(){
 		</div>
 	</div>
 	<!-- ------------------------- -->
+	<div style="height: 30px;">
+	</div>
 
-
-	<div class="row"  style="background:#66ff66;border-radius:10px;width:30%;margin:5%0%0%2%;opacity:0.85">
-		<div class="col-xs-12"  style="background:#66ff66;border-radius:10px;width:90%;margin:0%0%0%0%;opacity:0.85">
-			<div class="box box-primary"  style="background:#66ff66;border-radius:10px;width:100%;margin:0%0%0%5%;opacity:0.85">
-				<div class="box-header">
-					<h3 class="box-title" style="font-size:28px;opacity:1">Buy Product</h3>
+	<div class="row" align="center">
+		<div class="col-md-6" >
+			<div class="tablecontainer" style="margin-left:50px;margin-right: 50px; "> 
+				<div class="box-header" align="center">
+					<h3 class="box-title" style="font-size:28px;opacity:1">Create Product</h3>
 				</div>
 
 				<div class="form-group">
-
 					<table style="width:100%">
 						<form id="buy_product">
 
 							{{-- Form::open(array('url' => route("buyProduct"))) --}}
 							<tr>
-								<td>
+
+								<td><br>
 									<label for="product_id"> Product  : &nbsp;&nbsp;&nbsp; </label>
 								</td>
 								<td>
@@ -108,15 +117,14 @@ function getUC(){
 										<option value="{{ $prod->id }}">{{ $prod->god->user->username or 'GOD'}}'s'  {{ $prod->category }} {{ $prod->name }} id: ({{ $prod->id }})</option>
 										@endforeach
 									</select>
-								</td> </tr><tr><td><br><br>
-
-								<label>buy_price : </td><td><input disabled="true" id='buy_price' value=1472 /></label><br>
-							</td></tr><tr><td><br><br>
-							<label>RET : </td><td><input disabled="true" id='RET' value=5 /></label><br>
-						</td></tr><tr><td><br><br>
-						<label>num_units : </td><td><input type='number' name='num_units' value=10 /></label><br>
-					</td></tr><tr><td><br><br>
-					&nbsp;&nbsp;<div> <input type='submit' value="Buy Product" /> </div>
+								</td> </tr><tr><td><br>
+								<label>buy_price : </td><td><input disabled="true" class="form-control" id='buy_price' value=1472 /></label>	
+							</td></tr><tr><td><br>
+							<label>RET : </td><td><input disabled="true" class="form-control" id='RET' value=5 /></label>	
+						</td></tr><tr><td><br>
+						<label>num_units : </td><td><input type='number' class="form-control" name='num_units' value=10 /></label>	
+					</td></tr><tr><td align="center" colspan="2">	
+					<input type='submit' class="btn btn-lg" value="Buy Product" />
 				</td></tr>
 
 				{{-- Form::close() --}}
@@ -124,22 +132,19 @@ function getUC(){
 		</table>
 
 	</div>
+	<!-- form closed -->
 
-	<!-- /.box-header -->
-
 </div>
-</div>
-<!-- /.box-body -->
-</div>
-<!-- /.box -->
+<!-- table container -->
 </div>
 <!-- /.col -->
-</div>
 
 <div class="col-md-6">
-	<div id="boughtProducts" class="container" style="overflow-y:auto;height:75%;background:#66ff66;border-radius:10px;width:100%;margin:-51%0%0%80%;opacity:0.85">
-		<div class="box-header with-border">
-			<h3 class="box-title"> Available Products</h3>
+	<div class="row">
+		<div id="boughtProducts" class="tablecontainer" style=" overflow-y:auto;height:35%;margin-left:50px;margin-right   : 50px;"> 
+			<div class="box-header with-border">
+				<h3 class="box-title"> Available Products</h3>
+			</div>
 		</div>
 	</div>
 </div>

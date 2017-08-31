@@ -52,41 +52,9 @@ function redeem(){
 }
 reqRedeem(0);
 </script>
-<script type="text/javascript">
-function convertDictToArr(dict){
-  arr = [];
-  for (var d in dict){
-    arr.push(dict[d]);
-  }
-  return arr;
-}
-function inv_detail(){
-  $.ajax({
-    method: "POST",
-    url: "{{ route('getInvDetail') }}",
-      //data: { '': redeemLE },
-    })
-  .success(function( data1 ) {
-      // console.log(convertDictToArr(data1[0]));
-
-      var cellData=[];
-      var firstRow=['Product ID','Product Name','Product Category','God Name','Total Inserted', 'Total Received'];
-      var counter=0;
-      cellData.push(firstRow);
-      for(var i=0; i<data1.length ;i++){
-        cellData.push(convertDictToArr(data1[i]));
-      }    
-      insertTable(cellData,'inv_table',1);
-      
 
 
-      
-    });
-}
-window.onload=inv_detail;
-</script>
-
-<div class="info-box bg-red" style="opacity:0.85;width:45%;margin:7%0%0%3%">
+<div class="info-box bg-red" style="opacity:0.85;width:45%;position: relative; top:3%; left:3%">
   <span class="info-box-icon"><i class="fa fa-heartbeat"></i></span>
 
   <div class="info-box-content">
@@ -97,10 +65,8 @@ window.onload=inv_detail;
   <!-- /.info-box-content -->
 </div> 
 
-
-
 <!-- User LE  -->
-<div class="info-box bg-aqua" style="width:45%;margin:2%0%0%3%">
+<div class="info-box bg-aqua" style="width:45%;opacity:0.85; position: relative;top: 4%; left: 3%">
   <span class="info-box-icon"><i class="fa fa-star"></i>
     <!-- more options- --> <!-- ion ion-ios-heart-outline --> <!-- fa-star --> <!-- fa-thumbs-o-up --> <!-- fa-times-circle -->
   </span>
@@ -114,12 +80,10 @@ window.onload=inv_detail;
 
   </div>
 </div>
-<br>
-<br>
 
-<div class="row" style="padding-left: 6%;">
+<div class="row" style="width:46% ; position: relative; top: 5%; left: 3%; padding-left:1%;">
   <!-- Upper THR -->
-  <div class=" col-md-4 info-box" style="width:22%;background:#22f474;opacity: 0.9">
+  <div class=" col-md-4 info-box" style="width:50%;background:#22f474;opacity: 0.9">
     <span class="info-box-icon bg-green"><div><i class="fa fa-fw fa-users"></i></div></span>
     <div class="info-box-content">
       <span class="info-box-text"> Upper Threshold </span>
@@ -127,7 +91,7 @@ window.onload=inv_detail;
     </div>
   </div>
   <!-- Lower THR -->
-  <div class="col-md-4 info-box" style="width:22%;background:#22f474;opacity: 0.9">
+  <div class="col-md-4 info-box" style="width:50%;background:#22f474;opacity: 0.9">
     <span class="info-box-icon bg-yellow"><div><i class="fa fa-fw fa-user"></i></div></span>
     <div class="info-box-content">
       <span class="info-box-text">Lower Threshhold</span>
@@ -146,10 +110,10 @@ window.onload=inv_detail;
 </div>
 -->
 
-<div class="col-md-4" style="padding-left: 10%">
+<div class="col-md-4" style="padding-left: 10%; position:relative; top:6%; left:3%;">
  <div class="box box-primary"  style="background:#3399ff;padding-left: 10%;padding-right:10%;padding-bottom: 5%">
   <div class="box-header">
-    <h3 class="box-title">Redeem Stored LE</h3>
+    <h2 class="box-title" style="color: white;">Redeem Stored LE</h2>
   </div>
   <br>
   <input type='range'  class="btn btn-danger" min="0" max="{{$user->stored_LE or 1}}" id="stored_LE_slide" oninput=" $('#redeemLE').val(this.value)" value=0 /> 
@@ -157,12 +121,11 @@ window.onload=inv_detail;
   <input type='number' id='redeemLE' value=0 /> 
   <button onclick="redeem()"  class="btn btn-danger pull-right"> REDEEM</button>
   <br>
-  <br>
 </div>
 </div>
 
 <!-- interactive chart -->
-<div class="col-md-4" style="width:40%;background:#3399ff;margin:-30%0%0%52%;opacity:0.9;border-radius:10px">
+<div class="col-md-4" style="width:45%;background:#3399ff;position: relative; top:-38%; left:18%; opacity:0.9;border-radius:10px">
   <div class="row">
     <div class="col-xs-12">
       <div class="box box-primary">
@@ -182,13 +145,13 @@ window.onload=inv_detail;
         </div>
 
         <!-- Here comes the chart -->
-        <div id="interactive_user" style="height: 300px; padding: 0px; position: relative;"> </div>
+        <div id="interactive_user" style="height: 32%; padding: 0px; position: relative;"> </div>
       </div> <!-- /.box-body-->
     </div> <!-- /.box -->
   </div> <!-- /.col -->
 </div>
 
-<div class="col-md-4" style="width:40%;background:#3399ff;margin:-15%0%0%52%;opacity:0.9;border-radius:10px">
+<div class="col-md-4" style="width:45%;background:#3399ff;position: relative;opacity:0.9; top:-36%; left:51.5% ;border-radius:10px">
   <div class="row">
     <div class="col-xs-12">
       <div class="box box-primary">
@@ -204,19 +167,11 @@ window.onload=inv_detail;
           </div>
         </div>
         <!-- Here comes the chart -->
-        <div id="interactive_syst" style="height: 300px; padding: 0px; position: relative;"> </div>
+        <div id="interactive_syst" style="height: 32%; padding: 0px; position: relative;"> </div>
       </div> <!-- /.box-body-->
     </div> <!-- /.box -->
   </div> <!-- /.col -->
 </div>
-
-<!-- ------------ -->
-
-<div class="col-xs-6" id="inv_table">
-
-</div>
-
-<!-- ------------ -->
 
 
 <script src="./plugins/fastclick/fastclick.js"></script>

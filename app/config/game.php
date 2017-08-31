@@ -18,12 +18,12 @@ return array(
 	'notifTime'=>60,
 	'topmovers_update_time'=>60,
 	'notifHTMLs'=>[
-	'clean'=>'Clean',
-	'warn_die'=>'<i class="btn btn-warning fa fa-life-saver">	Death Warning</i>',
-	'warning_down'=>'<i class="btn btn-warning fa fa-arrow-circle-down">	Warning Down</i>',
-	'stuck_wait'=>'<i class="btn btn-danger fa fa-level-down">	Waiting for Swap Down</i>',
-	'class_topper'=>'<i class="btn btn-success fa fa-arrow-circle-up">	Level Up Candidate</i>',
-	'swap_down'=>'<i class="btn btn-danger fa fa-arrow-circle-down">	Switching Role </i>',
+	'clean'=>'<i class="btn btn-block btn-primary btn-sm fa fa-check">All Okay</i>',
+	'warn_die'=>'<i class="btn btn-block btn-warning btn-sm fa fa-life-saver">	Death Warning</i>',
+	'warning_down'=>'<i class="btn btn-block btn-warning btn-sm fa fa-arrow-circle-down">	Warning Down</i>',
+	'stuck_wait'=>'<i class="btn btn-block btn-danger btn-sm fa fa-level-down">	Waiting for Swap Down</i>',
+	'class_topper'=>'<i class="btn btn-block btn-success btn-sm fa fa-arrow-circle-up">	Level Up Candidate</i>',
+	'swap_down'=>'<i class="btn btn-block btn-danger btn-sm fa fa-arrow-circle-down">	Switching Role </i>',
 	'f_yeah'=>'F yeah !',
 	],
 	'receiptNames'=>[
