@@ -17,13 +17,13 @@
   @yield('headContent')
   
   <style type="text/css">
-    header input {
+    /*header input {
       width: 100px;
     }
     .headLink{
       color:red;
       font-size: 15px;
-    }
+    }*/
   </style>
 </head>
 
@@ -139,102 +139,147 @@ function insertTable(cellData,divID,black){
 
 <!--   ----------------------------------- -->
 
-<header class="main-header" style="background:#3399ff;opacity:0.85">
-  <span class="info-box-icon bg-aqua" style="opacity:0.85"> <i class="fa fa-fw fa-user"><div id="active_cat" align="center" style="font-size: 40%"></div></i></span>
-  <nav class="navbar navbar-static-top">
-    <div class="row">
+<header class="main-header" style="background:#3399ff;opacity:0.85; position:relative; height: 14%">
 
+  <span class="info-box-icon bg-aqua" style="opacity:0.85; position:relative; height: 100%">
+    <i class="fa fa-fw fa-user" style="position:relative; top:10%">
+      <div id="active_cat" align="center" style="font-size: 40%"></div></i>
+    </span>
+    <!-- <nav class="navbar navbar-static-top"> -->
+    <div>
+      <div class="row">
+        <div class="col-xs-4" style="position: relative; left:3%">
 
-      <div class="col-md-3">
-        <div class="row">
-
-          <ul class="nav navbar-nav "> 
+          <div class="row">
+            <br>
+          </div>
+          <div class="row">
+            <!-- <ul class="nav navbar-nav ">  -->
             <!-- We also have $user to be used -->
             <!-- common one- -->
-            <li> <a class="headLink"  href="{{ URL::route('energy') }}">Energy</a> </li>
-            
-            <?php $user=Auth::user()->get();$catLinks = C::get('master.catLinks'); ?>
-            @foreach($catLinks[$user->category] as $linkName=>$title)
-            <li> <a class="headLink"  href="{{ URL::route($linkName) }}">{{$title}}</a> </li>
-            @endforeach
-          </ul>
+            <div class="btn-group btn-group-justified">
+              <a href="{{ URL::route('energy') }}" class="btn btn-primary" role="button">Energy</a>
+              <?php $user=Auth::user()->get();$catLinks = C::get('master.catLinks'); ?>
+              @foreach($catLinks[$user->category] as $linkName=>$title)
+              <a href="{{ URL::route($linkName) }}" class="btn btn-primary" role="button">{{$title}}</a>
+              @endforeach
+            </div>
+            <!-- </ul> -->
 
-        </div>
-      </div>
-      <div class="col-md-2"> 
-        Notification :
-        <p id="msg"> </p>
-      </div>
-      <div class="col-md-6">
-
-        <div class="gap"><br></div>
-        <div class="row">
-          <div class="col-md-2" >
-            <div class="input-group">
-              <div class="input-group-btn">
-                <button class="btn btn-sm bg-purple ">Lower</button>
-              </div> 
-              <input  readonly="readonly" disabled id='lowerTHR' value=0 /> 
-            </div>
           </div>
-          <div class="col-md-2" >
-            <div class="input-group">
-              <div class="input-group-btn">
-                <button class="btn btn-sm bg-purple ">User le</button>
-              </div>        <input readonly="readonly" disabled id='le' value=0 >
-            </div>
+          <div class="row">
+            <br>
           </div>
-
-          <div class="col-md-2" >
-            <div class="input-group">
-              <div class="input-group-btn">
-                <button class="btn btn-sm bg-purple ">decay</button>
-              </div> 
-              <input readonly="readonly" disabled id='decay' value=0 /> 
+          <div class="row">
+            <div class="progress" style="height:10px;" >
+              <div id="LEwidth" class="progress-bar" style="width: 20%"></div>
             </div>
-          </div>
-          <div class="col-md-2" >
-            <div class="input-group">
-              <div class="input-group-btn">
-                <button class="btn btn-sm bg-purple ">ETA</button>
-              </div>  
-              <input readonly="readonly" disabled  id='ETA' value=0 />
-            </div>
-          </div>
-
-          <div class="col-md-2" >
-            <div class="input-group">
-              <div class="input-group-btn">
-                <button class="btn btn-sm bg-purple ">Upper</button>
-              </div>  
-              <input readonly="readonly" disabled id='upperTHR' value=0 /> 
-            </div>
-          </div>  
-          <div class="col-md-2" >
-            <div class="input-group">
-              <div class="input-group-btn">
-                <button class="btn btn-sm bg-purple ">Stored LE</button>
-              </div> 
-              <input readonly="readonly" disabled id='stored_LE' value=0 /> 
-            </div> 
-          </div> 
-        </div>
-        <div class="gap"><br></div>
-        
-        <div class="row">
-          <div class="progress" style="height:10px;" >
-            <div id="LEwidth" class="progress-bar" style="width: 20%"></div>
           </div>
         </div>
+
+        <div class="col-xs-6" style="position: relative; left:5%">
+
+          <div class="gap"><br></div>
+          <!-- <div class="input-group"> -->
+          <table >
+            <tr>
+              <td>
+                <button class="btn btn-sm btn-block bg-purple ">Lower</button>
+              </td>
+              <td>
+                <input  readonly="readonly" class="btn btn-block  btn-sm" disabled id='lowerTHR' value=0 /> 
+              </td>
+              <td>
+                <button class="btn btn-sm btn-block bg-purple ">User le</button>
+              </td>
+              <td>
+                <input readonly="readonly"  class="btn  btn-block btn-sm" disabled id='le' value=0 >
+              </td>
+              <td>
+                <button class="btn btn-sm btn-block bg-purple ">Stored LE</button>
+              </td>
+              <td>
+                <input readonly="readonly"  class="btn btn-block btn-sm" disabled id='stored_LE' value=0 /> 
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <button class="btn btn-sm btn-block bg-purple ">decay</button>
+              </td>
+              <td>
+                <input readonly="readonly"  class="btn btn-block btn-sm" disabled id='decay' value=0 /> 
+              </td>
+              <td>
+
+                <button class="btn btn-sm btn-block bg-purple ">ETA</button>
+              </td>
+              <td>
+                <input readonly="readonly"  class="btn  btn-block btn-sm" disabled  id='ETA' value=0 />
+              </td>
+              <td>
+                <button class="btn btn-sm btn-block bg-purple ">Upper</button>
+              </td>
+              <td>
+                <input readonly="readonly"  class="btn btn-block btn-sm" disabled id='upperTHR' value=0 /> 
+              </td>
+            </tr>
+          </table>
+        </div>
+
+        <div class="col-xs-1" style="width:10% ; position: relative;"> 
+          <div class="row"><br></div>
+          <table>
+            <tr>
+              <td>
+                <span id="msg"> </span>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div onclick="openNav()" id="news_btn"><button class="btn-block btn-success btn-sm">News &#9776;</button>
+                </div>
+              </td>
+            </tr>
+          </table>
+          
+        </div>
+
+
       </div>
     </div>
 
-  </nav>
-</header>
+    <!-- </nav> -->
+  </header>
 
-<div id="news_panel" style="background-color: white; padding:10px; position: fixed; right:0px; height:500px; z-index: 99999; overflow-y: auto; width:400px;line-height: 20px;font-size: 15px;font-family: 'Ubuntu';color:#666666; ">
-</div>
-@yield('bodyContent')
+
+  <script>
+    function openNav() {
+      if(document.getElementById("news_pan").style.display == "block")
+        document.getElementById("news_pan").style.display = "none";
+      else {document.getElementById("news_pan").style.display = "block";
+      document.getElementById("news_btn").style.color = "white";
+    }
+  }
+
+  function closeNav() {
+    document.getElementById("news_pan").style.display = "none";
+  }
+</script>
+
+<div id="news_pan" class="container" style="background-color: white; padding:10px; position: fixed; right:0px; height:88%; z-index: 99; display: none;width:400px; font-family: 'Ubuntu';color:#666666; ">
+
+  <h1 align="center" style="margin-top: 5%;"> News</h1>
+   <a href="javascript:void(0)" class="closebtn" style="position: absolute;
+    top: 0;
+    right: 25px;
+    color: #666666;
+    text-decoration: none;
+    font-size: 60px;
+    margin-left: 50px;" onclick="closeNav()">&times;</a>
+    <div id="news_panel"  style="line-height: 20px;font-size: 15px; overflow-y: auto; height: 83%;">
+    </div>
+  </div>
+  @yield('bodyContent')
 
 </body>
 </html>

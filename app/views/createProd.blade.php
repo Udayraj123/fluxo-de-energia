@@ -102,13 +102,16 @@ god.jpg
   </div>
 </div>
 <!-- ------------------------- -->
-
+<!-- 
 <div class="well" style="background:#3399ff">
   <input id="ex6" type="text" data-slider-min="-5" data-slider-max="20" data-slider-step="1" data-slider-value="3" data-value="8" value="8" style="display: none;">
   <span id="ex6CurrentSliderValLabel">Price <span id="ex6SliderVal">8</span></span>
 </div>
-
-<div class="row" align="center">
+Not required anymore
+ -->
+<div style="height: 30px;">
+</div>
+ <div class="row" align="center">
  <div class="col-md-6" >
    <div class="tablecontainer" style="margin-left:50px;margin-right   : 50px;"> 
      <div class="box-header" align="center">
