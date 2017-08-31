@@ -39,7 +39,7 @@ class GC extends \BaseController {
 		}
 		$funding_products = $funding_products?		$funding_products->toArray()	:	[];
 		$prev_products	  =    $prev_products?		$prev_products->toArray()		:	[];
-		log::info($funding_products);
+		// log::info($funding_products);
 		return View::make('fundingBar')->with([
 			'funding_products'=>$funding_products,
 			'prev_products'=>$prev_products
@@ -183,11 +183,14 @@ class GC extends \BaseController {
 		$user->le -= $p->total_cost;
 		$user->save();
 		$p->save();
-		
-		$msg = ($p->created_at.' : '.$p->name.'is created in category of '.$p->category .' of quality '.$p->quality.' , the funding time for the product is '.$p->FT.' minutes and its expiry time is '.$p->ET.' minutes. The available quantity is '.$p->total_shares.' each prices at '.$p->unit_price.'. This Product is  created by '.$user->username.'. <br>'.'God says about his product :'.$p->description);
 
-		Event::fire('all_news',$msg);
+		
+		
+
+		Event::fire('createProd',[[$user,$p]]);
 		echo "<tr> <td> Final Life Energy </td><td>".$user->le."</td></tr></table>";
+
+
 	}
 	else return "Transaction Failed.";
 } 

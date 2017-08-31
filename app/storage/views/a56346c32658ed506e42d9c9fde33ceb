@@ -2,21 +2,21 @@
 <br>
 <script>
 
-  var c1=<?php echo $c1; ?>;
-  var c2=<?php echo $c2; ?>;
-  var c3=<?php echo $c3; ?>;
-  var c4=<?php echo $c4; ?>;
-  var bp=<?php echo $fruitBP; ?>;
+var c1=<?php echo $c1; ?>;
+var c2=<?php echo $c2; ?>;
+var c3=<?php echo $c3; ?>;
+var c4=<?php echo $c4; ?>;
+var bp=<?php echo $fruitBP; ?>;
 
-  function getUC(){
-    var ET=document.getElementById('ET').value;
-    var GT=1;
-    var Tol=document.getElementById('Tol').value;
-    var quality=document.getElementById('quality_factor').value;
-    return bp*(c1*quality+c2*GT+c3*ET)*(1+c4*Tol);
-  }
-  setInterval(function(){$('#unit_price').val(getUC());},<?php echo C::get('game.msRefreshRate'); ?>);
-  
+function getUC(){
+  var ET=document.getElementById('ET').value;
+  var GT=1;
+  var Tol=document.getElementById('Tol').value;
+  var quality=document.getElementById('quality_factor').value;
+  return bp*(c1*quality+c2*GT+c3*ET)*(1+c4*Tol);
+}
+setInterval(function(){$('#unit_price').val(getUC());},<?php echo C::get('game.msRefreshRate'); ?>);
+
 
 </script>
 <table border="1px" cellpadding="20px">
@@ -37,6 +37,11 @@
           <option value="<?php echo $purch->id; ?>">(<?php echo $purch->avl_units; ?>)<?php echo isset($purch->product->god->user->username) ? $purch->product->god->user->username : 'GOD'; ?>'s  <?php echo $purch->product->category; ?> <?php echo $purch->product->name; ?> (<?php echo $purch->id; ?>)
           </option>
           <?php endif; ?>
+          <?php
+          if(!$purch->product)
+            Log::info("No Owner for product ");
+          Log::info($purch);
+          ?>
           <?php endforeach; ?>
         </select>
       </label>
@@ -84,11 +89,11 @@
 </tr>
 </table>
 <script>
-  var stateUnused=0,stateSeed=1,stateFert=2,stateFertSeed=3,stateFruit=4;
-  var stateText = ['Unused','Seed ','Fert Only &nbsp','Fert & Seed','Fruit'];
-  var colors = ['goldenrod','grey','blue','black','yellow','orange'];
+var stateUnused=0,stateSeed=1,stateFert=2,stateFertSeed=3,stateFruit=4;
+var stateText = ['Unused','Seed ','Fert Only &nbsp','Fert & Seed','Fruit'];
+var colors = ['goldenrod','grey','blue','black','yellow','orange'];
 
-  function makeBox(state,id,check){
+function makeBox(state,id,check){
     // console.log("makeBox",state,id,check,(check?'':'un')+'checked');
     var Icon='<span style="font-size:30px;">&nbsp '+stateText[state]+'&nbsp</span>';
     var block= '<label ><input type="checkbox" '+(check?'':'un')+'checked name="land_ids[]" onclick="updateLands(this.id)" id="land'+id+'" value="'+id+'"/>'+Icon+'</label>';
@@ -170,10 +175,10 @@
     alert('error updating RGT'); 
   }
 });
-  }
-  updateLands();
+}
+updateLands();
 
-  function makeFetchable(land_id){
+function makeFetchable(land_id){
   //THIS will make the land clickable & onclick will send an ajax to increase num_units in Fruits while cleaning the land
 
 //get that div box, change its onclick to call Fetch
@@ -206,4 +211,4 @@ updateLands();
 <br>
 <?php $__env->stopSection(); ?>
 
-<?php echo $__env->make('master', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+<?php echo $__env->make('master_home', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
