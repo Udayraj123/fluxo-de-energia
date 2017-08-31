@@ -92,7 +92,6 @@ progressGroup+
 	for (var i = 0; i < funding_products.length; i++) {
 		cr = funding_products[i];
 		currRow=[counter++];
-		console.log(counter);
 		for (var j = 1; j < preProg.length; j++) {
 	currRow.push(cr[preProg[j]])
 		}
