@@ -12,6 +12,7 @@ TODOs :
 - [x] Replace remaining post requests with Ajax calls
 - [ ] Add Migrations
 - [ ] Refactor the code
+- [ ] Debug Bidprice not updating
 
 ⋅⋅* Currently use the game.sql file for setting up the database. Also make sure to modify the `app/config/database.php` file with correct credentials.
 

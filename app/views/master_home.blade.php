@@ -1,3 +1,4 @@
+<html>
 <!-- Plugins contains flot, jQuery, fastclick -->
 <head>
   <meta charset="utf-8"> <meta http-equiv="X-UA-Compatible" content="IE=edge">  
@@ -236,3 +237,4 @@ function insertTable(cellData,divID,black){
 @yield('bodyContent')
 
 </body>
+</html>

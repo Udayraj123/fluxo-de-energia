@@ -1,5 +1,24 @@
 @extends('master_home')
 
+@section('headContent')
+<script src="{{asset('js/moment.js')}}"></script>
+<!-- AdminLTE App -->
+
+<title>
+  Farming Land 
+</title>
+<style type="text/css">
+.box-header{
+  background:#094d00;
+  margin: 20px;
+  color:grey;
+  opacity:0.85
+}
+</style>
+@endsection
+@section('bgsource')
+Terrace-Farming-Paddy-Spinach.jpg
+@endsection
 @section('bodyContent')
 <br>
 <script>
@@ -21,17 +40,24 @@ setInterval(function(){$('#unit_price').val(getUC());},{{C::get('game.msRefreshR
 
 
 </script>
-<table border="1px" cellpadding="20px">
-
-  <tr>
-    <td>
-      {{ Form::open(array('url' => route("applyPurch"))) }}
-      <div id="Land">  </div>
-    </td>
-    <td>
+<div id="LandWrapper " class="row box-header with-border">  
+  {{ Form::open(array('url' => route("applyPurch"))) }}
+  <div class="col-md-6"> 
+    <div class="row"> 
+      <div class="row"> 
+        <div class="col-md-12">  
+          <h1 style="color:lightblue" align="center"> Your Land</h1>
+        </div>
+      </div>
+      <div class="row">  
+        <div class="col-md-12">  
+          <div id="Land">  </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">  
       <div id="status">  </div>
-
-      <pre>
+      <pre class="box-header">
         <label>CHOOSE SEED/FERT/LAND :   <select name='purchase_id' id='purchase_id'>
           @foreach ($purchases as $purch)
           @if($purch->avl_units>0 &&  $purch->product)
@@ -49,57 +75,56 @@ setInterval(function(){$('#unit_price').val(getUC());},{{C::get('game.msRefreshR
       <label style="position: relative;left:40%;top: 100%"><input type="submit" value="Apply"/></label><br>
       {{ Form::close() }}
     </pre>
-  </td>
-</tr>
+  </div>
+</div>
+<div class="col-md-5">
+  <pre class="box-header">
+    {{ Form::open(array('url' => route("launchFruit"))) }}
+    CHOOSE FRUIT STORAGE TO LAUNCH :
+    <label>
+      <select name='storage_id' id='storage_id'>
+        @foreach ($fruits as $l=>$f)
+        @if($f->num_units>0 && $f->launched==0)
+        <option value="{{ $f->id }}">
+          Fruit-{{$f->id}}{{$f->name}} of seed{{$f->seed_id}} ({{$f->num_units}}) 
+        </option>
+        @endif
+        @endforeach
 
-<tr>
-  <td>
-    <pre>
-      {{ Form::open(array('url' => route("launchFruit"))) }}
-      CHOOSE FRUIT STORAGE TO LAUNCH :
-      <label>
-        <select name='storage_id' id='storage_id'>
-          @foreach ($fruits as $l=>$f)
-          @if($f->num_units>0 && $f->launched==0)
-          <option value="{{ $f->id }}">
-            Fruit-{{$f->id}}{{$f->name}} of seed{{$f->seed_id}} ({{$f->num_units}}) 
-          </option>
-          @endif
-          @endforeach
-
-        </select>
-      </label>
-      ENTER FRUIT DETAILS, All Fields below are required : 
-      <label>name: <input type='text' name='name' id='name' value="myFruit" /></label><br>
-      <label>description: <input type='text' name='description' id='description' value="description" /></label><br>
-      <label>quality_factor : <input min="5" max="100" value="10" type="range" name='quality_factor' id='quality_factor'/></label><br>
-      <label>ET : <input min="5" max="30" value="5" type="range" name='ET' id='ET'/></label><br>
-      <label>Tolerance : <input min="0" max="100" type="range" name='Tol' id='Tol' value=4/></label><br>
-      <label>unit_price: <input readonly="readonly" type='number' id='unit_price' name='unit_price' value="2000"/></label><br>
-      <!-- Disabled ones are not sent, read only ones are sent -->
-      <label style="position: relative;left:40%;top: 100%"><input type="submit" value="Deploy"/></label><br>
-      {{ Form::close() }}
-    </pre>
-  </td>
-  <td>
+      </select>
+    </label>
+    ENTER FRUIT DETAILS, All Fields below are required : 
+    <label>name: <input type='text' name='name' id='name' value="myFruit" /></label><br>
+    <label>description: <input type='text' name='description' id='description' value="description" /></label><br>
+    <label>quality_factor : <input min="5" max="100" value="10" type="range" name='quality_factor' id='quality_factor'/></label><br>
+    <label>ET : <input min="5" max="30" value="5" type="range" name='ET' id='ET'/></label><br>
+    <label>Tolerance : <input min="0" max="100" type="range" name='Tol' id='Tol' value=4/></label><br>
+    <label>unit_price: <input readonly="readonly" type='number' id='unit_price' name='unit_price' value="2000"/></label><br>
+    <!-- Disabled ones are not sent, read only ones are sent -->
+    <label style="position: relative;left:40%;top: 100%"><input type="submit" value="Deploy"/></label><br>
+    {{ Form::close() }}
   </pre>
-</td>
-</tr>
-</table>
+</div>
+</div>
 <script>
 var stateUnused=0,stateSeed=1,stateFert=2,stateFertSeed=3,stateFruit=4;
-var stateText = ['Unused','Seed ','Fert Only &nbsp','Fert & Seed','Fruit'];
-var colors = ['goldenrod','grey','blue','black','yellow','orange'];
+var stateText = ['<i class="fa fa-plus-square"></i> Unused',
+'<i class="fa fa-empire"></i> Seed ',
+'<i class="fa fa-hourglass"></i> Fert Only &nbsp',
+'<i class="fa fa-tree"></i> Fert & Seed',
+'<i class="fa fa-apple"></i> Fruit'];
+var colors = ['yellow','grey','blue','black','orange','green'];
 
 function makeBox(state,id,check){
     // console.log("makeBox",state,id,check,(check?'':'un')+'checked');
     var Icon='<span style="font-size:30px;">&nbsp '+stateText[state]+'&nbsp</span>';
-    var block= '<label ><input type="checkbox" '+(check?'':'un')+'checked name="land_ids[]" onclick="updateLands(this.id)" id="land'+id+'" value="'+id+'"/>'+Icon+'</label>';
+    var block= '<input type="checkbox" '+(check?'':'un')+'checked name="land_ids[]" onclick="updateLands(this.id)" id="land'+id+'" value="'+id+'"/>'+Icon;
     if(state==stateFruit || state==stateFertSeed )
-      block='<label><button type="button"'+(state==stateFruit?'':'')+'onclick="updateLands(this.id)" id="land'+id+'"/>'+Icon+'</label>';
+      block='<button type="button"'+(state==stateFruit?'':'')+'onclick="updateLands(this.id)" id="land'+id+'"/>'+Icon;
+    block = '<label style="width:205px;height:105px;margin:10px" class="btn btn-app bg-'+colors[state]+'" >'+block+'</label>';
+
     return block;
   }
-
 
   function makeLand2(divID,states,landIDs,checks){
 
@@ -124,7 +149,7 @@ function makeBox(state,id,check){
         check= typeof(check)=='undefined'?false:check; //default for buttons/ new lands
 
         var current_col=current_row.insertCell();
-        current_col.style="background:"+colors[state]+";color:lightgreen";
+        // current_col.style="background:"+colors[state]+";color:lightgreen";
         current_col.innerHTML=makeBox(state,land_id,check);
         cellCount++;
       }
@@ -160,7 +185,7 @@ function makeBox(state,id,check){
         makeLand2("Land",states,landIDs,checks); //this removes previous land & replaces with new states
 
         //TODO put this following on onclick () directly
-        var text='Ajax:   land'+land_id+'state ' + state +' : will grow a fruit in '+RGTs[landIDs.indexOf(land_id.toString())]+' minutes !';
+        var text='Ajax:  land'+land_id+'state ' + state +' : will grow a fruit in '+RGTs[landIDs.indexOf(land_id.toString())]+' minutes !';
         
         if(state==stateFruit){
           text='Ajax: land'+land_id+' has grown fully, click to fetch the fruit';
