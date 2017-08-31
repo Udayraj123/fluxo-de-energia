@@ -9,50 +9,48 @@
 @section('bgsource')
 god.jpg
 @stop
-
-
 @section('bodyContent') 
 <script type="text/javascript"> 
-  setInterval("takeFromAbove()",{{C::get('game.msRefreshRate')}});
+setInterval("takeFromAbove()",{{C::get('game.msRefreshRate')}});
 
-  function takeFromAbove(){
+function takeFromAbove(){
 
-    sysLE=parseInt($('#sysLE').html());
-    lowerTHR=$('#lowerTHR').val();
-    upperTHR=$('#upperTHR').val();
-    le = parseInt($('#le').val());
-    decay=parseInt($('#decay').val());
-    THRpercentL = Math.round(lowerTHR/sysLE*1000*p)/p;
-    THRpercentU = Math.round(upperTHR/sysLE*1000*p)/p;
-    decayRate=Math.round(60*decay/le*100*p)/p;
-    $('#decayRate').html(decayRate);
-    $('#THRpercentL').html(THRpercentL);
-    $('#THRpercentU').html(THRpercentU);
-    $('#ownLE').html(le);
-    lw=document.getElementById('LEwidth').style.width;
-    $('#ownLEwidth').width(lw);
-  }
+  sysLE=parseInt($('#sysLE').html());
+  lowerTHR=$('#lowerTHR').val();
+  upperTHR=$('#upperTHR').val();
+  le = parseInt($('#le').val());
+  decay=parseInt($('#decay').val());
+  THRpercentL = Math.round(lowerTHR/sysLE*1000*p)/p;
+  THRpercentU = Math.round(upperTHR/sysLE*1000*p)/p;
+  decayRate=Math.round(60*decay/le*100*p)/p;
+  $('#decayRate').html(decayRate);
+  $('#THRpercentL').html(THRpercentL);
+  $('#THRpercentU').html(THRpercentU);
+  $('#ownLE').html(le);
+  lw=document.getElementById('LEwidth').style.width;
+  $('#ownLEwidth').width(lw);
+}
 
-  function reqRedeem(redeemLE){
-    $.ajax({
-      method: "POST",
-      url: "{{ route('redeemLife') }}",
-      data: { 'redeemLE': redeemLE },
-    })
-    .success(function( data ) {
-      console.log("REDEEMED ",data['respLE']);
-      var now=parseInt(data['stored_LE']);
-      console.log("Now stored_LE ",now);
+function reqRedeem(redeemLE){
+  $.ajax({
+    method: "POST",
+    url: "{{ route('redeemLife') }}",
+    data: { 'redeemLE': redeemLE },
+  })
+  .success(function( data ) {
+    console.log("REDEEMED ",data['respLE']);
+    var now=parseInt(data['stored_LE']);
+    console.log("Now stored_LE ",now);
 
       $('#stored_LE').val(now); //update above one.
       $('#stored_LE_slide').attr("max",now);
     });
-  }
-  function redeem(){
-    var redeemLE=$('#redeemLE').val();
-    reqRedeem(redeemLE); 
-  }
-  reqRedeem(0);
+}
+function redeem(){
+  var redeemLE=$('#redeemLE').val();
+  reqRedeem(redeemLE); 
+}
+reqRedeem(0);
 </script>
 <script type="text/javascript">
 function convertDictToArr(dict){
@@ -62,13 +60,13 @@ function convertDictToArr(dict){
   }
   return arr;
 }
-  function inv_detail(){
-    $.ajax({
-      method: "POST",
-      url: "{{ route('getInvDetail') }}",
+function inv_detail(){
+  $.ajax({
+    method: "POST",
+    url: "{{ route('getInvDetail') }}",
       //data: { '': redeemLE },
     })
-    .success(function( data1 ) {
+  .success(function( data1 ) {
       // console.log(convertDictToArr(data1[0]));
 
       var cellData=[];
@@ -78,14 +76,14 @@ function convertDictToArr(dict){
       for(var i=0; i<data1.length ;i++){
         cellData.push(convertDictToArr(data1[i]));
       }    
-        insertTable(cellData,'inv_table',1);
+      insertTable(cellData,'inv_table',1);
       
 
 
       
     });
-  }
-  window.onload=inv_detail;
+}
+window.onload=inv_detail;
 </script>
 
 <div class="info-box bg-red" style="opacity:0.85;width:45%;margin:7%0%0%3%">
@@ -154,14 +152,14 @@ function convertDictToArr(dict){
     <h3 class="box-title">Redeem Stored LE</h3>
   </div>
   <br>
-  <input type='range'  class="btn btn-danger" min="0" max="{{$user->stored_LE or 1}}" id="stored_LE_slide" oninput=" $('#redeemLE').val(this.value)" value=0 /> <input type='number' id='redeemLE' value=0 /> 
-  <button onclick="redeem()"  class="btn btn-danger"> REDEEM</button>
+  <input type='range'  class="btn btn-danger" min="0" max="{{$user->stored_LE or 1}}" id="stored_LE_slide" oninput=" $('#redeemLE').val(this.value)" value=0 /> 
+  <br>
+  <input type='number' id='redeemLE' value=0 /> 
+  <button onclick="redeem()"  class="btn btn-danger pull-right"> REDEEM</button>
+  <br>
   <br>
 </div>
 </div>
-
-
-
 
 <!-- interactive chart -->
 <div class="col-md-4" style="width:40%;background:#3399ff;margin:-30%0%0%52%;opacity:0.9;border-radius:10px">
@@ -179,6 +177,10 @@ function convertDictToArr(dict){
             </div>
           </div>
         </div>
+        <div class="progress progress-bar-vertical" style="width:15px;height:300px" >
+          <div id="LEheight" class="progress-bar  progress-bar-striped  progress-bar-danger"  style="height: 20%"></div>
+        </div>
+
         <!-- Here comes the chart -->
         <div id="interactive_user" style="height: 300px; padding: 0px; position: relative;"> </div>
       </div> <!-- /.box-body-->
@@ -211,7 +213,7 @@ function convertDictToArr(dict){
 <!-- ------------ -->
 
 <div class="col-xs-6" id="inv_table">
-  
+
 </div>
 
 <!-- ------------ -->
@@ -227,7 +229,7 @@ function convertDictToArr(dict){
 
 <script>
 
- $(function () {
+$(function () {
     // We use an inline data source in the example, usually data would
     // be fetched from a server
     var data = [];
@@ -311,7 +313,7 @@ var interactive_plot = $.plot("#interactive_user", [getLiveLE()], {
   });
 
 
- $(function () {
+$(function () {
     // We use an inline data source in the example, usually data would
     // be fetched from a server
     var data = [], totalPoints = 100;
@@ -376,6 +378,7 @@ var interactive_plot = $.plot("#interactive_syst", [getLiveLE()], {
     var updateInterval = 500; //Fetch data ever x milliseconds
     var realtime = "on"; //If == to on then fetch data every x seconds. else stop fetching
     function update() {
+      $('#LEheight').height($('#LEwidth').width());
 
       interactive_plot.setData([getLiveLE()]);
       localStorage.setItem('data_syst',JSON.stringify(data));

@@ -22,4 +22,5 @@ return array(
     'Crypt' => array($vendorDir . '/phpseclib/phpseclib/phpseclib'),
     'ClassPreloader' => array($vendorDir . '/classpreloader/classpreloader/src'),
     'Boris' => array($vendorDir . '/d11wtq/boris/lib'),
+    'Barryvdh\\Snappy' => array($vendorDir . '/barryvdh/laravel-snappy/src'),
 );

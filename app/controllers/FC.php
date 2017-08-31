@@ -566,7 +566,7 @@ public function testFruitRel(){
 
 	}
 
-	else 								echo " Insufficient LE : $LE - $price < $THR, decrease no of units ";
+	else 								echo " Insufficient LE : $LE - $price < ".$thr['lowerTHR'].", decrease no of units ";
 	
 	//return C::get('debug.goBack');
 }

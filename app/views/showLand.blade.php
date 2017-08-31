@@ -58,6 +58,8 @@ setInterval(function(){$('#unit_price').val(getUC());},{{C::get('game.msRefreshR
     <div class="row">  
       <div id="status">  </div>
       <pre class="box-header">
+
+
         <label>CHOOSE SEED/FERT/LAND :   <select name='purchase_id' id='purchase_id'>
           @foreach ($purchases as $purch)
           @if($purch->avl_units>0 &&  $purch->product)

@@ -29,9 +29,6 @@ class IC extends \BaseController {
 
 	}
 
-
-
-
 	//---------------------------------------------------------------
 
 	/* buy Fruit here */

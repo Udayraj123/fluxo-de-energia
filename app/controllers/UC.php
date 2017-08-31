@@ -123,8 +123,8 @@ if(!$user->prev_time){
       try{
         $fcontent = file_get_contents($fileadrs);
       }catch(Exception $e){
+        shell_exec('touch '.$fileadrs);
         $fcontent=" ";
-
       }
       log::info($fcontent);
     }

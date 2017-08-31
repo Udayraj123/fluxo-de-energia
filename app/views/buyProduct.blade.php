@@ -14,8 +14,8 @@ god.jpg
 
 @section('bodyContent') 
 <script type="text/javascript">
-	var X;
-	function getUC(){
+var X;
+function getUC(){
 	var product_id=document.getElementById('product_id').value;
 		//send ajax here.
 		$.ajax({
@@ -43,46 +43,46 @@ god.jpg
 
 	}
 	setInterval("getUC()",{{C::get('game.msRefreshRate')}});
-</script>
+	</script>
 
-<script type="text/javascript">
+	<script type="text/javascript">
 	$(function () {
-  $('#buy_product').on('submit', function (e) {
-    e.preventDefault();
-    $.ajax({
-      type: 'post',
-      url: '{{route("buyProduct")}}',
-      data: $('#buy_product').serialize(),
-      success: function (data) {
-        $('#txn_msg').html(data);
-        $('#myModal').modal('show');
-        $('#myModalClose').click(reloadPage);
-      }
-    });
-  });
-});
-</script>
-<!-- ------------------------- -->
+		$('#buy_product').on('submit', function (e) {
+			e.preventDefault();
+			$.ajax({
+				type: 'post',
+				url: '{{route("buyProduct")}}',
+				data: $('#buy_product').serialize(),
+				success: function (data) {
+					$('#txn_msg').html(data);
+					$('#myModal').modal('show');
+					$('#myModalClose').click(reloadPage);
+				}
+			});
+		});
+	});
+	</script>
+	<!-- ------------------------- -->
 
-<div class="modal fade" id="myModal" role="dialog">
-  <div class="modal-dialog">
+	<div class="modal fade" id="myModal" role="dialog">
+		<div class="modal-dialog">
 
-    <!-- Modal content-->
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Your Transaction Details</h4>
-      </div>
-      <div class="modal-body">
-        <p id="txn_msg">Transcation Message</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" id="myModalClose" data-dismiss="modal">Close</button>
-      </div>
-    </div>
-  </div>
-</div>
-<!-- ------------------------- -->
+			<!-- Modal content-->
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title">Your Transaction Details</h4>
+				</div>
+				<div class="modal-body">
+					<p id="txn_msg">Transcation Message</p>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" id="myModalClose" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- ------------------------- -->
 
 
 	<div class="row"  style="background:#66ff66;border-radius:10px;width:30%;margin:5%0%0%2%;opacity:0.85">
@@ -95,32 +95,31 @@ god.jpg
 				<div class="form-group">
 
 					<table style="width:100%">
-					         <form id="buy_product">
+						<form id="buy_product">
 
-						{{-- Form::open(array('url' => route("buyProduct"))) --}}
-						<tr>
+							{{-- Form::open(array('url' => route("buyProduct"))) --}}
+							<tr>
+								<td>
+									<label for="product_id"> Product  : &nbsp;&nbsp;&nbsp; </label>
+								</td>
+								<td>
+									<select class="form-control" name='product_id' onchange="getUC()" id='product_id'>
+										@foreach ($products as $prod)
+										<option value="{{ $prod->id }}">{{ $prod->god->user->username or 'GOD'}}'s'  {{ $prod->category }} {{ $prod->name }} id: ({{ $prod->id }})</option>
+										@endforeach
+									</select>
+								</td> </tr><tr><td><br><br>
 
-							<td>
-								<label for="product_id"> Product  : &nbsp;&nbsp;&nbsp; </label>
-							</td>
-							<td>
-								<select class="form-control" name='product_id' onchange="getUC()" id='product_id'>
-									@foreach ($products as $prod)
-									<option value="{{ $prod->id }}">{{ $prod->god->user->username or 'GOD'}}'s'  {{ $prod->category }} {{ $prod->name }} id: ({{ $prod->id }})</option>
-									@endforeach
-								</select>
-							</td> </tr><tr><td><br><br>
-
-							<label>buy_price : </td><td><input disabled="true" id='buy_price' value=1472 /></label><br>
+								<label>buy_price : </td><td><input disabled="true" id='buy_price' value=1472 /></label><br>
+							</td></tr><tr><td><br><br>
+							<label>RET : </td><td><input disabled="true" id='RET' value=5 /></label><br>
 						</td></tr><tr><td><br><br>
-						<label>RET : </td><td><input disabled="true" id='RET' value=5 /></label><br>
+						<label>num_units : </td><td><input type='number' name='num_units' value=10 /></label><br>
 					</td></tr><tr><td><br><br>
-					<label>num_units : </td><td><input type='number' name='num_units' value=10 /></label><br>
-				</td></tr><tr><td><br><br>
-				&nbsp;&nbsp;<div> <input type='submit' value="Buy Product" /> </div>
-			</td></tr>
+					&nbsp;&nbsp;<div> <input type='submit' value="Buy Product" /> </div>
+				</td></tr>
 
-			{{-- Form::close() --}}
+				{{-- Form::close() --}}
 			</form>
 		</table>
 

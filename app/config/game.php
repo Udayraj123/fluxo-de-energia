@@ -1,6 +1,6 @@
 <?php
 return array(
-	'swapon'=>1,
+	'swapon'=>0,
 	'boostSwap'=>1,
 	'boostFac'=>0.25,
 	'facDecay' => array("god" => 1*(0.1*0.1/60),"investor" =>(0.1*0.01/60),"farmer" =>1*(0.1*0.001/60)),

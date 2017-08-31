@@ -57,6 +57,8 @@ setInterval(function(){$('#unit_price').val(getUC());},<?php echo C::get('game.m
     <div class="row">  
       <div id="status">  </div>
       <pre class="box-header">
+
+
         <label>CHOOSE SEED/FERT/LAND :   <select name='purchase_id' id='purchase_id'>
           <?php foreach($purchases as $purch): ?>
           <?php if($purch->avl_units>0 &&  $purch->product): ?>

@@ -1,5 +1,30 @@
 <?php
 """
+
+Final Call.
+// save prev states into a file or something
+
+
+TEST TEST TEST
+Farmer sellFruit and Returns
+// some column values
+	// Investment::where('investor_id',$inv->id)->sum('amt_ret');
+	
+	>server setup
+
+THINK THINK THINK
+> upcoming Products
+> Return events notify
+new Pages
+leaderBoard
+
+REMOVE DEBUG LINES
+> Product Name Ids from dropdown
+
+
+FrontendDos- dataTables
+
+
 26 August 
 Shall investment be in the God n not product??
 	- Nope, that's complicating it and making it just like vsm
