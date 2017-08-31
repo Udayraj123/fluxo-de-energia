@@ -1,7 +1,7 @@
 <?php
 namespace Helpers;
 use \App\Models;
-use C,User,Common,Log,Session;
+use C,User,Common,Log,Session,Event;
 
 class Game
 {

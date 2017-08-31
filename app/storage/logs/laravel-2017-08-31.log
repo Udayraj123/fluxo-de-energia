@@ -3610,3 +3610,6 @@ Stack trace:
 #1 {main} [] []
 >>>>>>> 850aacdef607e2c9b757934b37124eadfef1531e
 [2017-08-31 19:30:58] production.WARNING: 404 for URL: http://172.16.4.4:8000/favicon.ico [] []
+[2017-08-31 19:59:06] production.WARNING: 404 for URL: http://172.16.4.4:8000/favicon.ico [] []
+[2017-08-31 19:59:12] production.WARNING: 404 for URL: http://172.16.4.4:8000/favicon.ico [] []
+[2017-08-31 19:59:55] production.WARNING: 404 for URL: http://172.16.4.4:8000/red [] []
