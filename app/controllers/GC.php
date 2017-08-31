@@ -156,8 +156,9 @@ class GC extends \BaseController {
 		//from POST submit request by God
 		$input = Input::except('_token','Tol'); //,'unit_price' too ! but it is disabled
 		//THOUGH it might get vulnerable if they send unit_price as input in request
-		$user= Auth::user()->get();		 
-		echo "Current LE = ".$user->le."<BR>";
+		$user= Auth::user()->get();	
+		echo "<table class='table table-striped'> <tr> "; 
+		echo "<td> Current Life Energy </td> <td>".$user->le."</td> </tr>";
 
 		//Nope - THIS WILL ALREADY REDUCE GOD'S LE, make sure the product gets Added/
 		if( $this->transactionCheck($user,$input) ){ 
@@ -165,14 +166,15 @@ class GC extends \BaseController {
 			$p->god_id = $user->god->id;
 			$p->being_funded=1;
 		// $p->create_time=time(); -> this might be used later.
+			$rD = C::get('game.receiptNames');
 			foreach(array_keys($input) as $field){
 			$p->$field=Game::e($input[$field]); 				// if(property_exists($p,$field))
-			echo $field." :".$input[$field];
-			if($p->$field)echo " added.";echo "<br>";			
+			echo "<tr> <td> ".$rD[$field]."</td> <td>".$input[$field]."</td></tr>";
+			//if($p->$field)echo " added.";echo "<br>";			
 		}
 		$unitPrice = $this->getBasePrice($p->quality,$p->FT,$p->ET,Input::get('Tol'),$p->category);
 		$p->unit_price = $unitPrice;
-		echo "Re: unit_price:".$unitPrice."<BR>";
+		echo "<tr> <td> Modified Unit Price </td><td>".$unitPrice."</td></tr>";
 		$p->total_cost = $unitPrice * $p->avl_units;
 		$p->avl_shares = $p->total_shares;
 
@@ -182,8 +184,13 @@ class GC extends \BaseController {
 		$user->save();
 		$p->save();
 
+		
+		
+
 		Event::fire('createProd',[[$user,$p]]);
-		echo "Now LE = ".$user->le."<BR>";
+		echo "<tr> <td> Final Life Energy </td><td>".$user->le."</td></tr></table>";
+
+
 	}
 	else return "Transaction Failed.";
 } 
