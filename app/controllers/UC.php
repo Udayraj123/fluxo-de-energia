@@ -70,6 +70,7 @@ class UC extends \BaseController {
       public function decayHandle(){
         //------------------------------------------------------------------------------------------------
         $user=Auth::user()->get();
+
         //Log::info($user->id."------".(int)($user->prev_time-$user->prev_LE_time));
         if ((int)($user->prev_time-$user->prev_LE_time)%5==0)//&&(($user->prev_time-$user->prev_LE_time)%60<=5))
         {

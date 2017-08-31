@@ -130,7 +130,7 @@ $(function () {
       </select>
 
     </td></tr><tr><td><br>
-    <label>description : </td><td> <input type='text' name='description' id='description' value="desc" /></label><br>
+    <label>description : </td><td> <input type='text' name='description' html="false" id='description' value="desc" /></label><br>
   </td></tr><tr><td><br>
   <label>quality : </td><td> <input min="5" max="100"  oninput="update()" value="10" type="range" name='quality' id='quality'/></label><br>
 </td></tr><tr><td><br>
@@ -193,7 +193,7 @@ counter++;
 currRow.push(counter.toString());
 currRow.push('<?php echo $p->id; ?>');
 currRow.push('<?php echo $p->name; ?>');
-currRow.push('<?php echo $p->description; ?>');
+currRow.push('<?php echo e($p->description); ?>');
 currRow.push('<?php echo $p->quality; ?>');
 <?php if($p->being_funded==1): ?>
 currRow.push('<?php echo $p->total_shares; ?>');

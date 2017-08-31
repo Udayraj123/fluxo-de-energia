@@ -36,6 +36,11 @@ class Game
         		$cat2=$user2->category;
         		$user1->category= $cat2;
         		$user2->category= $cat1;
+        		if(C::get('game.boostSwap')){
+        			$fac = (1+C::get('game.boostFac'));
+        			$user2->le= $fac * $user2->le;
+        			Event::fire('user_boosted',array([$user2,$fac]));
+        		}
         		$user1->save();
         		$user2->save();
         		Log::info('Swapped '.$cat1.' user with '.$cat2.' user');
@@ -93,6 +98,8 @@ class Game
     }
 
     public static function thresholdsFor($cat){
+    	
+
     	$t=C::get('game.minRefreshRate'); 
     	$time=time();
     	$common = Common::where('category',$cat)->first();
