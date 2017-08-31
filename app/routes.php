@@ -64,6 +64,7 @@ Route::group(array('before' => 'investor'), function()
 //gets invester details -----------------------------------------------
 
 Route::post('/getInvDetail',['as' => 'getInvDetail', 'uses' => 'IC@getInvDetail']);
+Route::post('/newsUpdate',['as' => 'newsUpdate', 'uses' => 'UC@newsUpdate']);
 
 //---------------------------------------------------------------------
 

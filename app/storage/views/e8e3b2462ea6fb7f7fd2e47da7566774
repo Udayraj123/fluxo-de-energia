@@ -76,29 +76,30 @@ progressGroup+
 	var InvestorNames=[];
 	var Percentages=[];
 	var currRow=[];
-	var preProg=['id','product','name','total_shares'];
+	var preProg=['id','category','name','total_shares'];
 	var postProg=['avl_shares','FT'];
-	var firstRow=['#','id','product','name','total_shares','Fundings','avl_shares','FT'];//being funded
+	var firstRow=['#','id','category','name','total_shares','Fundings','avl_shares','FT'];//being funded
 	// From backend = ['id', 'category', 'name', 'total_shares', 'avl_shares', 'FT', ];
-	var firstRow2=['#','id','product','name','total_shares','avl_shares','Fundings','FT'];//launched
+	var firstRow2=['#','id','category','name','total_shares','Fundings','avl_shares','FT'];//launched
 	var counter=1;
 	cellData.push(firstRow);
 	cellData2.push(firstRow2);
 	// Now use ajax for this - 
-	funding_products = <?php echo json_encode($funding_products); ?>;
+	var funding_products = <?php echo json_encode($funding_products); ?>;
 
 	for (var i = 0; i < funding_products.length; i++) {
 		cr = funding_products[i];
 		currRow=[counter++];
-		for (var i = 1; i < preProg.length; i++) {
-			currRow.push(cr[preProg[i]])
+		console.log(counter);
+		for (var j = 1; j < preProg.length; j++) {
+	currRow.push(cr[preProg[j]])
 		}
 		currRow.push(makeProgress(cr.InvestorNames,cr.Percentages,cr.id,cr.Info));
-		for (var i = 1; i < postProg.length; i++) {
-			currRow.push(cr[postProg[i]])
+		for (var j = 1; j < postProg.length; j++) {
+			currRow.push(cr[postProg[j]])
 		}
 		cellData.push(currRow);
-	}
+}
 	insertTable(cellData,"myFundings",1);
 	// insertTable(cellData2,"detailFundings",1);
 	

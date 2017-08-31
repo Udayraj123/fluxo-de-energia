@@ -16,13 +16,13 @@
   @yield('headContent')
   
   <style type="text/css">
-  header input {
-    width: 100px;
-  }
-  .headLink{
-    color:red;
-    font-size: 15px;
-  }
+    header input {
+      width: 100px;
+    }
+    .headLink{
+      color:red;
+      font-size: 15px;
+    }
   </style>
 </head>
 
@@ -100,7 +100,7 @@ if(data['reload']=='1')
 }
 
 function insertTable(cellData,divID,black){
-  
+
   var offset=0;
   var tableContainer=document.getElementById(divID);
   var table1= document.createElement('table');
@@ -121,6 +121,22 @@ function insertTable(cellData,divID,black){
 }
 
 </script>
+<!--   ----------------------------------- -->
+<script type="text/javascript"> 
+  $(document).ready(function(){
+    $.ajax({
+      url:'{{asset("news.txt")}}',
+      dataType:'text',
+      success: function(data) {
+        $('#news_panel').html(data);
+        $('#news_panel').scrollTop($('#news_panel')[0].scrollHeight);
+      }
+    });
+  });
+
+</script>
+
+<!--   ----------------------------------- -->
 
 <header class="main-header" style="background:#3399ff;opacity:0.85">
   <span class="info-box-icon bg-aqua" style="opacity:0.85"> <i class="fa fa-fw fa-user"><div id="active_cat" align="center" style="font-size: 40%"></div></i></span>
@@ -215,6 +231,8 @@ function insertTable(cellData,divID,black){
   </nav>
 </header>
 
+<div id="news_panel" style="background-color: white; padding:10px; position: fixed; right:0px; height:500px; z-index: 99999; overflow-y: auto; width:400px;line-height: 20px;font-size: 15px;font-family: 'Ubuntu';color:#666666; ">
+</div>
 @yield('bodyContent')
 
 </body>

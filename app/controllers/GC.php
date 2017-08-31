@@ -39,6 +39,7 @@ class GC extends \BaseController {
 		}
 		$funding_products = $funding_products?		$funding_products->toArray()	:	[];
 		$prev_products	  =    $prev_products?		$prev_products->toArray()		:	[];
+		log::info($funding_products);
 		return View::make('fundingBar')->with([
 			'funding_products'=>$funding_products,
 			'prev_products'=>$prev_products
@@ -83,75 +84,75 @@ class GC extends \BaseController {
 					if(!$invt->user){echo "nope "; continue;}
 					echo $invt->user->username;
 					echo "(";
-						echo $invm->num_shares;
-						echo " ";
-						echo $invm->num_shares * $invm->bid_price;
-						echo ")  ";
-}
+					echo $invm->num_shares;
+					echo " ";
+					echo $invm->num_shares * $invm->bid_price;
+					echo ")  ";
+				}
 
-echo "<br>";
-echo "<br> purchases- ";
-$allpurch=$product->purchases()->orderBy('farmer_id')->get();
-foreach($allpurch as $purch){
-	$farmer= $purch->farmer;
-	if(!$farmer->user){echo "nope "; continue;}
-	echo $farmer->user->username;
-	echo "(num ";
-		echo $purch->num_units;
-		echo " cost : ";
-		echo $purch->num_units * $purch->buy_price;
-		echo " > ";
-		echo $purch->avl_units;
-		echo ")  ";	
-}
-echo "--<BR><BR>";
-}
+				echo "<br>";
+				echo "<br> purchases- ";
+				$allpurch=$product->purchases()->orderBy('farmer_id')->get();
+				foreach($allpurch as $purch){
+					$farmer= $purch->farmer;
+					if(!$farmer->user){echo "nope "; continue;}
+					echo $farmer->user->username;
+					echo "(num ";
+					echo $purch->num_units;
+					echo " cost : ";
+					echo $purch->num_units * $purch->buy_price;
+					echo " > ";
+					echo $purch->avl_units;
+					echo ")  ";	
+				}
+				echo "--<BR><BR>";
+			}
 
-else {
-	echo " &emsp; Funding over For the product, show sell stats using purchases here.<br>";
-}
+			else {
+				echo " &emsp; Funding over For the product, show sell stats using purchases here.<br>";
+			}
 
-}
-}
-public function transactionCheck($user,$input){
+		}
+	}
+	public function transactionCheck($user,$input){
 		//FT ET positive check
 		//$input['avl_units']
 
-	if(!(array_key_exists('avl_units', $input)&&$input['category']&& $input['unit_price'] && $input['FT']>0 && $input['ET']>0 ))
-	{
-		echo "avl_units/category/unit_price/FT not ready";
-		return false;
-	}
-	else {
-		$category = $input['category'];
-		if(!($category=="seed" ||$category=="fertilizer" ||$category=="land")){
-			echo "Wrong category ";			return false;
+		if(!(array_key_exists('avl_units', $input)&&$input['category']&& $input['unit_price'] && $input['FT']>0 && $input['ET']>0 ))
+		{
+			echo "avl_units/category/unit_price/FT not ready";
+			return false;
 		}
-		$price= (int)($input['avl_units'])*(int)($input['unit_price']);
-		$LE=$user->le;
-		$thr = Game::thresholdsFor($user->category);
+		else {
+			$category = $input['category'];
+			if(!($category=="seed" ||$category=="fertilizer" ||$category=="land")){
+				echo "Wrong category ";			return false;
+			}
+			$price= (int)($input['avl_units'])*(int)($input['unit_price']);
+			$LE=$user->le;
+			$thr = Game::thresholdsFor($user->category);
 		//Life Energy price check
-		return ($LE - $price > $thr['lowerTHR']);
+			return ($LE - $price > $thr['lowerTHR']);
+		}
 	}
-}
 
 
-public function getBasePrice($quality,$FT,$ET,$Tol,$type){
+	public function getBasePrice($quality,$FT,$ET,$Tol,$type){
 	# quality, product_type, ini_sysLE
-	$c=Config::get('game.baseCIs');
-	$bps=Config::get('game.basePrices');
-	$bp=$bps[$type];
-	return $bp*($c['c1']*$quality + $c['c2']*$FT + $c['c3']*$ET)*(1 + $c['c4']*$Tol);
-}
+		$c=Config::get('game.baseCIs');
+		$bps=Config::get('game.basePrices');
+		$bp=$bps[$type];
+		return $bp*($c['c1']*$quality + $c['c2']*$FT + $c['c3']*$ET)*(1 + $c['c4']*$Tol);
+	}
 
-public function createProduct(){
-	$user=Auth::user()->get();
+	public function createProduct(){
+		$user=Auth::user()->get();
 
-	return View::make('createProd')
-	->with(C::get('game.baseCIs'))
-	->with('products',$user->god->products()->orderBy('id','desc')->get());
-}
-public function postCreateProduct(){
+		return View::make('createProd')
+		->with(C::get('game.baseCIs'))
+		->with('products',$user->god->products()->orderBy('id','desc')->get());
+	}
+	public function postCreateProduct(){
 		//from POST submit request by God
 		$input = Input::except('_token','Tol'); //,'unit_price' too ! but it is disabled
 		//THOUGH it might get vulnerable if they send unit_price as input in request
@@ -180,7 +181,9 @@ public function postCreateProduct(){
 		$user->le -= $p->total_cost;
 		$user->save();
 		$p->save();
+		$msg = ($p->created_at.' : '.$p->name.'is created in category of '.$p->category .' of quality '.$p->quality.' , the funding time for the product is '.$p->FT.' minutes and its expiry time is '.$p->ET.' minutes. The available quantity is '.$p->total_shares.' each prices at '.$p->unit_price.'. This Product is  created by '.$user->username.'. <br>'.'God says about his product :'.$p->description);
 
+		Event::fire('all_news',$msg);
 		echo "Now LE = ".$user->le."<BR>";
 	}
 	else return "Transaction Failed.";

@@ -112,6 +112,18 @@ class UC extends \BaseController {
       }
 
 
+      public function newsUpdate(){
+        $fileadrs = asset("news.txt");
+        log::info($fileadrs);
+        try{
+        $fcontent = file_get_contents($fileadrs);
+      }catch(Exception $e){
+        $fcontent=" ";
+
+      }
+      log::info($fcontent);
+      }
+
       public function login($id=42){
         $user=User::find($id); if($user){Auth::user()->login($user); return View::make('goback');} else 
       return View::make('admin.login'); 
