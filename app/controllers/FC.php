@@ -116,6 +116,7 @@ class FC extends \BaseController {
 
 	public function  applyPurch(){
 		$input=Input::all();
+		Log::info($input);
 		$sel_lands=$input['land_ids'];
 		$purchase_id=$input['purchase_id'];
 

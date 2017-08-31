@@ -52,7 +52,6 @@ class UC extends \BaseController {
       public function leDifference()
       {
         $user=Auth::user()->get();
-        // Log::info("========================================");
         $user->LE_diff=$user->le-$user->prev_LE;
         if($user->prev_LE)
           {$user->change_percent=(float)$user->LE_diff/$user->prev_LE*100.0;}
@@ -61,7 +60,6 @@ class UC extends \BaseController {
         // $rowSQL=mysql_query("SELECT MAX(change_percent) AS max FROM 'users';");
         // $row=mysql_fetch_array($rowSQL);
         // $top_change=$row['max'];
-        // Log::info('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx');
         // Log::info($top_change);
       }
       //---------------------------------------------------------------------
@@ -75,7 +73,6 @@ class UC extends \BaseController {
         if ((int)($user->prev_time-$user->prev_LE_time)%5==0)//&&(($user->prev_time-$user->prev_LE_time)%60<=5))
 {
   $this->leDifference();
-          // Log::info("++++++++++++++++++++++++++++++++++++++");
 }
 if($user->highest_LE<$user->le)
   $user->highest_LE=$user->le;
@@ -119,14 +116,14 @@ if(!$user->prev_time){
 
     public function newsUpdate(){
       $fileadrs = asset("news.txt");
-      log::info($fileadrs);
+      // log::info($fileadrs);
       try{
         $fcontent = file_get_contents($fileadrs);
       }catch(Exception $e){
         shell_exec('touch '.$fileadrs);
         $fcontent=" ";
       }
-      log::info($fcontent);
+      // log::info($fcontent);
     }
 
     public function login($id=42){

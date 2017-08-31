@@ -4,10 +4,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     @endsection
 @section('description')
-    Error!
+    Server Error!
     @endsection
 @section('title')
-    Error!
+    Server Error!
 @endsection
 @section('body')
     <section class="wet-asphalt no-margin" style="height: 100%">
