@@ -299,7 +299,7 @@ public function showLand(){
 	//Convert following into return array('key'=>'val'); to be handled by ajax
 	//this shall be obtained from ajax since land updates with time
 
-	foreach ($L as $l)$this->checkGT($l->id);
+	// foreach ($L as $l)$this->checkGT($l->id);
 
 	return View::make('showLand')
 	->with(C::get('game.fruitCIs'))
