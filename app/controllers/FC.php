@@ -451,7 +451,7 @@ public function testFruitRel(){
 
 	public function postbuyProduct(){
 			//request comes here from listProducts-
-		echo "lets go. ";
+		$msg2='';
 		$flag =0;
 		$input = Input::except('_token');
 		if(!($input['num_units'] && $input['product_id']))
@@ -568,7 +568,7 @@ public function testFruitRel(){
 
 	else 								echo " Insufficient LE : $LE - $price < $THR, decrease no of units ";
 	
-	return C::get('debug.goBack');
+	//return C::get('debug.goBack');
 }
 
 

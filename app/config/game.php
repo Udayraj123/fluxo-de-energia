@@ -24,6 +24,17 @@ return array(
 	'swap_down'=>'<i class="btn btn-danger fa fa-arrow-circle-down">	Switching Role </i>',
 	'f_yeah'=>'F yeah !',
 	],
+	'receiptNames'=>[
+	'ET'=>'Expiry Time',
+	'FT'=>'Funding Time',
+	'name'=>'Name',
+	'category'=>'Category',
+	'description'=>'Description',
+	'quality'=>'Quality',
+	'unit_price'=>'Unit Price',
+	'avl_units'=>'Available Units',
+	'total_shares'=>'Total Shares Launched',
+	],
 	'reloads'=>[
 	'clean'=>'0',
 	'warn_die'=>'0',

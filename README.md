@@ -21,3 +21,13 @@ TODOs :
 
 ⋅⋅* Want more fun ?
 	Edit `app/config/game.php` file for tweaking the game's functionality.
+
+
+	//Edit By Apurva\\
+Swapping Function to be implemented
+ui to be worked on
+to verify farmer's selling
+stats to be placed on correct dashboard
+stats calcualte
+
+	      \\//
