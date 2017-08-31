@@ -20,7 +20,7 @@ leaderBoard
 
 REMOVE DEBUG LINES
 > Product Name Ids from dropdown
-
+> Team ID instead of Usernames in Funding Bar
 
 FrontendDos- dataTables
 

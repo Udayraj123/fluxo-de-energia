@@ -334,7 +334,11 @@ var interactive_plot = $.plot("#interactive_syst", [getLiveLE()], {
     var realtime = "on"; //If == to on then fetch data every x seconds. else stop fetching
     function update() {
       $('#LEheight').height($('#LEwidth').width());
-
+      
+      var h = Math.round( 
+        $('#LEheight').height() / $('#LEheight').parent().height() * 100 
+        );
+      $('#LEheight').attr('class','progress-bar  progress-bar-striped  progress-bar-'+((h>50)?'success':'danger'));
       interactive_plot.setData([getLiveLE()]);
       localStorage.setItem('data_syst',JSON.stringify(data));
       localStorage.setItem('ctop_syst',JSON.stringify(currentTop));
