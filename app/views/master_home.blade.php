@@ -134,7 +134,7 @@ function insertTable(cellData,divID,black){
 </script>
 <!--   ----------------------------------- -->
 <script type="text/javascript"> 
-  $(document).ready(function(){
+  function newsGetNow(){
     $.ajax({
       url:'{{asset("news.txt")}}',
       dataType:'text',
@@ -143,7 +143,7 @@ function insertTable(cellData,divID,black){
         $('#news_panel').scrollTop($('#news_panel')[0].scrollHeight);
       }
     });
-  });
+  };
 
 </script>
 
@@ -206,10 +206,10 @@ function insertTable(cellData,divID,black){
                 <input readonly="readonly"  class="btn  btn-block btn-sm" disabled id='le' value=0 >
               </td>
               <td>
-                <button class="btn btn-sm btn-block bg-purple ">Stored LE</button>
+                <button class="btn btn-sm btn-block bg-purple ">Upper</button>
               </td>
               <td>
-                <input readonly="readonly"  class="btn btn-block btn-sm" disabled id='stored_LE' value=0 /> 
+                <input readonly="readonly"  class="btn btn-block btn-sm" disabled id='upperTHR' value=0 /> 
               </td>
             </tr>
             <tr>
@@ -227,10 +227,10 @@ function insertTable(cellData,divID,black){
                 <input readonly="readonly"  class="btn  btn-block btn-sm" disabled  id='ETA' value=0 />
               </td>
               <td>
-                <button class="btn btn-sm btn-block bg-purple ">Upper</button>
+                <button class="btn btn-sm btn-block bg-purple ">Stored LE</button>
               </td>
               <td>
-                <input readonly="readonly"  class="btn btn-block btn-sm" disabled id='upperTHR' value=0 /> 
+                <input readonly="readonly"  class="btn btn-block btn-sm" disabled id='stored_LE' value=0 /> 
               </td>
             </tr>
           </table>
@@ -266,7 +266,9 @@ function insertTable(cellData,divID,black){
     function openNav() {
       if(document.getElementById("news_pan").style.display == "block")
         document.getElementById("news_pan").style.display = "none";
-      else {document.getElementById("news_pan").style.display = "block";
+      else {newsGetNow();
+        document.getElementById("news_pan").style.display = "block";
+
       document.getElementById("news_btn").style.color = "white";
     }
   }
