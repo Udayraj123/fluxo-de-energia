@@ -1,3 +1,364 @@
-[2017-08-31 07:00:08] production.WARNING: 404 for URL: http://localhost:8000/favicon.ico [] []
-[2017-08-31 07:06:30] production.INFO: Noted purchase : Notify the God, or Push to the table which is fetched with ajax [] []
-[2017-08-31 07:07:11] production.INFO: Noted purchase : Notify the God, or Push to the table which is fetched with ajax [] []
+[2017-08-31 11:01:33] production.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'Class 'Helpers\Event' not found' in /home/apurva/fluxo-de-energia/app/classes/Helpers/Game.php:42
+Stack trace:
+#0 [internal function]: Illuminate\Exception\Handler->handleShutdown()
+#1 {main} [] []
+[2017-08-31 11:01:34] production.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'Class 'Helpers\Event' not found' in /home/apurva/fluxo-de-energia/app/classes/Helpers/Game.php:42
+Stack trace:
+#0 [internal function]: Illuminate\Exception\Handler->handleShutdown()
+#1 {main} [] []
+[2017-08-31 11:01:35] production.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'Class 'Helpers\Event' not found' in /home/apurva/fluxo-de-energia/app/classes/Helpers/Game.php:42
+Stack trace:
+#0 [internal function]: Illuminate\Exception\Handler->handleShutdown()
+#1 {main} [] []
+[2017-08-31 11:01:36] production.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'Class 'Helpers\Event' not found' in /home/apurva/fluxo-de-energia/app/classes/Helpers/Game.php:42
+Stack trace:
+#0 [internal function]: Illuminate\Exception\Handler->handleShutdown()
+#1 {main} [] []
+[2017-08-31 11:01:37] production.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'Class 'Helpers\Event' not found' in /home/apurva/fluxo-de-energia/app/classes/Helpers/Game.php:42
+Stack trace:
+#0 [internal function]: Illuminate\Exception\Handler->handleShutdown()
+#1 {main} [] []
+[2017-08-31 11:01:38] production.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'Class 'Helpers\Event' not found' in /home/apurva/fluxo-de-energia/app/classes/Helpers/Game.php:42
+Stack trace:
+#0 [internal function]: Illuminate\Exception\Handler->handleShutdown()
+#1 {main} [] []
+[2017-08-31 11:01:39] production.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'Class 'Helpers\Event' not found' in /home/apurva/fluxo-de-energia/app/classes/Helpers/Game.php:42
+Stack trace:
+#0 [internal function]: Illuminate\Exception\Handler->handleShutdown()
+#1 {main} [] []
+[2017-08-31 11:01:40] production.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'Class 'Helpers\Event' not found' in /home/apurva/fluxo-de-energia/app/classes/Helpers/Game.php:42
+Stack trace:
+#0 [internal function]: Illuminate\Exception\Handler->handleShutdown()
+#1 {main} [] []
+[2017-08-31 11:01:41] production.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'Class 'Helpers\Event' not found' in /home/apurva/fluxo-de-energia/app/classes/Helpers/Game.php:42
+Stack trace:
+#0 [internal function]: Illuminate\Exception\Handler->handleShutdown()
+#1 {main} [] []
+[2017-08-31 11:01:42] production.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'Class 'Helpers\Event' not found' in /home/apurva/fluxo-de-energia/app/classes/Helpers/Game.php:42
+Stack trace:
+#0 [internal function]: Illuminate\Exception\Handler->handleShutdown()
+#1 {main} [] []
+[2017-08-31 11:01:43] production.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'Class 'Helpers\Event' not found' in /home/apurva/fluxo-de-energia/app/classes/Helpers/Game.php:42
+Stack trace:
+#0 [internal function]: Illuminate\Exception\Handler->handleShutdown()
+#1 {main} [] []
+[2017-08-31 11:01:44] production.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'Class 'Helpers\Event' not found' in /home/apurva/fluxo-de-energia/app/classes/Helpers/Game.php:42
+Stack trace:
+#0 [internal function]: Illuminate\Exception\Handler->handleShutdown()
+#1 {main} [] []
+[2017-08-31 11:01:45] production.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'Class 'Helpers\Event' not found' in /home/apurva/fluxo-de-energia/app/classes/Helpers/Game.php:42
+Stack trace:
+#0 [internal function]: Illuminate\Exception\Handler->handleShutdown()
+#1 {main} [] []
+[2017-08-31 11:01:46] production.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'Class 'Helpers\Event' not found' in /home/apurva/fluxo-de-energia/app/classes/Helpers/Game.php:42
+Stack trace:
+#0 [internal function]: Illuminate\Exception\Handler->handleShutdown()
+#1 {main} [] []
+[2017-08-31 11:01:47] production.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'Class 'Helpers\Event' not found' in /home/apurva/fluxo-de-energia/app/classes/Helpers/Game.php:42
+Stack trace:
+#0 [internal function]: Illuminate\Exception\Handler->handleShutdown()
+#1 {main} [] []
+[2017-08-31 11:01:48] production.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'Class 'Helpers\Event' not found' in /home/apurva/fluxo-de-energia/app/classes/Helpers/Game.php:42
+Stack trace:
+#0 [internal function]: Illuminate\Exception\Handler->handleShutdown()
+#1 {main} [] []
+[2017-08-31 11:01:49] production.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'Class 'Helpers\Event' not found' in /home/apurva/fluxo-de-energia/app/classes/Helpers/Game.php:42
+Stack trace:
+#0 [internal function]: Illuminate\Exception\Handler->handleShutdown()
+#1 {main} [] []
+[2017-08-31 11:01:50] production.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'Class 'Helpers\Event' not found' in /home/apurva/fluxo-de-energia/app/classes/Helpers/Game.php:42
+Stack trace:
+#0 [internal function]: Illuminate\Exception\Handler->handleShutdown()
+#1 {main} [] []
+[2017-08-31 11:01:51] production.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'Class 'Helpers\Event' not found' in /home/apurva/fluxo-de-energia/app/classes/Helpers/Game.php:42
+Stack trace:
+#0 [internal function]: Illuminate\Exception\Handler->handleShutdown()
+#1 {main} [] []
+[2017-08-31 11:01:52] production.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'Class 'Helpers\Event' not found' in /home/apurva/fluxo-de-energia/app/classes/Helpers/Game.php:42
+Stack trace:
+#0 [internal function]: Illuminate\Exception\Handler->handleShutdown()
+#1 {main} [] []
+[2017-08-31 11:01:53] production.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'Class 'Helpers\Event' not found' in /home/apurva/fluxo-de-energia/app/classes/Helpers/Game.php:42
+Stack trace:
+#0 [internal function]: Illuminate\Exception\Handler->handleShutdown()
+#1 {main} [] []
+[2017-08-31 11:01:54] production.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'Class 'Helpers\Event' not found' in /home/apurva/fluxo-de-energia/app/classes/Helpers/Game.php:42
+Stack trace:
+#0 [internal function]: Illuminate\Exception\Handler->handleShutdown()
+#1 {main} [] []
+[2017-08-31 11:01:55] production.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'Class 'Helpers\Event' not found' in /home/apurva/fluxo-de-energia/app/classes/Helpers/Game.php:42
+Stack trace:
+#0 [internal function]: Illuminate\Exception\Handler->handleShutdown()
+#1 {main} [] []
+[2017-08-31 11:01:56] production.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'Class 'Helpers\Event' not found' in /home/apurva/fluxo-de-energia/app/classes/Helpers/Game.php:42
+Stack trace:
+#0 [internal function]: Illuminate\Exception\Handler->handleShutdown()
+#1 {main} [] []
+[2017-08-31 11:01:57] production.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'Class 'Helpers\Event' not found' in /home/apurva/fluxo-de-energia/app/classes/Helpers/Game.php:42
+Stack trace:
+#0 [internal function]: Illuminate\Exception\Handler->handleShutdown()
+#1 {main} [] []
+[2017-08-31 11:01:58] production.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'Class 'Helpers\Event' not found' in /home/apurva/fluxo-de-energia/app/classes/Helpers/Game.php:42
+Stack trace:
+#0 [internal function]: Illuminate\Exception\Handler->handleShutdown()
+#1 {main} [] []
+[2017-08-31 11:01:59] production.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'Class 'Helpers\Event' not found' in /home/apurva/fluxo-de-energia/app/classes/Helpers/Game.php:42
+Stack trace:
+#0 [internal function]: Illuminate\Exception\Handler->handleShutdown()
+#1 {main} [] []
+[2017-08-31 11:02:00] production.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'Class 'Helpers\Event' not found' in /home/apurva/fluxo-de-energia/app/classes/Helpers/Game.php:42
+Stack trace:
+#0 [internal function]: Illuminate\Exception\Handler->handleShutdown()
+#1 {main} [] []
+[2017-08-31 11:02:01] production.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'Class 'Helpers\Event' not found' in /home/apurva/fluxo-de-energia/app/classes/Helpers/Game.php:42
+Stack trace:
+#0 [internal function]: Illuminate\Exception\Handler->handleShutdown()
+#1 {main} [] []
+[2017-08-31 11:02:02] production.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'Class 'Helpers\Event' not found' in /home/apurva/fluxo-de-energia/app/classes/Helpers/Game.php:42
+Stack trace:
+#0 [internal function]: Illuminate\Exception\Handler->handleShutdown()
+#1 {main} [] []
+[2017-08-31 11:02:03] production.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'Class 'Helpers\Event' not found' in /home/apurva/fluxo-de-energia/app/classes/Helpers/Game.php:42
+Stack trace:
+#0 [internal function]: Illuminate\Exception\Handler->handleShutdown()
+#1 {main} [] []
+[2017-08-31 11:02:04] production.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'Class 'Helpers\Event' not found' in /home/apurva/fluxo-de-energia/app/classes/Helpers/Game.php:42
+Stack trace:
+#0 [internal function]: Illuminate\Exception\Handler->handleShutdown()
+#1 {main} [] []
+[2017-08-31 11:02:05] production.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'Class 'Helpers\Event' not found' in /home/apurva/fluxo-de-energia/app/classes/Helpers/Game.php:42
+Stack trace:
+#0 [internal function]: Illuminate\Exception\Handler->handleShutdown()
+#1 {main} [] []
+[2017-08-31 11:02:06] production.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'Class 'Helpers\Event' not found' in /home/apurva/fluxo-de-energia/app/classes/Helpers/Game.php:42
+Stack trace:
+#0 [internal function]: Illuminate\Exception\Handler->handleShutdown()
+#1 {main} [] []
+[2017-08-31 11:02:07] production.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'Class 'Helpers\Event' not found' in /home/apurva/fluxo-de-energia/app/classes/Helpers/Game.php:42
+Stack trace:
+#0 [internal function]: Illuminate\Exception\Handler->handleShutdown()
+#1 {main} [] []
+[2017-08-31 11:02:08] production.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'Class 'Helpers\Event' not found' in /home/apurva/fluxo-de-energia/app/classes/Helpers/Game.php:42
+Stack trace:
+#0 [internal function]: Illuminate\Exception\Handler->handleShutdown()
+#1 {main} [] []
+[2017-08-31 11:02:09] production.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'Class 'Helpers\Event' not found' in /home/apurva/fluxo-de-energia/app/classes/Helpers/Game.php:42
+Stack trace:
+#0 [internal function]: Illuminate\Exception\Handler->handleShutdown()
+#1 {main} [] []
+[2017-08-31 11:02:10] production.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'Class 'Helpers\Event' not found' in /home/apurva/fluxo-de-energia/app/classes/Helpers/Game.php:42
+Stack trace:
+#0 [internal function]: Illuminate\Exception\Handler->handleShutdown()
+#1 {main} [] []
+[2017-08-31 11:02:11] production.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'Class 'Helpers\Event' not found' in /home/apurva/fluxo-de-energia/app/classes/Helpers/Game.php:42
+Stack trace:
+#0 [internal function]: Illuminate\Exception\Handler->handleShutdown()
+#1 {main} [] []
+[2017-08-31 11:02:12] production.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'Class 'Helpers\Event' not found' in /home/apurva/fluxo-de-energia/app/classes/Helpers/Game.php:42
+Stack trace:
+#0 [internal function]: Illuminate\Exception\Handler->handleShutdown()
+#1 {main} [] []
+[2017-08-31 11:02:13] production.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'Class 'Helpers\Event' not found' in /home/apurva/fluxo-de-energia/app/classes/Helpers/Game.php:42
+Stack trace:
+#0 [internal function]: Illuminate\Exception\Handler->handleShutdown()
+#1 {main} [] []
+[2017-08-31 11:02:14] production.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'Class 'Helpers\Event' not found' in /home/apurva/fluxo-de-energia/app/classes/Helpers/Game.php:42
+Stack trace:
+#0 [internal function]: Illuminate\Exception\Handler->handleShutdown()
+#1 {main} [] []
+[2017-08-31 11:02:15] production.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'Class 'Helpers\Event' not found' in /home/apurva/fluxo-de-energia/app/classes/Helpers/Game.php:42
+Stack trace:
+#0 [internal function]: Illuminate\Exception\Handler->handleShutdown()
+#1 {main} [] []
+[2017-08-31 11:02:16] production.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'Class 'Helpers\Event' not found' in /home/apurva/fluxo-de-energia/app/classes/Helpers/Game.php:42
+Stack trace:
+#0 [internal function]: Illuminate\Exception\Handler->handleShutdown()
+#1 {main} [] []
+[2017-08-31 11:02:17] production.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'Class 'Helpers\Event' not found' in /home/apurva/fluxo-de-energia/app/classes/Helpers/Game.php:42
+Stack trace:
+#0 [internal function]: Illuminate\Exception\Handler->handleShutdown()
+#1 {main} [] []
+[2017-08-31 11:02:18] production.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'Class 'Helpers\Event' not found' in /home/apurva/fluxo-de-energia/app/classes/Helpers/Game.php:42
+Stack trace:
+#0 [internal function]: Illuminate\Exception\Handler->handleShutdown()
+#1 {main} [] []
+[2017-08-31 11:02:19] production.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'Class 'Helpers\Event' not found' in /home/apurva/fluxo-de-energia/app/classes/Helpers/Game.php:42
+Stack trace:
+#0 [internal function]: Illuminate\Exception\Handler->handleShutdown()
+#1 {main} [] []
+[2017-08-31 11:02:20] production.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'Class 'Helpers\Event' not found' in /home/apurva/fluxo-de-energia/app/classes/Helpers/Game.php:42
+Stack trace:
+#0 [internal function]: Illuminate\Exception\Handler->handleShutdown()
+#1 {main} [] []
+[2017-08-31 11:02:21] production.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'Class 'Helpers\Event' not found' in /home/apurva/fluxo-de-energia/app/classes/Helpers/Game.php:42
+Stack trace:
+#0 [internal function]: Illuminate\Exception\Handler->handleShutdown()
+#1 {main} [] []
+[2017-08-31 11:02:22] production.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'Class 'Helpers\Event' not found' in /home/apurva/fluxo-de-energia/app/classes/Helpers/Game.php:42
+Stack trace:
+#0 [internal function]: Illuminate\Exception\Handler->handleShutdown()
+#1 {main} [] []
+[2017-08-31 11:02:23] production.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'Class 'Helpers\Event' not found' in /home/apurva/fluxo-de-energia/app/classes/Helpers/Game.php:42
+Stack trace:
+#0 [internal function]: Illuminate\Exception\Handler->handleShutdown()
+#1 {main} [] []
+[2017-08-31 11:02:24] production.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'Class 'Helpers\Event' not found' in /home/apurva/fluxo-de-energia/app/classes/Helpers/Game.php:42
+Stack trace:
+#0 [internal function]: Illuminate\Exception\Handler->handleShutdown()
+#1 {main} [] []
+[2017-08-31 11:02:25] production.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'Class 'Helpers\Event' not found' in /home/apurva/fluxo-de-energia/app/classes/Helpers/Game.php:42
+Stack trace:
+#0 [internal function]: Illuminate\Exception\Handler->handleShutdown()
+#1 {main} [] []
+[2017-08-31 11:02:26] production.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'Class 'Helpers\Event' not found' in /home/apurva/fluxo-de-energia/app/classes/Helpers/Game.php:42
+Stack trace:
+#0 [internal function]: Illuminate\Exception\Handler->handleShutdown()
+#1 {main} [] []
+[2017-08-31 11:02:27] production.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'Class 'Helpers\Event' not found' in /home/apurva/fluxo-de-energia/app/classes/Helpers/Game.php:42
+Stack trace:
+#0 [internal function]: Illuminate\Exception\Handler->handleShutdown()
+#1 {main} [] []
+[2017-08-31 11:02:28] production.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'Class 'Helpers\Event' not found' in /home/apurva/fluxo-de-energia/app/classes/Helpers/Game.php:42
+Stack trace:
+#0 [internal function]: Illuminate\Exception\Handler->handleShutdown()
+#1 {main} [] []
+[2017-08-31 11:02:29] production.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'Class 'Helpers\Event' not found' in /home/apurva/fluxo-de-energia/app/classes/Helpers/Game.php:42
+Stack trace:
+#0 [internal function]: Illuminate\Exception\Handler->handleShutdown()
+#1 {main} [] []
+[2017-08-31 11:02:30] production.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'Class 'Helpers\Event' not found' in /home/apurva/fluxo-de-energia/app/classes/Helpers/Game.php:42
+Stack trace:
+#0 [internal function]: Illuminate\Exception\Handler->handleShutdown()
+#1 {main} [] []
+[2017-08-31 11:02:31] production.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'Class 'Helpers\Event' not found' in /home/apurva/fluxo-de-energia/app/classes/Helpers/Game.php:42
+Stack trace:
+#0 [internal function]: Illuminate\Exception\Handler->handleShutdown()
+#1 {main} [] []
+[2017-08-31 11:02:32] production.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'Class 'Helpers\Event' not found' in /home/apurva/fluxo-de-energia/app/classes/Helpers/Game.php:42
+Stack trace:
+#0 [internal function]: Illuminate\Exception\Handler->handleShutdown()
+#1 {main} [] []
+[2017-08-31 11:02:33] production.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'Class 'Helpers\Event' not found' in /home/apurva/fluxo-de-energia/app/classes/Helpers/Game.php:42
+Stack trace:
+#0 [internal function]: Illuminate\Exception\Handler->handleShutdown()
+#1 {main} [] []
+[2017-08-31 11:02:34] production.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'Class 'Helpers\Event' not found' in /home/apurva/fluxo-de-energia/app/classes/Helpers/Game.php:42
+Stack trace:
+#0 [internal function]: Illuminate\Exception\Handler->handleShutdown()
+#1 {main} [] []
+[2017-08-31 11:02:35] production.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'Class 'Helpers\Event' not found' in /home/apurva/fluxo-de-energia/app/classes/Helpers/Game.php:42
+Stack trace:
+#0 [internal function]: Illuminate\Exception\Handler->handleShutdown()
+#1 {main} [] []
+[2017-08-31 11:02:36] production.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'Class 'Helpers\Event' not found' in /home/apurva/fluxo-de-energia/app/classes/Helpers/Game.php:42
+Stack trace:
+#0 [internal function]: Illuminate\Exception\Handler->handleShutdown()
+#1 {main} [] []
+[2017-08-31 11:02:37] production.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'Class 'Helpers\Event' not found' in /home/apurva/fluxo-de-energia/app/classes/Helpers/Game.php:42
+Stack trace:
+#0 [internal function]: Illuminate\Exception\Handler->handleShutdown()
+#1 {main} [] []
+[2017-08-31 11:02:38] production.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'Class 'Helpers\Event' not found' in /home/apurva/fluxo-de-energia/app/classes/Helpers/Game.php:42
+Stack trace:
+#0 [internal function]: Illuminate\Exception\Handler->handleShutdown()
+#1 {main} [] []
+[2017-08-31 11:02:39] production.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'Class 'Helpers\Event' not found' in /home/apurva/fluxo-de-energia/app/classes/Helpers/Game.php:42
+Stack trace:
+#0 [internal function]: Illuminate\Exception\Handler->handleShutdown()
+#1 {main} [] []
+[2017-08-31 11:02:40] production.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'Class 'Helpers\Event' not found' in /home/apurva/fluxo-de-energia/app/classes/Helpers/Game.php:42
+Stack trace:
+#0 [internal function]: Illuminate\Exception\Handler->handleShutdown()
+#1 {main} [] []
+[2017-08-31 11:02:41] production.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'Class 'Helpers\Event' not found' in /home/apurva/fluxo-de-energia/app/classes/Helpers/Game.php:42
+Stack trace:
+#0 [internal function]: Illuminate\Exception\Handler->handleShutdown()
+#1 {main} [] []
+[2017-08-31 11:02:42] production.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'Class 'Helpers\Event' not found' in /home/apurva/fluxo-de-energia/app/classes/Helpers/Game.php:42
+Stack trace:
+#0 [internal function]: Illuminate\Exception\Handler->handleShutdown()
+#1 {main} [] []
+[2017-08-31 11:02:43] production.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'Class 'Helpers\Event' not found' in /home/apurva/fluxo-de-energia/app/classes/Helpers/Game.php:42
+Stack trace:
+#0 [internal function]: Illuminate\Exception\Handler->handleShutdown()
+#1 {main} [] []
+[2017-08-31 11:02:44] production.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'Class 'Helpers\Event' not found' in /home/apurva/fluxo-de-energia/app/classes/Helpers/Game.php:42
+Stack trace:
+#0 [internal function]: Illuminate\Exception\Handler->handleShutdown()
+#1 {main} [] []
+[2017-08-31 11:02:45] production.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'Class 'Helpers\Event' not found' in /home/apurva/fluxo-de-energia/app/classes/Helpers/Game.php:42
+Stack trace:
+#0 [internal function]: Illuminate\Exception\Handler->handleShutdown()
+#1 {main} [] []
+[2017-08-31 11:02:46] production.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'Class 'Helpers\Event' not found' in /home/apurva/fluxo-de-energia/app/classes/Helpers/Game.php:42
+Stack trace:
+#0 [internal function]: Illuminate\Exception\Handler->handleShutdown()
+#1 {main} [] []
+[2017-08-31 11:02:47] production.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'Class 'Helpers\Event' not found' in /home/apurva/fluxo-de-energia/app/classes/Helpers/Game.php:42
+Stack trace:
+#0 [internal function]: Illuminate\Exception\Handler->handleShutdown()
+#1 {main} [] []
+[2017-08-31 11:02:48] production.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'Class 'Helpers\Event' not found' in /home/apurva/fluxo-de-energia/app/classes/Helpers/Game.php:42
+Stack trace:
+#0 [internal function]: Illuminate\Exception\Handler->handleShutdown()
+#1 {main} [] []
+[2017-08-31 11:02:49] production.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'Class 'Helpers\Event' not found' in /home/apurva/fluxo-de-energia/app/classes/Helpers/Game.php:42
+Stack trace:
+#0 [internal function]: Illuminate\Exception\Handler->handleShutdown()
+#1 {main} [] []
+[2017-08-31 11:02:50] production.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'Class 'Helpers\Event' not found' in /home/apurva/fluxo-de-energia/app/classes/Helpers/Game.php:42
+Stack trace:
+#0 [internal function]: Illuminate\Exception\Handler->handleShutdown()
+#1 {main} [] []
+[2017-08-31 11:02:51] production.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'Class 'Helpers\Event' not found' in /home/apurva/fluxo-de-energia/app/classes/Helpers/Game.php:42
+Stack trace:
+#0 [internal function]: Illuminate\Exception\Handler->handleShutdown()
+#1 {main} [] []
+[2017-08-31 11:02:52] production.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'Class 'Helpers\Event' not found' in /home/apurva/fluxo-de-energia/app/classes/Helpers/Game.php:42
+Stack trace:
+#0 [internal function]: Illuminate\Exception\Handler->handleShutdown()
+#1 {main} [] []
+[2017-08-31 11:02:53] production.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'Class 'Helpers\Event' not found' in /home/apurva/fluxo-de-energia/app/classes/Helpers/Game.php:42
+Stack trace:
+#0 [internal function]: Illuminate\Exception\Handler->handleShutdown()
+#1 {main} [] []
+[2017-08-31 11:02:54] production.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'Class 'Helpers\Event' not found' in /home/apurva/fluxo-de-energia/app/classes/Helpers/Game.php:42
+Stack trace:
+#0 [internal function]: Illuminate\Exception\Handler->handleShutdown()
+#1 {main} [] []
+[2017-08-31 11:02:55] production.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'Class 'Helpers\Event' not found' in /home/apurva/fluxo-de-energia/app/classes/Helpers/Game.php:42
+Stack trace:
+#0 [internal function]: Illuminate\Exception\Handler->handleShutdown()
+#1 {main} [] []
+[2017-08-31 11:02:56] production.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'Class 'Helpers\Event' not found' in /home/apurva/fluxo-de-energia/app/classes/Helpers/Game.php:42
+Stack trace:
+#0 [internal function]: Illuminate\Exception\Handler->handleShutdown()
+#1 {main} [] []
+[2017-08-31 11:02:57] production.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'Class 'Helpers\Event' not found' in /home/apurva/fluxo-de-energia/app/classes/Helpers/Game.php:42
+Stack trace:
+#0 [internal function]: Illuminate\Exception\Handler->handleShutdown()
+#1 {main} [] []
+[2017-08-31 11:02:58] production.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'Class 'Helpers\Event' not found' in /home/apurva/fluxo-de-energia/app/classes/Helpers/Game.php:42
+Stack trace:
+#0 [internal function]: Illuminate\Exception\Handler->handleShutdown()
+#1 {main} [] []
+[2017-08-31 11:02:59] production.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'Class 'Helpers\Event' not found' in /home/apurva/fluxo-de-energia/app/classes/Helpers/Game.php:42
+Stack trace:
+#0 [internal function]: Illuminate\Exception\Handler->handleShutdown()
+#1 {main} [] []
+[2017-08-31 11:03:00] production.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'Class 'Helpers\Event' not found' in /home/apurva/fluxo-de-energia/app/classes/Helpers/Game.php:42
+Stack trace:
+#0 [internal function]: Illuminate\Exception\Handler->handleShutdown()
+#1 {main} [] []
+[2017-08-31 11:03:01] production.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'Class 'Helpers\Event' not found' in /home/apurva/fluxo-de-energia/app/classes/Helpers/Game.php:42
+Stack trace:
+#0 [internal function]: Illuminate\Exception\Handler->handleShutdown()
+#1 {main} [] []
+[2017-08-31 11:03:02] production.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'Class 'Helpers\Event' not found' in /home/apurva/fluxo-de-energia/app/classes/Helpers/Game.php:42
+Stack trace:
+#0 [internal function]: Illuminate\Exception\Handler->handleShutdown()
+#1 {main} [] []
+[2017-08-31 11:03:03] production.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'Class 'Helpers\Event' not found' in /home/apurva/fluxo-de-energia/app/classes/Helpers/Game.php:42
+Stack trace:
+#0 [internal function]: Illuminate\Exception\Handler->handleShutdown()
+#1 {main} [] []
