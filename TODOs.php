@@ -1,6 +1,5 @@
 <?php
 """
-
 Final Call.
 // save prev states into a file or something
 
@@ -9,8 +8,8 @@ TEST TEST TEST
 Farmer sellFruit and Returns
 // some column values
 	// Investment::where('investor_id',$inv->id)->sum('amt_ret');
-	
-	>server setup
+
+>server setup
 
 THINK THINK THINK
 > upcoming Products
@@ -24,13 +23,15 @@ REMOVE DEBUG LINES
 
 FrontendDos- dataTables
 
+BUG BUG
+showLand land_ids is null
 
 26 August 
 Shall investment be in the God n not product??
-	- Nope, that's complicating it and making it just like vsm
-	- Also the code is established already to even think about that.
-	>> This is the point where the Game differs from VSM.
-	- And in reality there must be an analogy where people invest in the product and not company
+- Nope, that's complicating it and making it just like vsm
+- Also the code is established already to even think about that.
+>> This is the point where the Game differs from VSM.
+- And in reality there must be an analogy where people invest in the product and not company
 
 Current procedure is an investor when buys the shares, they will automatically cash out when the product expires.
 
@@ -54,19 +55,19 @@ Later : Write test files !
 TodayDos :
 // 26 June
 Thinking of Practical requirements : 
-	> Need to list Variety in products
-	> Converted ETs & FTs from 5 min to 60 Minutes. Kept seed GTs to 5 mins
-	> Add progress bar for Launching Products
+> Need to list Variety in products
+> Converted ETs & FTs from 5 min to 60 Minutes. Kept seed GTs to 5 mins
+> Add progress bar for Launching Products
 
 Working on farmer side :
 // UPDATE * $p->being_funded= -1 stands for deleted
 >buyProd : 
-	If buy_price is -1, front end removes that expired product
+If buy_price is -1, front end removes that expired product
 
 // 14 June 
 Now: Realised the workflow again - First make it fully functional, then add the GUI complexity. 
-	Currently just redirect back
-	>But still, the functioning of json arrays needs to be added - in listInvestments, buyFruit (tally with buyProduct)
+Currently just redirect back
+>But still, the functioning of json arrays needs to be added - in listInvestments, buyFruit (tally with buyProduct)
 REDIRECTS : Character transitions,create product makeinvestment,etc buy/make functions redirect after submit 
 
 //make a function in GC to return the products array
@@ -75,8 +76,8 @@ REDIRECTS : Character transitions,create product makeinvestment,etc buy/make fun
 Later >Give GUI to the receipts : Notifs of Purchase & each LE Update : like a bank statement
 Later >Fetch Fruit : here we also increase Farmers energy a bit    
 <Thru Practical> How to reorder the purchases - by sales.
-		Decide order of prods shown for makeInvestment
-		How to highlight profits - update colors (use spl bootstrap template)
+Decide order of prods shown for makeInvestment
+How to highlight profits - update colors (use spl bootstrap template)
 
 Nope if - only To keep the gap, itd be complicated - Decay = function (SIGMOID(time),Threshold)
 /**********	**********	**********	**********	********************	**********	**********/
@@ -85,22 +86,22 @@ Done > Makeinvestment page : Limit by avl_shares,  ajax the bid price
 Done >> master.blade.php should have a Links array (stored in game.php) to populate Navigation links;
 Done >> sumLE was already improved. Just had to put it into Game::
 NOPE - Think ::TRANSITIONS & WARNINGS IN FILTERS ? 
-	>> Yeah its prob. Gave bugs 'during' transacts. >> Adding Reloads
-		>> But. The ajax calls might cause trouble ?
-		Well, will they be handled by your functions?
-		-Yeah, and filters will not let it reach the function
-		>> So I am back to square one in this. Removing from filters.
+>> Yeah its prob. Gave bugs 'during' transacts. >> Adding Reloads
+>> But. The ajax calls might cause trouble ?
+Well, will they be handled by your functions?
+-Yeah, and filters will not let it reach the function
+>> So I am back to square one in this. Removing from filters.
 Done > For ajax in threshold/decayHandle : add a parameter called reload. If its one, the frontend will reload the page.
 Done > Indicator Arrows for Level Up/Down warnings.
 // 10 June
 Easy way to convert array in views:
-  var messages={{ json_encode(C::get('game.notifHTMLs')); }}
+var messages={{ json_encode(C::get('game.notifHTMLs')); }}
 
 > The game is hard to play without knowing the updates. 
 (Nope-  Tables are the best right now. - Though tables are there, I see notifs is required.)
 
-	> Notif I am choosing state based currently. If required, can add a new database just for that,
-	> Events will come handy here.
+> Notif I am choosing state based currently. If required, can add a new database just for that,
+> Events will come handy here.
 /**********	**********	********************	**********	**********/
 AllToDos: 
 12Oct
@@ -140,24 +141,24 @@ Do later & NOT NOW!- Soon, confirm that backend rechecks whatever from frontends
 //seed GT shall later also depend on its sub-type
 later make GT logarithmic so that qual=10 & qual = 50 are not 5 times diff in magnitude
 Do later- server returns an array of past 100 LEs. OR the JS does it (maybe ajax doesn't destroy the vars)
-	::KNOWN  CONCEPT BUG'
-	Do later -
-	currently we are updating locally from the land. this way it is giving correct initial GTs.
-	But theres one more variable needed.
-	the Fert can be applied from X minutes of planted_at. The GT should now 
-	should not be :  seedGT / ( 1 + quals)
-	it should be prev_GT
-	ELse
-	We shall keep a RGT column which gets divided on fert apply. and thats what gets updated & checked everytime.
-	-but it wil require a prev_time just like user->le. => Do it that way then
+::KNOWN  CONCEPT BUG'
+Do later -
+currently we are updating locally from the land. this way it is giving correct initial GTs.
+But theres one more variable needed.
+the Fert can be applied from X minutes of planted_at. The GT should now 
+should not be :  seedGT / ( 1 + quals)
+it should be prev_GT
+ELse
+We shall keep a RGT column which gets divided on fert apply. and thats what gets updated & checked everytime.
+-but it wil require a prev_time just like user->le. => Do it that way then
 	//TODO : rectify this bad condition 
-	$minLE=C::get('game.minLE');
-	if($user->le - $decay*$time_passed > $minLE)
+$minLE=C::get('game.minLE');
+if($user->le - $decay*$time_passed > $minLE)
 
-		Done:: filter if land/fert already applied
-	Done -> >> can reduce SUM(le) operations by keeping time()-updated_time > 30sec for each user req (Nope - thru filters.php)
-	Done::->  if($p->launched) shall be corrected to  $p->launched==1 since -1 is also getting here.
-	Done::-> change this types to array_key_exists- if(!(array_key_exists('num_shares', $input) && array_key_exists('product_id', $input))) return "Input not read.";
+	Done:: filter if land/fert already applied
+Done -> >> can reduce SUM(le) operations by keeping time()-updated_time > 30sec for each user req (Nope - thru filters.php)
+Done::->  if($p->launched) shall be corrected to  $p->launched==1 since -1 is also getting here.
+Done::-> change this types to array_key_exists- if(!(array_key_exists('num_shares', $input) && array_key_exists('product_id', $input))) return "Input not read.";
 
 Done:://Make every created_at into Nullable default null - ELSE MAINTAIN A DIFF COLUMN - BEST
 Done:: -> Prefer using Input::get('num_shares')); //return "input get is calm";

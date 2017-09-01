@@ -229,6 +229,7 @@ class FC extends \BaseController {
 //this will be used only when planting seed. later, only RGT will be updated separately
 	public function getGT($l){
 		if($l->seed_id < 0 )return C::get('game.maxGT');
+		Log::info($l->purchase);
 		$lq=$l->purchase->product->quality;
 		$sq=$l->seed->product->quality;
 		if($l->fert_id < 0)$fq=1; else $fq=$l->fertilizer->product->quality;

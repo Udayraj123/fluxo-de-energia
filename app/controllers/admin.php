@@ -73,7 +73,7 @@ class admin extends \BaseController {
 
 			foreach ($models as $m) {
 				if($m::where('user_id',$u->id)->count()==0){
-					echo ".";
+					echo "*";
 					$f=new $m();
 					$f->user_id=$u->id;
 					$f->save();
@@ -104,6 +104,7 @@ class admin extends \BaseController {
 			DB::table('products')->insert([
 				'god_id'=> $gid,
 				'category'=>'land',
+				'description'=>'new added default land',
 				'being_funded'=> -1, 'launched_at'=>time(),
 				'total_shares'=>50, 'avl_shares'=>0,
 				'quality'=>50,

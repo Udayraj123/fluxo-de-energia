@@ -60,7 +60,7 @@ setInterval(function(){$('#unit_price').val(getUC());},{{C::get('game.msRefreshR
       <pre class="box-header">
 
 
-        <label>CHOOSE SEED/FERT/LAND :   <select name='purchase_id' id='purchase_id'>
+        <label>CHOOSE SEED/FERT/LAND :   <select required name='purchase_id' id='purchase_id'>
           @foreach ($purchases as $purch)
           @if($purch->avl_units>0 &&  $purch->product)
           <option value="{{ $purch->id }}">({{$purch->avl_units}}){{ $purch->product->god->user->username or 'GOD'}}'s  {{ $purch->product->category }} {{ $purch->product->name }} ({{ $purch->id }})
@@ -84,7 +84,7 @@ setInterval(function(){$('#unit_price').val(getUC());},{{C::get('game.msRefreshR
     {{ Form::open(array('url' => route("launchFruit"))) }}
     CHOOSE FRUIT STORAGE TO LAUNCH :
     <label>
-      <select name='storage_id' id='storage_id'>
+      <select required name='storage_id' id='storage_id'>
         @foreach ($fruits as $l=>$f)
         @if($f->num_units>0 && $f->launched==0)
         <option value="{{ $f->id }}">
