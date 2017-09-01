@@ -48,14 +48,17 @@ Route::filter('user', function() {
     }
 });
 function logBackIn(){
-    $user= Auth::user()->get();
-    return "Not allowed. $user->username $user->category <BR>".C::get('debug.login');
+    // $user= Auth::user()->get();
+    // $user->logged_in = 0;
+    // $user->save();
+    // Auth::user()->logout();
+    return "Login from here : <BR>".C::get('debug.login');
 }
 
 Route::filter('god', function() {
     $user= Auth::user()->get();
     if(!$user)return C::get('debug.login');
-    if (!($user->god && $user->category=='god')) {
+    if (!($user->logged_in && $user->god && $user->category=='god')) {
         return logBackIn();
     }
     
@@ -66,7 +69,7 @@ Route::filter('god', function() {
 Route::filter('investor', function() {
     $user= Auth::user()->get();
     if(!$user)return C::get('debug.login');
-    if (!($user->investor && $user->category=='investor')) {
+    if (!($user->logged_in && $user->investor && $user->category=='investor')) {
         return logBackIn();
     }
     
@@ -75,7 +78,7 @@ Route::filter('investor', function() {
 Route::filter('farmer', function() {
     $user= Auth::user()->get();
     if(!$user)return C::get('debug.login');
-    if (!($user->farmer && $user->category=='farmer')) {
+    if (!($user->logged_in && $user->farmer && $user->category=='farmer')) {
         return logBackIn();
     }
     

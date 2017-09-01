@@ -83,11 +83,12 @@ class admin extends \BaseController {
 			//----------------------------------------------------------------
 			$u->prev_LE_time=time();
 			//----------------------------------------------------------------
-			$u->prev_LE =0;
 			// $u->LE_diff =0;
 			$u->change_percent =0;
 			$u->prev_time =$t;
+			$u->logged_in = 0;
 			$u->le=$ini[$u->category];
+			$u->prev_LE =$ini[$u->category];
 			$u->highest_LE=$ini[$u->category];
 			$u->stored_LE=$stored_LE[$u->category];
 			$u->is_moderator=0;

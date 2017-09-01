@@ -23,7 +23,8 @@ Route::get('/leaderBoard',['as' => 'leaderBoard', 'uses' => 'UC@leaderBoard']);
 Route::get('/profile/{id}',['as' => 'profile', 'uses' => 'UC@profile']);
 
 //debugs
-Route::get('/login/{id?}', ['as' => 'login', 'uses' => 'UC@login']);
+Route::get('/passwordLogin/{id?}', ['as' => 'passwordLogin', 'uses' => 'UC@login']);
+Route::get('/login/{cat}/{force?}', ['as' => 'login', 'uses' => 'UC@loginCat']);
 Route::get ('/boost', ['as' => 'boostLE', 'uses' => 'admin@boostLE']);
 Route::get ('/updateUsers', ['as' => 'updateUsers', 'uses' => 'admin@updateUsers']);
 Route::get ('/plantSeedLands', ['as' => 'plantSeedLands', 'uses' => 'admin@plantSeedLands']);

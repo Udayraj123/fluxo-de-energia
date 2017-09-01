@@ -1,7 +1,7 @@
 <?php
 return array(
-	'swapon'=>0,
-	'boostSwap'=>1,
+	'swapon'=>1,
+	'boostSwap'=>1,//bool
 	'boostFac'=>0.25,
 	'facDecay' => array("god" => 1*(0.1*0.1/60),"investor" =>(0.1*0.01/60),"farmer" =>1*(0.1*0.001/60)),
 	'iniLE' => array("god" => 1000000,"investor" => 500000,"farmer" => 30000),

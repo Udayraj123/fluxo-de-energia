@@ -186,8 +186,33 @@ class UC extends \BaseController {
     }
 
     public function login($id=42){
-      $user=User::find($id); if($user){Auth::user()->login($user); return View::make('goback');} else 
+      $user=User::find($id); 
+      if($user){Auth::user()->login($user); return View::make('goback');} else 
       return View::make('admin.login'); 
+    }
+    public function loginCat($cat,$force=0){
+      $authuser = Auth::user()->get();
+      if($authuser && $force==0)return "already logged in ";
+
+        
+      $user = User::where('is_moderator','0')
+      ->where('logged_in','0')
+      ->where('category',$cat)
+      ->first();
+
+      if($user){
+        if($authuser){
+          $authuser->logged_in=0;
+          $authuser->save();
+          Auth::user()->logout(); 
+        }
+        Auth::user()->login($user); 
+        $user->logged_in = 1; $user->save(); 
+        return View::make('goback');
+      } 
+      else 
+        return "No user available to login!" ;
+
     }
 
     public function logout(){

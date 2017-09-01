@@ -40,39 +40,39 @@ class FC extends \BaseController {
 public function getRGT($l){
 	return $this->getGT($l) - (time()-$l->planted_at)/60;	//-ve if fruit.
 }
-	
-	public function calcStorageLE($fruit){
-		$maxQual=C::get('game.maxQual');
-		$storage_fac=C::get('game.storage_fac');
+
+public function calcStorageLE($fruit){
+	$maxQual=C::get('game.maxQual');
+	$storage_fac=C::get('game.storage_fac');
 //add complexity here.
-		return $fruit->unit_price * (1 + $storage_fac*$fruit->seed->product->quality/$maxQual);
-	}
+	return $fruit->unit_price * (1 + $storage_fac*$fruit->seed->product->quality/$maxQual);
+}
 
-	public function calcSellPrice($fruit){
-		$sellC1=C::get('game.sellC1');
-		$sellC2=C::get('game.sellC2');
-		
-		return $fruit->storage_le * ($sellC1*$fruit->quality_factor + $sellC2*$fruit->ET) ;
-	}
+public function calcSellPrice($fruit){
+	$sellC1=C::get('game.sellC1');
+	$sellC2=C::get('game.sellC2');
 	
-	public function getUnitPrice($input){
-		$quality=$input['quality_factor'];
-		$GT=1;
-		$ET=$input['ET'];
-		$Tol=$input['Tol'];
-		$c1=C::get('game.fruitC1');
-		$c2=C::get('game.fruitC2');
-		$c3=C::get('game.fruitC3');
-		$c4=C::get('game.fruitC4');
-		$bp=C::get('game.fruitBP');
-		return $bp*($c1*$quality+$c2*$GT+$c3*$ET)*(1+$c4*$Tol);
-	}
+	return $fruit->storage_le * ($sellC1*$fruit->quality_factor + $sellC2*$fruit->ET) ;
+}
 
-	
+public function getUnitPrice($input){
+	$quality=$input['quality_factor'];
+	$GT=1;
+	$ET=$input['ET'];
+	$Tol=$input['Tol'];
+	$c1=C::get('game.fruitC1');
+	$c2=C::get('game.fruitC2');
+	$c3=C::get('game.fruitC3');
+	$c4=C::get('game.fruitC4');
+	$bp=C::get('game.fruitBP');
+	return $bp*($c1*$quality+$c2*$GT+$c3*$ET)*(1+$c4*$Tol);
+}
+
+
 
 	//work on UI of this later
-	public function launchFruit(){
-		$input=Input::all();
+public function launchFruit(){
+	$input=Input::all();
 		$f0=Fruit::find($input['storage_id']); //Fruit::where('seed_id',$l->seed_id)->where('launched',0)->first(); 
 		$num_units = $f0->num_units; //to be transferred
 		if($f0->launched != 0 || $num_units==0)
@@ -142,6 +142,9 @@ public function getRGT($l){
 //currently form, later can be ajax
 
 	public function  applyPurch(){
+		if(!Input::has('land_ids'))
+			return " No land was selected, try again !";
+
 		$input=Input::all();
 		$sel_lands=$input['land_ids'];
 		$purchase_id=$input['purchase_id'];
@@ -252,13 +255,13 @@ public function getRGT($l){
 	}
 
 //here comes the ajax
-public function getStates(){
-	$user= Auth::user()->get(); 
-	$L = $user->farmer->lands;
-	$states= array();
-	$RGTs= array();
-	$landIDs= array();
-	foreach ($L as $l){
+	public function getStates(){
+		$user= Auth::user()->get(); 
+		$L = $user->farmer->lands;
+		$states= array();
+		$RGTs= array();
+		$landIDs= array();
+		foreach ($L as $l){
 			$RGT=C::get('game.maxGT'); //check default btw
 			$fert=($l->fert_id>-1)?1:0; //fert there
 			
@@ -296,7 +299,7 @@ public function showLand(){
 	$L = $farmer->lands;
 	$purchases = $farmer->purchases; //->where('product is seed or fert') //not req
 
-    $fruits = Fruit::where('farmer_id',$farmer->id)->where('launched',0)->get();
+	$fruits = Fruit::where('farmer_id',$farmer->id)->where('launched',0)->get();
 	
 	//Convert following into return array('key'=>'val'); to be handled by ajax
 	//this shall be obtained from ajax since land updates with time
@@ -432,7 +435,7 @@ public function testFruitRel(){
 		
 		$time_elapsed= (time()-(int)$p->launched_at)/60; //Minutes
 		
-         $new_decay=C::get('game.facDecay')['god'] * Game::sysLE();
+		$new_decay=C::get('game.facDecay')['god'] * Game::sysLE();
 		
 		$num=$p->total_cost/$p->unit_price;
 		$godRecovery=C::get('game.godRecovery');

@@ -9,7 +9,7 @@ KEEP NOTE OF USER:: queries -> check is_moderator=0
 TEST TEST TEST
 >> Farmer sellFruit and Returns
 
-
+ALL WATCH THRU LOGS!
 
 // some column values
 	// Investment::where('investor_id',$inv->id)->sum('amt_ret');

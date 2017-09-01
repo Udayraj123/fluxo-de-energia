@@ -205,7 +205,7 @@ function makeBox(state,id,index,check,RGTs){
       },
 
   error: function(){// Server Disconnected
-    alert('error updating RGT'); 
+    console.log('error updating RGT'); 
   }
 });
 }
@@ -232,7 +232,7 @@ console.log(data);
 updateLands();
 },
   error: function(){// Server Disconnected
-    alert('error updating Fruit Land'); 
+    console.log('error updating Fruit Land'); 
   }
 });
 

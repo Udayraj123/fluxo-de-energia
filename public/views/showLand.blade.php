@@ -165,7 +165,7 @@
       },
 
   error: function(){// ERROR NOT HANDLING ?
-    alert('error updating RGT'); 
+    console.log('error updating RGT'); 
   }
 });
   }
@@ -192,7 +192,7 @@ $.ajax({
     updateLands();
   },
   error: function(){// ERROR NOT HANDLING ?
-    alert('error updating Fruit Land'); 
+    console.log('error updating Fruit Land'); 
   }
 });
 

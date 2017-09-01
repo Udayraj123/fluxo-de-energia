@@ -119,8 +119,8 @@ var colors = ['yellow','grey','blue','black','orange','green'];
 
 function makeBox(state,id,index,check,RGTs){
     // console.log("makeBox",state,id,check,(check?'':'un')+'checked');
-    var Icon='<span style="font-size:30px;">&nbsp '+stateText[state]+'</span> &nbsp <span style="font-size:30px;" id="status'+id+'">&nbsp'+RGTs[index]+'</span>';
-    console.log(id)
+    var Icon='<span style="font-size:30px;">&nbsp '+stateText[state]+'</span> <br> <span style="font-size:30px;" id="status'+id+'">&nbsp'+RGTs[index]+'</span>';
+    // console.log(id)
     var block= '<input type="checkbox" '+(check?'':'un')+'checked name="land_ids[]" onclick="updateLands(this.id)" id="land'+id+'" value="'+id+'"/>'+Icon;
     if(state==stateFruit || state==stateFertSeed )
       block='<button type="button"'+(state==stateFruit?'':'')+'onclick="updateLands(this.id)" id="land'+id+'"/>'+Icon;
@@ -203,7 +203,7 @@ function makeBox(state,id,index,check,RGTs){
       },
 
   error: function(){// Server Disconnected
-    alert('error updating RGT'); 
+    console.log('error updating RGT'); 
   }
 });
 }
@@ -230,7 +230,7 @@ console.log(data);
 updateLands();
 },
   error: function(){// Server Disconnected
-    alert('error updating Fruit Land'); 
+    console.log('error updating Fruit Land'); 
   }
 });
 

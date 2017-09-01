@@ -10,7 +10,8 @@
                     <img src="{{ asset('images/404.png') }}" alt="" height="450px"/>
                 </div>
                 <div style="display: inline-block; margin-top:175px" class="col-md-6 pull-left">
-                    <p class="lead">The page you are looking for is not available. <br>If you think it should work please <a href="{{ route('home') }}" class="linkNormal"> report us.</a></p>
+                    <p class="lead">The page you are looking for is not available. 
+                    </p>
                 </div>
             </div>
         </div>

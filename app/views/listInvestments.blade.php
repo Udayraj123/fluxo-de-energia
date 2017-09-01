@@ -30,7 +30,7 @@ god.jpg
 
   			error: function(){// Server Disconnected
   				X=data;	
-  				alert('error updating bp, check type X in console'); 
+  				console.log('error updating bp, check type X in console'); 
   			}
   		});
 

@@ -7,6 +7,7 @@ class testExists extends TestCase {
     	// $bool =True;
     	$user = Auth::user()->get();
         $this->assertTrue($user->god);
+        // $active_cat = $user->category; // Not Null in table
         // $this->call('post','decayHandle');
     }
     public function testLandPurchases()
