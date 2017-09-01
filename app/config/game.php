@@ -13,6 +13,7 @@ return array(
 	'modFs'=>2,
 	'minLE' => 1000,
 	'minDecay' => '0.005',
+	'leaderBoardRate'=>60,//currently in top movers
 	'minRefreshRate'=>1,//seconds
 	'msRefreshRate'=>500,//miliseconds
 	'notifTime'=>60,

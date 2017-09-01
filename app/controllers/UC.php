@@ -26,7 +26,38 @@ class UC extends \BaseController {
 
         public function leaderBoard(){
           $users = User::orderBy('le','desc')->where('is_moderator',0)->get();
-          return View::make('leaderBoard')->with('users',$users);
+          $leaders=[];
+
+          $godThresholds  = Game::thresholdsFor('god');
+          $investorThresholds  = Game::thresholdsFor('investor');
+          $farmerThresholds  = Game::thresholdsFor('farmer');
+          $allTHRs = [
+          'lowerG'=>$godThresholds['lowerTHR'],
+          'lowerF'=>$farmerThresholds['lowerTHR'],
+          'lowerI'=>$investorThresholds['lowerTHR'],
+          'upperG'=>$godThresholds['upperTHR'],
+          'upperI'=>$investorThresholds['upperTHR'],
+          'upperF'=>$farmerThresholds['upperTHR'],
+          ];
+
+          foreach ($users as $u) {
+            $luser = [];
+            $luser['name']=$u->username;
+            $luser['category']=$u->category;
+            // $luser['highest_LE']=$u->highest_LE;
+            $luser['le']=$u->le;
+            $lCat= $allTHRs['lower'.strtoupper($u->category[0])];
+            $uCat= $allTHRs['upper'.strtoupper($u->category[0])];
+            $luser['lCat']=round($lCat);
+            $luser['uCat']=round($uCat);
+            $diff1 = $u->le - $lCat;
+            $diff2 = $uCat - $lCat;
+            $luser['width']= ($diff1/$diff2) * 100;
+            $luser['color']=($diff1*2 > $diff2)?'green':'danger';
+            $luser['invcolor']=($u->category=='god')?'black':(($u->category=='farmer')?'green':'red');
+            $leaders[]=$luser;
+          }
+          return View::make('leaderBoard')->with('leaders',$leaders);
         }
 
         ////////////////////////////////////////////////////////////////////////////////
@@ -50,67 +81,47 @@ class UC extends \BaseController {
       //this swaps characters !
         $catThresholds  = Game::thresholdsFor($user->category);
 
-        $godThresholds  = Game::thresholdsFor('god');
-        $investorThresholds  = Game::thresholdsFor('investor');
-        $farmerThresholds  = Game::thresholdsFor('farmer');
-        $allTHRs = [
-        'lowerG'=>$godThresholds['lowerTHR'],
-        'lowerF'=>$farmerThresholds['lowerTHR'],
-        'lowerI'=>$investorThresholds['lowerTHR'],
-        'upperG'=>$godThresholds['upperTHR'],
-        'upperI'=>$investorThresholds['upperTHR'],
-        'upperF'=>$farmerThresholds['upperTHR'],
-        ];
-
         $msg=Game::thresholdCheck($catThresholds,$user); //will already swap the user.
         $reload=C::get('game.reloads')[$msg];
 
         $user=Auth::user()->get(); //get the updated user.
-        return array_merge($catThresholds,$allTHRs,['reload'=>$reload,'msg'=>$msg,'active_cat'=>$user->category,'le'=>$user->le]);
+        return array_merge($catThresholds,['reload'=>$reload,'msg'=>$msg,'active_cat'=>$user->category,'le'=>$user->le]);
       }
-
-
-      //---------------------------------------------------------------------
-      public function leDifference()
-      {
-        $user=Auth::user()->get();
-        $user->LE_diff=$user->le-$user->prev_LE;
-        if($user->prev_LE)
-          {$user->change_percent=(float)$user->LE_diff/$user->prev_LE*100.0;}
-        $user->prev_LE_time=time();
-        $user->prev_LE=$user->le;
-        // $rowSQL=mysql_query("SELECT MAX(change_percent) AS max FROM 'users';");
-        // $row=mysql_fetch_array($rowSQL);
-        // $top_change=$row['max'];
-        // Log::info($top_change);
-      }
-      //---------------------------------------------------------------------
 
 
       public function decayHandle(){
-        //------------------------------------------------------------------------------------------------
         $user=Auth::user()->get();
-
-        //Log::info($user->id."------".(int)($user->prev_time-$user->prev_LE_time));
-        if ((int)($user->prev_time-$user->prev_LE_time)%5==0)//&&(($user->prev_time-$user->prev_LE_time)%60<=5))
-        {
-          $this->leDifference();
-        }
+        //------------------------------------------------------------------------------------------------
         if($user->highest_LE<$user->le)
           $user->highest_LE=$user->le;
-        // Log::info('test');
-
         //------------------------------------------------------------------------------------------------
 
-        $minRefreshRate=C::get('game.minRefreshRate');
         if(!$user->prev_time){
           $user->prev_time=time();$user->save();
         }
+        if(!$user->prev_LE_time){
+          $user->prev_LE_time=time();$user->save();
+        }
+
         $active_cat = $user->category; // Not Null in table
         $char= $user->$active_cat; //required for decay value ?!
         
+        $leaderBoardRate=C::get('game.leaderBoardRate');
+        $time_leader_passed = time()-$user->prev_LE_time;
+        if($time_leader_passed>=$leaderBoardRate){
+          if($user->prev_LE)
+          {
+            $user->change_percent = (float)($user->le-$user->prev_LE)/$user->prev_LE*100.0;
+          }
+          $user->prev_LE_time=time();
+          $user->prev_LE=$user->le;
+          $user->save();
+        }
+
+        $minRefreshRate=C::get('game.minRefreshRate');
         $time_passed = time()-$user->prev_time;
         if($time_passed>=$minRefreshRate){
+
          $user->prev_time=time();
          $user->save();
 
@@ -124,7 +135,7 @@ class UC extends \BaseController {
         if($user->le - $char->decay*$time_passed <= C::get('game.minLE'))
           $char->decay=C::get('game.minDecay');
         $char->save();
-        
+
         if($user->is_moderator == 1)
           $user->le = C::get('game.iniLE')[$user->category]; 
         else

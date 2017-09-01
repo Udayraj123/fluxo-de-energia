@@ -96,7 +96,7 @@ function getUC(){
 		<div class="col-md-6" >
 			<div class="tablecontainer" style="margin-left:50px;margin-right: 50px; "> 
 				<div class="box-header" align="center">
-					<h3 class="box-title" style="font-size:28px;opacity:1">Create Product</h3>
+					<h3 class="box-title" style="font-size:28px;opacity:1">Buy Product</h3>
 				</div>
 
 				<div class="form-group">
@@ -122,13 +122,14 @@ function getUC(){
 						</td></tr><tr><td><br>
 						<label>num_units : </td><td><input type='number' class="form-control" name='num_units' value=10 /></label>	
 					</td></tr><tr><td align="center" colspan="2">	
+<br>
 					<input type='submit' class="btn btn-lg" value="Buy Product" />
 				</td></tr>
 
 				<?php /* Form::close() */ ?>
 			</form>
 		</table>
-
+<br>
 	</div>
 	<!-- form closed -->
 

@@ -54,7 +54,7 @@ class Game
         	if($diff1<=0){
 	            //will cost a query  
         		if($cat!='farmer'){
-        			$user2=User::where('category',($cat=='investor'?'farmer':'investor'))->orderBy('le','desc')->first();
+        			$user2=User::where('is_moderator',0)->where('category',($cat=='investor'?'farmer':'investor'))->orderBy('le','desc')->first();
         			$common2 = Common::where('category',$user2->category)->first();
         			if($user2->le > $common2->upperTHR){
         				Game::swap($user,$user2);

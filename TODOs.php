@@ -4,6 +4,8 @@ Final Call.
 // save prev states into a file or something
 
 
+KEEP NOTE OF USER:: queries -> check is_moderator=0
+
 TEST TEST TEST
 Farmer sellFruit and Returns
 // some column values

@@ -138,9 +138,7 @@ reqRedeem(0);
             </div>
           </div>
         </div>
-        <div class="progress progress-bar-vertical" style="width:15px;height:300px" >
-          <div id="LEheight" class="progress-bar  progress-bar-striped  progress-bar-danger"  style="height: 20%"></div>
-        </div>
+        
 
         <!-- Here comes the chart -->
         <div id="interactive_user" style="height: 32%; padding: 0px; position: relative;"> </div>
@@ -148,6 +146,9 @@ reqRedeem(0);
     </div> <!-- /.box -->
   </div> <!-- /.col -->
 </div>
+<div class="progress progress-bar-vertical" style="width:15px;height:29%; position: relative; top: -31.5%; left:-25%" >
+          <div id="LEheight" class="progress-bar  progress-bar-striped  progress-bar-danger"  style="height: 20%"></div>
+        </div>
 
 <div class="col-md-4" style="width:45%;background:#3399ff;position: relative;opacity:0.9; top:-36%; left:51.5% ;border-radius:10px">
   <div class="row">

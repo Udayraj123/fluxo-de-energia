@@ -3,6 +3,14 @@
 <!-- titles array -->
 @section('headContent')
 <title>Leaderboard</title>
+<style type="text/css">
+.progress-text{
+	font-size: 25px
+}
+.yellowstyle{
+	background:#ffc61a;margin:5%0%0%5%;border-radius:10px;opacity:0.85
+}
+</style>
 @stop
 
 <!-- bg sources array -->
@@ -10,41 +18,74 @@
 god.jpg
 @stop
 @section('bodyContent')
-@foreach ($users as $u)
-<div class="progress-group">
+<div id="stats">
+	<div class="row">
+		<div class="col-md-4 yellowstyle">
+			<div class="row">
+				<p align="center" style="font-size:28px	">
+					<strong>Top Movers in last {{C::get('game.leaderBoardRate')}} seconds</strong>
+				</p>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<?php 
+					$topMoverG = User::where('is_moderator',0)->where('category','god')->orderBy('change_percent','desc')->first();
+					$topMoverF = User::where('is_moderator',0)->where('category','farmer')->orderBy('change_percent','desc')->first();
+					$topMoverI = User::where('is_moderator',0)->where('category','investor')->orderBy('change_percent','desc')->first();
+					?>
+					<div class="row" style="font-size:25px">
+						<div class="col-md-4"> In Gods </div>
+						<div class="col-md-4"> In Investors </div>
+						<div class="col-md-4"> In Farmers </div>
+					</div>
+					<div class="row" style="font-size:25px">
+						<div class="col-md-4"> {{ $topMoverG->namelink() }} : {{ $topMoverG->change_percent }}% </div>
+						<div class="col-md-4"> {{ $topMoverF->namelink() }} : {{ $topMoverF->change_percent }}% </div>
+						<div class="col-md-4"> {{ $topMoverI->namelink() }} : {{ $topMoverI->change_percent }}% </div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<p align="center" style="font-size:28px	">
+					<strong>Your Change : {{Auth::user()->get()->change_percent}} %</strong>
+				</p>
+			</div>
+		</div>
+		<div class="col-md-6 yellowstyle">
+			<div class="row">
+				<p align="center" style="font-size:28px	">
+					<strong>Life Energy Leaderboard</strong>
+				</p>
+			</div>
+			<div class="row" style="padding:30px">
+				@foreach ($leaders as $i=>$u)
+				{{--
+				@if( $i > 0 && $leaders[$i-1]['category'] != $leaders[$i]['category'])
+				<div class="col-md-4" class="bg-blue">
+					<hr>
+				</div>
+				@endif
+				--}}
 
-<span class="progress-text">
-	{{$u->username}} | {{$u->category}}
-</span>
-<span class="progress-number" id="progress-number{{$u->id}}">
+				<div class="col-md-6 bg-{{$u['invcolor']}}" style="border:10px solid goldenrod;">
+					<div class="progress-group">
+						<span class="progress-text">
+							{{$u['name']}} | {{$u['category']}}
+						</span>
+						<span class="progress-number">
+							{{$u['le']}}/{{$u['uCat']}}
+						</span>
 
-</span>
-
-<div class="progress sm"><div class="progress-bar progress-bar-green" id="progress{{$u->id}}" style="width:0%">
+						<div class="progress sm">
+							<div class="progress-bar progress-{{$u['color']}}" style="width:{{$u['width']}}%">
+							</div>
+						</div>
+					</div>
+				</div>
+				@endforeach
+			</div>
+		</div>
+		<div class="col-md-2"></div>
+	</div>
 </div>
-<script type="text/javascript">
-	var THR = upper{{strtoupper($u->category[0])}};
-	var lowerCat = lower{{strtoupper($u->category[0])}};
-	curr_LE = {{$u->le}}
-	diff1 = THR - curr_LE;
-	diff2 = THR - lowerCat;
-	width = 100*(diff1/diff2);
-	$('#progress{{$u->id}}').width(width);
-	$('#progress-number{{$u->id}}').html(curr_LE+'/'+THR);
-</script>
-</div>
-</div>
-@endforeach
-
-<script type="text/javascript">
-	$('#print').append(upperG);
-	$('#print').append(upperI);
-	$('#print').append(upperF);
-	$('#print').append(lowerF);
-	$('#print').append(lowerI);
-	$('#print').append(lowerG);
-</script>
-
-<p id="printthr">Something</p>
-
 @stop

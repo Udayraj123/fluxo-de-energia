@@ -20,6 +20,10 @@ class User extends Eloquent implements UserInterface {
     function farmer() {
         return $this->hasOne('Farmer');
     }
+    function namelink() {
+        //  Dependency! 
+        return '<a href="'.route('profile',['id'=>$this->id]).'"> '.$this->username.' </a>';
+    }
     function investor() {
         return $this->hasOne('Investor');
     }
