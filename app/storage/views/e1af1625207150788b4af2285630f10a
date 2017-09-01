@@ -59,7 +59,7 @@ setInterval(function(){$('#unit_price').val(getUC());},<?php echo C::get('game.m
       <pre class="box-header">
 
 
-        <label>CHOOSE SEED/FERT/LAND :   <select name='purchase_id' id='purchase_id'>
+        <label>CHOOSE SEED/FERT/LAND :   <select required name='purchase_id' id='purchase_id'>
           <?php foreach($purchases as $purch): ?>
           <?php if($purch->avl_units>0 &&  $purch->product): ?>
           <option value="<?php echo $purch->id; ?>">(<?php echo $purch->avl_units; ?>)<?php echo isset($purch->product->god->user->username) ? $purch->product->god->user->username : 'GOD'; ?>'s  <?php echo $purch->product->category; ?> <?php echo $purch->product->name; ?> (<?php echo $purch->id; ?>)
@@ -85,7 +85,7 @@ setInterval(function(){$('#unit_price').val(getUC());},<?php echo C::get('game.m
 
     CHOOSE FRUIT STORAGE TO LAUNCH :
     <label>
-      <select name='storage_id' id='storage_id'>
+      <select required name='storage_id' id='storage_id'>
         <?php foreach($fruits as $l=>$f): ?>
         <?php if($f->num_units>0 && $f->launched==0): ?>
         <option value="<?php echo $f->id; ?>">

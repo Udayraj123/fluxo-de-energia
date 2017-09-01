@@ -20,8 +20,8 @@ Route::get('/testFruitRel', ['as' => 'testFruitRel', 'uses' => 'FC@testFruitRel'
 
 /////////////////////////////Leaderboard///////////////////////////////
 Route::get('/leaderBoard',['as' => 'leaderBoard', 'uses' => 'UC@leaderBoard']);
-Route::get('/profile',['as' => 'profile', 'uses' => 'UC@profile']);
-/////////////////////////////Leaderboard///////////////////////////////
+/////////////////////////////Profile///////////////////////////////
+Route::get('/profile/{id}',['as' => 'profile', 'uses' => 'UC@profile']);
 
 //debugs
 Route::get('/login/{id?}', ['as' => 'login', 'uses' => 'UC@login']);

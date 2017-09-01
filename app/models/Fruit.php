@@ -14,6 +14,10 @@ class Fruit extends Eloquent {
     function purchase() {
         return $this->belongsTo('Purchase');
     }
+    
+    // function fruitbills() {
+    //     return $this->belongsTo('Fruitbill');
+    // }
 
     function seed() {
         return $this->belongsTo('Purchase'); //looksfor seed_id in fruit to match with id of a Purchase
