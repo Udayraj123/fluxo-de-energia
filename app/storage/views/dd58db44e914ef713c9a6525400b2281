@@ -2,11 +2,11 @@
 <?php $__env->startSection('headContent'); ?>
 <title>Create Product</title>
 <style type="text/css">
-  .tablecontainer{
-    padding-right: 30px;
-    padding-left: 30px;
-    background:#66ff66;border-radius:10px;opacity:0.85;
-  }
+.tablecontainer{
+  padding-right: 30px;
+  padding-left: 30px;
+  background:#66ff66;border-radius:10px;opacity:0.85;
+}
 </style>
 <?php $__env->stopSection(); ?>
 
@@ -18,12 +18,12 @@ god.jpg
 
 <?php $__env->startSection('bodyContent'); ?> 
 <script type="text/javascript">
-  c=<?php echo json_encode(Config::get('game.baseCIs')); ?>;
+c=<?php echo json_encode(Config::get('game.baseCIs')); ?>;
 
-  var c1= c['c1'];
-  var c2= c['c2'];
-  var c3= c['c3'];
-  var c4= c['c4'];
+var c1= c['c1'];
+var c2= c['c2'];
+var c3= c['c3'];
+var c4= c['c4'];
     var k = <?php echo json_encode(C::get('game.basePrices'));; ?>;//direct dictionary it is ! {"seed" : 500,"fertilizer" : 2000,"land" : 7000};
     function getUC(){
 
@@ -62,21 +62,21 @@ god.jpg
 
 <!-- ------------------------- -->
 <script>
-  $(function () {
-    $('#create_product').on('submit', function (e) {
-      e.preventDefault();
-      $.ajax({
-        type: 'post',
-        url: '<?php echo route("createProduct"); ?>',
-        data: $('#create_product').serialize(),
-        success: function (data) {
-          $('#txn_msg').html(data);
-          $('#myModal').modal('show');
-          $('#myModalClose').click(reloadPage);
-        }
-      });
+$(function () {
+  $('#create_product').on('submit', function (e) {
+    e.preventDefault();
+    $.ajax({
+      type: 'post',
+      url: '<?php echo route("createProduct"); ?>',
+      data: $('#create_product').serialize(),
+      success: function (data) {
+        $('#txn_msg').html(data);
+        $('#myModal').modal('show');
+        $('#myModalClose').click(reloadPage);
+      }
     });
   });
+});
 </script>
 
 
@@ -106,11 +106,15 @@ god.jpg
   <input id="ex6" type="text" data-slider-min="-5" data-slider-max="20" data-slider-step="1" data-slider-value="3" data-value="8" value="8" style="display: none;">
   <span id="ex6CurrentSliderValLabel">Price <span id="ex6SliderVal">8</span></span>
 </div>
+<<<<<<< HEAD
+<div class="row" align="center">
+=======
 Not required anymore
  -->
 <div style="height: 30px;">
 </div>
  <div class="row" align="center">
+>>>>>>> 850aacdef607e2c9b757934b37124eadfef1531e
  <div class="col-md-6" >
    <div class="tablecontainer" style="margin-left:50px;margin-right   : 50px;"> 
      <div class="box-header" align="center">
@@ -188,48 +192,50 @@ Not required anymore
 
 
 <script type="text/javascript">
-  var cellData=[];
-  var cellData2=[];
-  var currRow=[];
-  var firstRow=['#','id','name','description','quality','total_shares','bid_price','FT','created_at'];
-  var firstRow2=['#','id','name','description','quality','total_units','unit_price','ET','launched_at'];
-  var counter=0;
-  cellData.push(firstRow);
-  cellData2.push(firstRow2);
+var cellData=[];
+var cellData2=[];
+var currRow=[];
+var firstRow=['#','id','name','description','quality','total_shares','bid_price','FT','created_at'];
+var firstRow2=['#','id','name','description','quality','total_units','unit_price','ET','launched_at'];
+var counter=0;
+cellData.push(firstRow);
+cellData2.push(firstRow2);
 
-  <?php foreach($products as $p): ?>
+<?php foreach($products as $p): ?>
 
-  currRow=[];
-  counter++;
-  currRow.push(counter.toString());
-  currRow.push('<?php echo $p->id; ?>');
-  currRow.push('<?php echo $p->name; ?>');
-  currRow.push('<?php echo e($p->description); ?>');
-  currRow.push('<?php echo $p->quality; ?>');
-  <?php if($p->being_funded==1): ?>
-  currRow.push('<?php echo $p->total_shares; ?>');
-  currRow.push('<?php echo $p->bid_price; ?>');
-  currRow.push('<?php echo $p->FT; ?>');
-  var t = "<?php echo $p->created_at; ?>".split(/[- :]/);
-  var d = new Date(Date.UTC(t[0], t[1]-1, t[2], t[3], t[4], t[5]));
-  currRow.push(d.toLocaleTimeString());
-  <?php else: ?>
-  currRow.push('<?php echo $p->total_units; ?>');
-  currRow.push('<?php echo $p->unit_price; ?>');
-  currRow.push('<?php echo $p->ET; ?>');
-  x=new Date(1000*<?php echo isset($p->launched_at) ? $p->launched_at : '1'; ?>);
-  currRow.push(x.toLocaleTimeString());
-  <?php endif; ?>
+currRow=[];
+counter++;
+currRow.push(counter.toString());
+currRow.push('<?php echo $p->id; ?>');
+currRow.push('<?php echo $p->name; ?>');
+currRow.push('<?php echo e($p->description); ?>');
+currRow.push('<?php echo $p->quality; ?>');
+<?php if($p->being_funded==1): ?>
+currRow.push('<?php echo $p->total_shares; ?>');
+currRow.push('<?php echo $p->bid_price; ?>');
+currRow.push('<?php echo $p->FT; ?>');
+var t = "<?php echo $p->created_at; ?>".split(/[- :]/);
+var d = new Date(Date.UTC(t[0], t[1]-1, t[2], t[3], t[4], t[5]));
+currRow.push(d.toLocaleTimeString());
+<?php else: ?>
+currRow.push('<?php echo $p->total_units; ?>');
+currRow.push('<?php echo $p->unit_price; ?>');
+currRow.push('<?php echo $p->ET; ?>');
+x=new Date(1000*<?php echo isset($p->launched_at) ? $p->launched_at : '1'; ?>);
+currRow.push(x.toLocaleTimeString());
+<?php endif; ?>
 
-  <?php if($p->being_funded==1): ?>
-  cellData.push(currRow);
-  <?php else: ?>
-  cellData2.push(currRow);
-  <?php endif; ?>
-  <?php endforeach; ?>
+<?php if($p->being_funded==1): ?>
+cellData.push(currRow);
+<?php else: ?>
+cellData2.push(currRow);
+<?php endif; ?>
+<?php endforeach; ?>
 
-  insertTable(cellData,"selfProducts",1);
-  insertTable(cellData2,"launchedProducts",1);
+insertTable(cellData,"selfProducts",1);
+insertTable(cellData2,"launchedProducts",1);
+</script>
+<script>
 
       // $(document).ready(function() {
         /* Example 1 */
@@ -237,14 +243,20 @@ Not required anymore
         $("#ex6").on("slide", function(slideEvt) {
           $("#ex6SliderVal").text(slideEvt.value);
         });    
-      </script>
 
 
-      <?php $__env->stopSection(); ?>
+        document.getElementById('#ex6CurrentSliderValLabel').style='display:None'
+        setTimeout("$('#ex6CurrentSliderValLabel').hide()",3000);
+
+
+        </script>
+
+
+        <?php $__env->stopSection(); ?>
 
 
 
 
-      <?php $__env->stopSection(); ?>
+        <?php $__env->stopSection(); ?>
 
 <?php echo $__env->make('master_home', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
