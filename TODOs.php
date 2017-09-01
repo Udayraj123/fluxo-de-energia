@@ -14,6 +14,7 @@ Farmer sellFruit and Returns
 THINK THINK THINK
 > upcoming Products
 > Return events notify
+> Transaction Details Logs
 new Pages
 leaderBoard
 

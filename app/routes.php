@@ -18,6 +18,9 @@
 //test/practices
 Route::get('/testFruitRel', ['as' => 'testFruitRel', 'uses' => 'FC@testFruitRel']);
 
+/////////////////////////////Leaderboard///////////////////////////////
+Route::get('/leaderBoard',['as' => 'leaderBoard', 'uses' => 'UC@leaderBoard']);
+/////////////////////////////Leaderboard///////////////////////////////
 
 //debugs
 Route::get('/login/{id?}', ['as' => 'login', 'uses' => 'UC@login']);

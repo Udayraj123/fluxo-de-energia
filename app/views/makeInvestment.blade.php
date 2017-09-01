@@ -3,6 +3,13 @@
 <!-- titles array -->
 @section('headContent')
 <title>Energy</title>
+<style type="text/css">
+.tablecontainer{
+	padding-right: 30px;
+	padding-left: 30px;
+	background:#66ff66;border-radius:10px;opacity:0.85;
+}
+</style>
 @stop
 
 <!-- bg sources array -->
@@ -39,62 +46,106 @@ god.jpg
 	}
 	setInterval("getUC()",{{C::get('game.msRefreshRate')}});
 </script>
+<!-- ------------------------- -->
+<script>
+	$(function () {
+		$('#make_investment').on('submit', function (e) {
+			e.preventDefault();
+			$.ajax({
+				type: 'post',
+				url: '{{route("makeInvestment")}}',
+				data: $('#make_investment').serialize(),
+				success: function (data) {
+					$('#txn_msg').html(data);
+					$('#myModal').modal('show');
+					$('#myModalClose').click(reloadPage);
+				}
+			});
+		});
+	});
+</script>
+
+
+<!-- ------------------------- -->
+
+<!-- ------------------------- -->
+
+<div class="modal fade" id="myModal" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Your Transaction Details</h4>
+      </div>
+      <div class="modal-body">
+        <p id="txn_msg">Transcation Message</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" id="myModalClose" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- ------------------------- -->
+
 <br>
-<div class="row"  style="background:#66ff66;border-radius:10px;width:30%;margin:5%0%0%2%;opacity:0.85">
-	<div class="col-xs-12"  style="background:#66ff66;border-radius:10px;width:90%;margin:0%0%0%0%;opacity:0.85">
-		<div class="box box-primary"  style="background:#66ff66;border-radius:10px;width:100%;margin:0%0%0%5%;opacity:0.85">
-			<div class="box-header">
+<div class="row" align="center">
+
+	<div class="col-md-6" >
+		<div class="tablecontainer" style="margin-left:50px;margin-right: 50px;"> 
+			<div class="box-header" align="center">
 				<h3 class="box-title" style="font-size:28px;opacity:1">Make Investment</h3>
 			</div>
+
 
 			<div class="form-group">
 
 				<table style="width:100%">
-					{{ Form::open(array('url' => route("makeInvestment"))) }}
-					<tr>
+					<form id="make_investment">
+						{{-- Form::open(array('url' => route("makeInvestment"))) --}}
+						<tr>
 
-						<td>
-							<label for="product_id"> Product Type  : &nbsp;&nbsp;&nbsp; </label>
-						</td>
-						<td>
-							<select class="form-control" onchange="getUC()" name='product_id' id='product_id'>
-								@foreach ($products as $prod)
-								<option value="{{ $prod->id }}">{{ $prod->god->user->username or 'GOD'}}'s'  {{ $prod->category }} {{ $prod->name }} id: ({{ $prod->id }})
-								</option>
-								@endforeach
-							</select>
-						</td> </tr>
-						<tr><td><br><br>
-							<label>bid_price : </td><td><input disabled="true" type='number' id='bid_price' value=0 /></label><br>
-						</td></tr>
-						<tr><td><br><br>
-							<label>RFT : </td><td><input disabled="true" type='number' id='RFT' value=0 /></label><br>
-						</td></tr>
-						<tr><td><br><br>
-							<label>avl_shares : </td><td><input disabled="true" type='number' id='avl_shares' value=0 /></label><br>
-						</td></tr>
-						<tr><td><br><br>
-							<label>num_shares : </td><td><input type='number' name='num_shares' id='num_shares' max=100 min=0 value=10 /></label><br>
-						</td></tr>
-						<tr><td><br><br>
-						&nbsp;&nbsp;<div> <input type='submit' value="SAVE" /> </div>
-					</td></tr>
-					{{ Form::close() }}
-				</table>
+							<td><br>
+								<label for="product_id"> Product Type  : &nbsp;&nbsp;&nbsp; </label>
+							</td>
+							<td>
+								<select class="form-control" onchange="getUC()" name='product_id' id='product_id'>
+									@foreach ($products as $prod)
+									<option value="{{ $prod->id }}">{{ $prod->god->user->username or 'GOD'}}'s'  {{ $prod->category }} {{ $prod->name }} id: ({{ $prod->id }})
+									</option>
+									@endforeach
+								</select>
+							</td> </tr>
+							<tr><td><br>
+								<label>Current Bidding Price : </td><td><input class="form-control" disabled="true" type='number' id='bid_price' value=0 /></label>
+							</td></tr>
+							<tr><td><br>
+								<label>Remaining Funding Time : </td><td><input disabled="true" class="form-control" type='number' id='RFT' value=0 /></label>
+							</td></tr>
+							<tr><td><br>
+								<label>Available Shares : </td><td><input disabled="true" class="form-control" type='number' id='avl_shares' value=0 /></label>
+							</td></tr>
+							<tr><td><br>
+								<label>Number Of Shares : </td><td><input type='number' name='num_shares' class="form-control" id='num_shares' max=100 min=0 value=10 /></label>
+							</td></tr>
+							<tr><td colspan="2" align="center" ><br> <input type='submit' class="btn btn-lg btn-default" value="Make Investment"/> 
+							</td></tr>
+
+							{{-- Form::close() --}}
+						</form>
+					</table>
+					<br>
+				</div>
+
+				<!-- /.box-header -->
+
 			</div>
-
-			<!-- /.box-header -->
-
 		</div>
-	</div>
-	<!-- /.box-body -->
-</div>
-<!-- /.box -->
-</div>
-<!-- /.col -->
-</div>
+		</div>
 
-<div class="col-md-6">
+<div class="col-md-6" style="position: relative; left: 8%; top:5%;">
 	<div id="productLaunched" class="container" style="overflow-y:auto;height:75%;background:#66ff66;border-radius:10px;width:100%;margin:-51%0%0%80%;opacity:0.85">
 		<div class="box-header with-border">
 			<h3 class="box-title"> Upcoming Products</h3>

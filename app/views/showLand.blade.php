@@ -117,9 +117,10 @@ var stateText = ['<i class="fa fa-plus-square"></i> Unused',
 '<i class="fa fa-apple"></i> Fruit'];
 var colors = ['yellow','grey','blue','black','orange','green'];
 
-function makeBox(state,id,check){
+function makeBox(state,id,index,check,RGTs){
     // console.log("makeBox",state,id,check,(check?'':'un')+'checked');
-    var Icon='<span style="font-size:30px;">&nbsp '+stateText[state]+'&nbsp</span>';
+    var Icon='<span style="font-size:30px;">&nbsp '+stateText[state]+'</span> &nbsp <span style="font-size:30px;" id="status'+id+'">&nbsp'+RGTs[index]+'</span>';
+    console.log(id)
     var block= '<input type="checkbox" '+(check?'':'un')+'checked name="land_ids[]" onclick="updateLands(this.id)" id="land'+id+'" value="'+id+'"/>'+Icon;
     if(state==stateFruit || state==stateFertSeed )
       block='<button type="button"'+(state==stateFruit?'':'')+'onclick="updateLands(this.id)" id="land'+id+'"/>'+Icon;
@@ -128,7 +129,7 @@ function makeBox(state,id,check){
     return block;
   }
 
-  function makeLand2(divID,states,landIDs,checks){
+  function makeLand2(divID,states,landIDs,checks,RGTs){
 
     var cellCount=0
     var state=0;
@@ -152,7 +153,10 @@ function makeBox(state,id,check){
 
         var current_col=current_row.insertCell();
         // current_col.style="background:"+colors[state]+";color:lightgreen";
-        current_col.innerHTML=makeBox(state,land_id,check);
+
+        var land_index=landIDs.indexOf(parseInt(land_id));
+
+        current_col.innerHTML=makeBox(state,land_id,land_index,check,RGTs);
         cellCount++;
       }
     }
@@ -176,24 +180,26 @@ function makeBox(state,id,check){
         
         console.log(landIDs,states,RGTs);
 
-        var land_index=landIDs.indexOf(land_id.toString());
+        var land_index=landIDs.indexOf(parseInt(land_id));
         var state=states[land_index];
+        console.log(landIDs,states,RGTs);
+        console.log(land_index);
 
       //This is reseting the checkBoxes too !
         //can do with cookie too, or pass array here. cookie seems better as you can keep track by id, but updating states can cause probs
         var checks=[];
         $(":checkbox").each(function(){checks[this.id]=this.checked; });
 
-        makeLand2("Land",states,landIDs,checks); //this removes previous land & replaces with new states
+        makeLand2("Land",states,landIDs,checks,RGTs); //this removes previous land & replaces with new states
 
         //TODO put this following on onclick () directly
-        var text='Ajax:  land'+land_id+'state ' + state +' : will grow a fruit in '+RGTs[landIDs.indexOf(land_id.toString())]+' minutes !';
+       // var text='Ajax:  land'+land_id+'state ' + state +' : will grow a fruit in '+RGTs[land_index]+' minutes !';
         
         if(state==stateFruit){
-          text='Ajax: land'+land_id+' has grown fully, click to fetch the fruit';
+       //   text='Ajax: land'+land_id+' has grown fully, click to fetch the fruit';
           makeFetchable(land_id);
         }
-        $("#status").html(text);
+      //  $("#status").html(text);
       },
 
   error: function(){// Server Disconnected

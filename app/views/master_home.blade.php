@@ -39,6 +39,12 @@
 
 <body background="@yield('bgsource')" style="background-repeat:no-repeat;background-size: cover;" >
   <script type="text/javascript">
+  var upperG = 0;
+  var upperI = 0;
+  var upperF = 0;
+  var lowerF = 0;
+  var lowerI = 0;
+  var lowerG = 0;
   var p =Math.pow(10,3); //(x*p)/p precision of all calculations here
   
   var messages={{ json_encode(C::get('game.notifHTMLs')); }}
@@ -69,7 +75,8 @@ function decayHandle(){
     upperTHR=$('#upperTHR').val();
     var eta=(le-lowerTHR)/decay;
     $('#ETA').val(Math.round(eta/60*p)/p + ' m');
-
+  $('#stored_LE').val(data['stored_LE']);
+  // console.log
     LEwidth=(le-lowerTHR)/(upperTHR-lowerTHR)*100+'%';
     $('#LEwidth').width(LEwidth);
     
@@ -84,7 +91,6 @@ function decayHandle(){
 });
 }
 function thresholdHandle(){
-
  $.ajax({
   method: "POST",
   url: "{{ route('thresholdHandle') }}",
@@ -97,6 +103,12 @@ function thresholdHandle(){
   $('#lowerTHR').val(parseInt(data['lowerTHR']));
 //<!-- We also have $user to be used -->
 // console.log(data);
+  upperG  = parseInt(data['upperG']);     
+  upperI  = parseInt(data['upperI']);     
+  upperF  = parseInt(data['upperF']);     
+  lowerF  = parseInt(data['lowerF']);     
+  lowerI  = parseInt(data['lowerI']);     
+  lowerG  = parseInt(data['lowerG']);     
 $('#active_cat').html(data['active_cat'].toString());
 
 m=data['msg'];
@@ -134,7 +146,7 @@ function insertTable(cellData,divID,black){
 </script>
 <!--   ----------------------------------- -->
 <script type="text/javascript"> 
-  $(document).ready(function(){
+  function newsGetNow(){
     $.ajax({
       url:'{{asset("news.txt")}}',
       dataType:'text',
@@ -143,7 +155,7 @@ function insertTable(cellData,divID,black){
         $('#news_panel').scrollTop($('#news_panel')[0].scrollHeight);
       }
     });
-  });
+  };
 
 </script>
 
@@ -206,10 +218,10 @@ function insertTable(cellData,divID,black){
                 <input readonly="readonly"  class="btn  btn-block btn-sm" disabled id='le' value=0 >
               </td>
               <td>
-                <button class="btn btn-sm btn-block bg-purple ">Stored LE</button>
+                <button class="btn btn-sm btn-block bg-purple ">Upper</button>
               </td>
               <td>
-                <input readonly="readonly"  class="btn btn-block btn-sm" disabled id='stored_LE' value=0 /> 
+                <input readonly="readonly"  class="btn btn-block btn-sm" disabled id='upperTHR' value=0 /> 
               </td>
             </tr>
             <tr>
@@ -227,10 +239,10 @@ function insertTable(cellData,divID,black){
                 <input readonly="readonly"  class="btn  btn-block btn-sm" disabled  id='ETA' value=0 />
               </td>
               <td>
-                <button class="btn btn-sm btn-block bg-purple ">Upper</button>
+                <button class="btn btn-sm btn-block bg-purple ">Stored LE</button>
               </td>
               <td>
-                <input readonly="readonly"  class="btn btn-block btn-sm" disabled id='upperTHR' value=0 /> 
+                <input readonly="readonly"  class="btn btn-block btn-sm" disabled id='stored_LE' value=0 /> 
               </td>
             </tr>
           </table>
@@ -266,7 +278,9 @@ function insertTable(cellData,divID,black){
     function openNav() {
       if(document.getElementById("news_pan").style.display == "block")
         document.getElementById("news_pan").style.display = "none";
-      else {document.getElementById("news_pan").style.display = "block";
+      else {newsGetNow();
+        document.getElementById("news_pan").style.display = "block";
+
       document.getElementById("news_btn").style.color = "white";
     }
   }

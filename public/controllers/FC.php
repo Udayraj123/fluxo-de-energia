@@ -160,7 +160,7 @@ class FC extends \BaseController {
 				//select first num_units lands
 				array_splice($sel_lands, $num_units);
 			}
-
+Log::info($sel_lands);
 		//state change happens here.
 			foreach ($sel_lands as $id) {
 				//FOR EACH (SPLICED)SELECTED LANDS, DO THIS-
@@ -169,6 +169,7 @@ class FC extends \BaseController {
 				$l->save(); //This will affect the farmer's visuals of land
 				
 				//action - set new GT, set planted_at
+Log::info($l);
 				$l->GT=$this->getGT($l); $l->planted_at=time(); $l->save();
 
 				//Should not be null, should be unique

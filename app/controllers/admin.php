@@ -1,4 +1,4 @@
-<?php
+\<?php
 class admin extends \BaseController {
 //CALL THIS FUNCTION EVERY 30MIN OR SO => To avoid Stucks
 //MOVE THE FUNCTION BELOW TO SQL functions in Workbench
@@ -83,8 +83,12 @@ class admin extends \BaseController {
 			//----------------------------------------------------------------
 			$u->prev_LE_time=time();
 			//----------------------------------------------------------------
+			$u->prev_LE =0;
+			$u->LE_diff =0;
+			$u->change_percent =0;
 			$u->prev_time =$t;
 			$u->le=$ini[$u->category];
+			$u->highest_LE=$ini[$u->category];
 			$u->stored_LE=$stored_LE[$u->category];
 			$u->is_moderator=0;
 			$u->save();
@@ -113,8 +117,10 @@ class admin extends \BaseController {
 				'avl_units'=>100,
 				'ET'=>5,'FT'=>5,
 				]);
-			$default_land = Product::where('god_id',$gid)->where('avl_units','>',60)->where('category','land')->first();	
 		}
+		$default_land = Product::where('god_id',$gid)->where('avl_units','>',60)->where('category','land')->first();	
+		$default_land->description='moderated';
+		$default_land->save();
 
 		foreach ($users as $c=> $u) {
 // // Pasted from FC.php 30 Aug

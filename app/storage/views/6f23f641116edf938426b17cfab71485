@@ -3,10 +3,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <?php $__env->stopSection(); ?>
 <?php $__env->startSection('description'); ?>
-    Error!
+    Server Error!
     <?php $__env->stopSection(); ?>
 <?php $__env->startSection('title'); ?>
-    Error!
+    Server Error!
 <?php $__env->stopSection(); ?>
 <?php $__env->startSection('body'); ?>
     <section class="wet-asphalt no-margin" style="height: 100%">
