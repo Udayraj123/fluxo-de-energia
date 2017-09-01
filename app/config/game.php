@@ -4,8 +4,8 @@ return array(
 	'boostSwap'=>1,
 	'boostFac'=>0.25,
 	'facDecay' => array("god" => 1*(0.1*0.1/60),"investor" =>(0.1*0.01/60),"farmer" =>1*(0.1*0.001/60)),
-	'iniLE' => array("god" => 1000000,"investor" => 500000,"farmer" => 40000),
-	'stored_LE' => array("god" => 100000,"investor" => 50000,"farmer" => 4000),
+	'iniLE' => array("god" => 1000000,"investor" => 500000,"farmer" => 30000),
+	'stored_LE' => array("god" => 100000,"investor" => 60000,"farmer" => 10000),
 	'numGods'=>6,
 	'numInvs'=>11,
 	'modGs'=>2,
@@ -14,8 +14,8 @@ return array(
 	'minLE' => 1000,
 	'minDecay' => '0.005',
 	'leaderBoardRate'=>60,//currently in top movers
-	'minRefreshRate'=>1,//seconds
-	'msRefreshRate'=>500,//miliseconds
+	'minRefreshRate'=>3,//seconds
+	'msRefreshRate'=>2500,//miliseconds
 	'notifTime'=>60,
 	'topmovers_update_time'=>60,
 	'notifHTMLs'=>[

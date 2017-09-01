@@ -295,7 +295,9 @@ public function showLand(){
 	$farmer=$user->farmer;
 	$L = $farmer->lands;
 	$purchases = $farmer->purchases; //->where('product is seed or fert') //not req
-	$fruits=	 $farmer->fruits;
+
+    $fruits = Fruit::where('farmer_id',$farmer->id)->where('launched',0)->get();
+	
 	//Convert following into return array('key'=>'val'); to be handled by ajax
 	//this shall be obtained from ajax since land updates with time
 

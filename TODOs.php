@@ -7,7 +7,10 @@ Final Call.
 KEEP NOTE OF USER:: queries -> check is_moderator=0
 
 TEST TEST TEST
-Farmer sellFruit and Returns
+>> Farmer sellFruit and Returns
+
+
+
 // some column values
 	// Investment::where('investor_id',$inv->id)->sum('amt_ret');
 
@@ -17,8 +20,8 @@ THINK THINK THINK
 > upcoming Products
 > Return events notify
 > Transaction Details Logs
-new Pages
-leaderBoard
+_/ new Pages
+_/ leaderBoard
 
 REMOVE DEBUG LINES
 > Product Name Ids from dropdown

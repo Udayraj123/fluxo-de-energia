@@ -66,6 +66,7 @@ var c4= c['c4'];
 $(function () {
   $('#create_product').on('submit', function (e) {
     e.preventDefault();
+    $('#create_product').attr('disabled',true);
     $.ajax({
       type: 'post',
       url: '{{route("createProduct")}}',

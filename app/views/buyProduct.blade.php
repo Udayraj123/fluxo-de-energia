@@ -55,6 +55,7 @@ function getUC(){
 	<script type="text/javascript">
 	$(function () {
 		$('#buy_product').on('submit', function (e) {
+			$('#buy_product').attr('disabled',true);
 			e.preventDefault();
 			$.ajax({
 				type: 'post',
@@ -124,14 +125,14 @@ function getUC(){
 						</td></tr><tr><td><br>
 						<label>num_units : </td><td><input type='number' class="form-control" name='num_units' value=10 /></label>	
 					</td></tr><tr><td align="center" colspan="2">	
-<br>
+					<br>
 					<input type='submit' class="btn btn-lg" value="Buy Product" />
 				</td></tr>
 
 				{{-- Form::close() --}}
 			</form>
 		</table>
-<br>
+		<br>
 	</div>
 	<!-- form closed -->
 
