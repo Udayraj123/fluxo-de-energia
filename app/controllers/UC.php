@@ -42,25 +42,50 @@ class UC extends \BaseController {
          $stored_LE=$user->stored_LE;
          return array('respLE'=>$redeemLE,'stored_LE'=>$stored_LE);
        }
+       //////////////////////////////////////Profile////////////////////////////////
+       
+       public function profile($id){
+        $puser = User::find($id);
+        if($puser){
+          $total = $this->fruitbill($puser);
+         return View::make('profile')->with(['puser'=>$puser,'total'=>$total]);
+       }
+       else{
+        return 'User Not Found';
+      }
+    }
 
+    public function fruitbill($puser){
+      $total[0]=0;
+      $total[1]=0;
+      foreach ($puser->farmer->fruits as $p){
+        foreach( Fruitbill::where('fruit_id',$p->id)->get() as $q){
+          $total[0] += $q->num_units;
+          $total[1] += ($q->num_units) * ($q->buy_price);
+        }
+      }
+      return $total;
+    }
+
+       //////////////////////////////////////Profile////////////////////////////////
 //the display function
-       public static function thresholdHandle(){
+    public static function thresholdHandle(){
 
-        $user=Auth::user()->get();
+      $user=Auth::user()->get();
       //this swaps characters !
-        $catThresholds  = Game::thresholdsFor($user->category);
+      $catThresholds  = Game::thresholdsFor($user->category);
 
-        $godThresholds  = Game::thresholdsFor('god');
-        $investorThresholds  = Game::thresholdsFor('investor');
-        $farmerThresholds  = Game::thresholdsFor('farmer');
-        $allTHRs = [
-        'lowerG'=>$godThresholds['lowerTHR'],
-        'lowerF'=>$farmerThresholds['lowerTHR'],
-        'lowerI'=>$investorThresholds['lowerTHR'],
-        'upperG'=>$godThresholds['upperTHR'],
-        'upperI'=>$investorThresholds['upperTHR'],
-        'upperF'=>$farmerThresholds['upperTHR'],
-        ];
+      $godThresholds  = Game::thresholdsFor('god');
+      $investorThresholds  = Game::thresholdsFor('investor');
+      $farmerThresholds  = Game::thresholdsFor('farmer');
+      $allTHRs = [
+      'lowerG'=>$godThresholds['lowerTHR'],
+      'lowerF'=>$farmerThresholds['lowerTHR'],
+      'lowerI'=>$investorThresholds['lowerTHR'],
+      'upperG'=>$godThresholds['upperTHR'],
+      'upperI'=>$investorThresholds['upperTHR'],
+      'upperF'=>$farmerThresholds['upperTHR'],
+      ];
 
         $msg=Game::thresholdCheck($catThresholds,$user); //will already swap the user.
         $reload=C::get('game.reloads')[$msg];
