@@ -39,6 +39,12 @@
 
 <body background="@yield('bgsource')" style="background-repeat:no-repeat;background-size: cover;" >
   <script type="text/javascript">
+  var upperG = 0;
+  var upperI = 0;
+  var upperF = 0;
+  var lowerF = 0;
+  var lowerI = 0;
+  var lowerG = 0;
   var p =Math.pow(10,3); //(x*p)/p precision of all calculations here
   
   var messages={{ json_encode(C::get('game.notifHTMLs')); }}
@@ -85,7 +91,6 @@ function decayHandle(){
 });
 }
 function thresholdHandle(){
-
  $.ajax({
   method: "POST",
   url: "{{ route('thresholdHandle') }}",
@@ -98,6 +103,12 @@ function thresholdHandle(){
   $('#lowerTHR').val(parseInt(data['lowerTHR']));
 //<!-- We also have $user to be used -->
 // console.log(data);
+  upperG  = parseInt(data['upperG']);     
+  upperI  = parseInt(data['upperI']);     
+  upperF  = parseInt(data['upperF']);     
+  lowerF  = parseInt(data['lowerF']);     
+  lowerI  = parseInt(data['lowerI']);     
+  lowerG  = parseInt(data['lowerG']);     
 $('#active_cat').html(data['active_cat'].toString());
 
 m=data['msg'];

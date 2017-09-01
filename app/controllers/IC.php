@@ -118,7 +118,7 @@ class IC extends \BaseController {
 	public function calcBidPrice($p){
 		if(!($p->FT>0 && $p->total_shares>0))return 0;
 		$RFT = Game::getRFT($p);
-		if($RFT<=0){
+		if($RFT<=0 || $p->avl_shares==0){
 	  		//Nope - Launching is in control of god?
 	  		// Launch automatically to be fair.
 			Game::launchProd($p);
@@ -159,7 +159,7 @@ class IC extends \BaseController {
 	}
 	public function makeInvestment(){
 		$products=Product::where('being_funded',1) 
-		->where('avl_shares','>',0) 
+		->where('avl_shares','>=',0) 
 		->orderBy('id','desc') ->get();
 		return View::make('makeInvestment') 
 		->with('products',$products);

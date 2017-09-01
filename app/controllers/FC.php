@@ -248,7 +248,7 @@ public function getRGT($l){
 		}
 
 		$pch->avl_units -= $num_units; 		 $pch->save();
-		return View::make('goback');
+		return Redirect::route('showLand');
 	}
 
 

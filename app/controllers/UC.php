@@ -22,6 +22,15 @@ class UC extends \BaseController {
         - the above might require a game.transitionTime
 */
 
+        ////////////////////////////////////////////////////////////////////////////////
+
+        public function leaderBoard(){
+          $users = User::orderBy('le','desc')->where('is_moderator',0)->get();
+          return View::make('leaderBoard')->with('users',$users);
+        }
+
+        ////////////////////////////////////////////////////////////////////////////////
+
         public function redeemLife(){
           $user = Auth::user()->get();
           $redeemLE = Input::get('redeemLE');
@@ -40,11 +49,24 @@ class UC extends \BaseController {
         $user=Auth::user()->get();
       //this swaps characters !
         $catThresholds  = Game::thresholdsFor($user->category);
+
+        $godThresholds  = Game::thresholdsFor('god');
+        $investorThresholds  = Game::thresholdsFor('investor');
+        $farmerThresholds  = Game::thresholdsFor('farmer');
+        $allTHRs = [
+        'lowerG'=>$godThresholds['lowerTHR'],
+        'lowerF'=>$farmerThresholds['lowerTHR'],
+        'lowerI'=>$investorThresholds['lowerTHR'],
+        'upperG'=>$godThresholds['upperTHR'],
+        'upperI'=>$investorThresholds['upperTHR'],
+        'upperF'=>$farmerThresholds['upperTHR'],
+        ];
+
         $msg=Game::thresholdCheck($catThresholds,$user); //will already swap the user.
         $reload=C::get('game.reloads')[$msg];
 
         $user=Auth::user()->get(); //get the updated user.
-        return array_merge($catThresholds,['reload'=>$reload,'msg'=>$msg,'active_cat'=>$user->category,'le'=>$user->le]);
+        return array_merge($catThresholds,$allTHRs,['reload'=>$reload,'msg'=>$msg,'active_cat'=>$user->category,'le'=>$user->le]);
       }
 
 
@@ -71,19 +93,19 @@ class UC extends \BaseController {
 
         //Log::info($user->id."------".(int)($user->prev_time-$user->prev_LE_time));
         if ((int)($user->prev_time-$user->prev_LE_time)%5==0)//&&(($user->prev_time-$user->prev_LE_time)%60<=5))
-{
-  $this->leDifference();
-}
-if($user->highest_LE<$user->le)
-  $user->highest_LE=$user->le;
+        {
+          $this->leDifference();
+        }
+        if($user->highest_LE<$user->le)
+          $user->highest_LE=$user->le;
         // Log::info('test');
 
         //------------------------------------------------------------------------------------------------
 
-$minRefreshRate=C::get('game.minRefreshRate');
-if(!$user->prev_time){
-  $user->prev_time=time();$user->save();
-}
+        $minRefreshRate=C::get('game.minRefreshRate');
+        if(!$user->prev_time){
+          $user->prev_time=time();$user->save();
+        }
         $active_cat = $user->category; // Not Null in table
         $char= $user->$active_cat; //required for decay value ?!
         
