@@ -427,12 +427,14 @@ public function testFruitRel(){
              //expiry time is over now : Game:: will take care of expiring it.          Done<-- What's correct place to update this?
 			return $removeResp;
 		}
+		
 		$time_elapsed= (time()-(int)$p->launched_at)/60; //Minutes
 		
-		$loss=  $p->god->decay * $p->ET;
+         $new_decay=C::get('game.facDecay')['god'] * Game::sysLE();
+		
 		$num=$p->total_cost/$p->unit_price;
 		$godRecovery=C::get('game.godRecovery');
-		$buy_price= $p->unit_price + $godRecovery*($loss)/($num)*($time_elapsed)/($p->ET);
+		$buy_price= $p->unit_price + $godRecovery*($new_decay)/($num)*($time_elapsed);
         // echo "Buy price = ".$buy_price."<BR>";
         // return  $buy_price;
 		return array('buy_price'=>$buy_price,'RET'=>$RET);

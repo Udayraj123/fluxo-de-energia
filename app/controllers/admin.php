@@ -103,7 +103,7 @@ class admin extends \BaseController {
 		if(!$default_land){
 			DB::table('products')->insert([
 				'god_id'=> $gid,
-				'category'=>'land',
+				'category'=>'land','description'=>'created by moderator',
 				'being_funded'=> -1, 'launched_at'=>time(),
 				'total_shares'=>50, 'avl_shares'=>0,
 				'quality'=>50,
