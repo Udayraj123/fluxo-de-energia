@@ -110,7 +110,7 @@ if(!$user->prev_time){
 
         $user->save();
       }
-      return array('reload'=>'0','le'=>$user->le,'decay'=>$char->decay,'active_cat'=>$active_cat);
+      return array('reload'=>'0','le'=>$user->le,'stored_LE'=>$user->stored_LE,'decay'=>$char->decay,'active_cat'=>$active_cat);
     }
 
 

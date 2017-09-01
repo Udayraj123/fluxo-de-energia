@@ -5,6 +5,7 @@ class FC extends \BaseController {
 
 //for Test
 	public function checkGT($land_id){
+		echo $land_id."<br>";
 		$l=Land::findOrFail($land_id);
 		echo "land $l->id Seed $l->seed_id Fert $l->fert_id ";
 		if($l->seed_id<0)
@@ -13,6 +14,32 @@ class FC extends \BaseController {
 			echo (	$GT= $this->getRGT($l))."<BR>";
 		}
 	}
+
+//this will be used only when planting seed. later, only RGT will be updated separately
+	public function getGT($l){
+		if($l->seed_id < 0 )return C::get('game.maxGT');
+		$lq=$l->purchase->product->quality;
+		$sq=$l->seed->product->quality;
+		if($l->fert_id < 0)$fq=1; else $fq=$l->fertilizer->product->quality;
+
+//pass seed's quality, fert's quality, land's quality.
+	if($lq*$sq*$fq==0)return C::get('game.maxGT');//this will never make it fruit
+
+	$lq *= C::get('game.landQual');
+	$sq *= C::get('game.seedQual');
+	$fq *= C::get('game.fertQual');
+
+	$GT= C::get('game.seedGT') / (1 + $sq*$fq*$lq);
+
+	$l->GT=$GT; $l->save();
+
+	return $GT; 
+}
+
+//for AJax (thru getStates)
+public function getRGT($l){
+	return $this->getGT($l) - (time()-$l->planted_at)/60;	//-ve if fruit.
+}
 	
 	public function calcStorageLE($fruit){
 		$maxQual=C::get('game.maxQual');
@@ -225,32 +252,6 @@ class FC extends \BaseController {
 	}
 
 
-//this will be used only when planting seed. later, only RGT will be updated separately
-	public function getGT($l){
-		if($l->seed_id < 0 )return C::get('game.maxGT');
-		$lq=$l->purchase->product->quality;
-		$sq=$l->seed->product->quality;
-		if($l->fert_id < 0)$fq=1; else $fq=$l->fertilizer->product->quality;
-
-//pass seed's quality, fert's quality, land's quality.
-	if($lq*$sq*$fq==0)return C::get('game.maxGT');//this will never make it fruit
-
-	$lq *= C::get('game.landQual');
-	$sq *= C::get('game.seedQual');
-	$fq *= C::get('game.fertQual');
-
-	$GT= C::get('game.seedGT') / (1 + $sq*$fq*$lq);
-
-	$l->GT=$GT; $l->save();
-
-	return $GT; 
-}
-
-//for AJax (thru getStates)
-public function getRGT($l){
-	return $this->getGT($l) - (time()-$l->planted_at)/60;	//-ve if fruit.
-}
-
 //here comes the ajax
 public function getStates(){
 	$user= Auth::user()->get(); 
@@ -427,12 +428,14 @@ public function testFruitRel(){
              //expiry time is over now : Game:: will take care of expiring it.          Done<-- What's correct place to update this?
 			return $removeResp;
 		}
+		
 		$time_elapsed= (time()-(int)$p->launched_at)/60; //Minutes
 		
-		$loss=  $p->god->decay * $p->ET;
+         $new_decay=C::get('game.facDecay')['god'] * Game::sysLE();
+		
 		$num=$p->total_cost/$p->unit_price;
 		$godRecovery=C::get('game.godRecovery');
-		$buy_price= $p->unit_price + $godRecovery*($loss)/($num)*($time_elapsed)/($p->ET);
+		$buy_price= $p->unit_price + $godRecovery*($new_decay)/($num)*($time_elapsed);
         // echo "Buy price = ".$buy_price."<BR>";
         // return  $buy_price;
 		return array('buy_price'=>$buy_price,'RET'=>$RET);

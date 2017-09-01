@@ -1,4 +1,4 @@
-<?php
+\<?php
 class admin extends \BaseController {
 //CALL THIS FUNCTION EVERY 30MIN OR SO => To avoid Stucks
 //MOVE THE FUNCTION BELOW TO SQL functions in Workbench
@@ -103,7 +103,7 @@ class admin extends \BaseController {
 		if(!$default_land){
 			DB::table('products')->insert([
 				'god_id'=> $gid,
-				'category'=>'land',
+				'category'=>'land','description'=>'created by moderator',
 				'being_funded'=> -1, 'launched_at'=>time(),
 				'total_shares'=>50, 'avl_shares'=>0,
 				'quality'=>50,
@@ -112,8 +112,10 @@ class admin extends \BaseController {
 				'avl_units'=>100,
 				'ET'=>5,'FT'=>5,
 				]);
-			$default_land = Product::where('god_id',$gid)->where('avl_units','>',60)->where('category','land')->first();	
 		}
+		$default_land = Product::where('god_id',$gid)->where('avl_units','>',60)->where('category','land')->first();	
+		$default_land->description='moderated';
+		$default_land->save();
 
 		foreach ($users as $c=> $u) {
 // // Pasted from FC.php 30 Aug
