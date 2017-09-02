@@ -1,4 +1,4 @@
-\<?php
+<?php
 class admin extends \BaseController {
 //CALL THIS FUNCTION EVERY 30MIN OR SO => To avoid Stucks
 //MOVE THE FUNCTION BELOW TO SQL functions in Workbench
@@ -69,7 +69,9 @@ class admin extends \BaseController {
 	}
 	
 
-	public function resetUsers(){
+	public function resetUsers()
+	{
+		
 		if(!$this->checkID())return;
 		$users=User::all();
 		$t=time();
@@ -97,7 +99,6 @@ class admin extends \BaseController {
 			//----------------------------------------------------------------
 			$u->prev_LE_time=time();
 			//----------------------------------------------------------------
-			// $u->LE_diff =0;
 			$u->change_percent =0;
 			$u->prev_time =$t;
 			$u->logged_in = 0;

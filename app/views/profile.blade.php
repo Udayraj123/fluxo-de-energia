@@ -34,8 +34,11 @@ god.jpg
       cellData.push(firstRow);
       for(var i=0; i<data1.length ;i++){
         cellData.push(convertDictToArr(data1[i]));
-      }    
-      insertTable(cellData,'inv_table',1);
+      }
+      if(!cellData)
+      {    
+        insertTable(cellData,'inv_table',1);
+      }
 
     });
   }
@@ -43,42 +46,42 @@ god.jpg
 </script>
 
 <!-- ------------ -->
-<div class='col-xs-6' id='p_perchng'>
+<div class='col-xs-12' id='p_perchng'>
 <h1> Welcome to {{$puser->username}}'s Flux.</h1>
 </div>
 
-<div class="col-xs-3" id="tot_inv"> 
-Total Amount Invested as an Investor is {{$totinv[0]}}.
+<div class="col-xs-6" id="tot_inv"> 
+<h4>Total Amount Invested as an Investor is <strong>{{$totinv[0]}}</strong>.</h4>
 </div>
-<div class="col-xs-3" id="tot_rec"> 
-Total Amount Received as an Investor is {{$totinv[1]}}.
-</div>
-
-<div class='col-xs-3' id='p_highle'>
-All time highest Life Energy was {{$puser->highest_LE}}.
+<div class="col-xs-6" id="tot_rec"> 
+<h4>Total Amount Received as an Investor is <strong>{{$totinv[1]}}</strong>.</h4>
 </div>
 
-<div class='col-xs-3' id='p_perchng'>
-The Change in Life Energy in last one minute is {{$puser->change_percent}}.
+<div class='col-xs-6' id='p_highle'>
+<h4>All time highest Life Energy was <strong>{{$puser->highest_LE}}.</strong></h4>
 </div>
 
-<div class='col-xs-3' id='p_perchng'>
-The current Life Energy is {{$puser->le}}.
+<div class='col-xs-6' id='p_perchng'>
+<h4>The Change in Life Energy in last one minute is <strong>{{$puser->change_percent}}.</strong></h4>
 </div>
 
-<div class='col-xs-3' id='p_perchng'>
-The current role played by {{$puser->username}} is {{$puser->category}}.
+<div class='col-xs-6' id='p_perchng'>
+<h4>The current Life Energy is <strong>{{$puser->le}}.</strong></h4>
 </div>
 
-<div class="col-xs-3" id="p_fruit">
-Fruits Grown Till Date : {{Fruit::where('launched','1')->where('farmer_id',$puser->farmer->id)->count()}}.
+<div class='col-xs-6' id='p_perchng'>
+<h4>The current role played by {{$puser->username}} is <strong>{{$puser->category}}.</strong></h4>
 </div>
 
-<div class="col-xs-3" id="p_fruit">
-Fruits Sold Till Date : {{$total[0]}}. 
+<div class="col-xs-6" id="p_fruit">
+<h4>Fruits Grown Till Date : <strong>{{Fruit::where('launched','1')->where('farmer_id',$puser->farmer->id)->count()}}.</strong></h4>
 </div>
-<div class="col-xs-3" id="p_fruit">
-Money Earned from selling fruits : {{$total[1]}}. 
+
+<div class="col-xs-6" id="p_fruit">
+<h4>Fruits Sold Till Date : <strong>{{$total[0]}}. </strong></h4>
+</div>
+<div class="col-xs-6" id="p_fruit">
+<h4>Money Earned from selling fruits : <strong>{{$total[1]}}. </strong></h4>
 </div>
 
 <div class="col-xs-6" id="inv_table">

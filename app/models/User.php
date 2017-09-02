@@ -20,6 +20,11 @@ class User extends Eloquent implements UserInterface {
     function farmer() {
         return $this->hasOne('Farmer');
     }
+
+    function cat() {
+        $cat = $this->category;
+        return $this->$cat;
+    }
     function namelink() {
         //  Dependency! 
         // return '<b> '.$this->username.' </b>';
