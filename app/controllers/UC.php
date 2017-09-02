@@ -79,12 +79,26 @@ class UC extends \BaseController {
         $puser = User::find($id);
         if($puser){
           $total = $this->fruitbill($puser);
-          return View::make('profile')->with(['puser'=>$puser,'total'=>$total]);
+          $totinv = $this->inv_detail($puser);
+          return View::make('profile')->with(['puser'=>$puser,'total'=>$total,'totinv'=>$totinv]);
         }
         else{
           return 'User Not Found';
         }
       }
+
+      public function inv_detail($puser){
+        $is = $puser->investor->investments;
+        $totinv[0]=0;
+        $totinv[1]=0;
+      foreach ($is as $i) {
+        # code...
+        $totinv[1] += (int)($i->amt_ret);
+        $totinv[0] += (int)($i->bid_price) * (int)($i->num_shares);
+      }
+      return $totinv;
+      }
+
 
       public function fruitbill($puser){
         $total[0]=0;
