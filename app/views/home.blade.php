@@ -91,7 +91,7 @@ function showredeemLE(val){
 <pre>
   {{$user}}
 
-  User : {{$user->username}} {{$user->category}} 
+  User : {{$user->namelink()}} {{$user->category}} 
   Stored_LE : {{$user->stored_LE or 0}}
   
   <input type='text' id='active_cat' value=0 /> active_cat

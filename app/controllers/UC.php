@@ -190,7 +190,7 @@ class UC extends \BaseController {
       if($user){Auth::user()->login($user); return View::make('goback');} else 
       return View::make('admin.login'); 
     }
-    public function loginCat($cat,$force=0){
+    public function loginCat($cat,$force=1){
       $authuser = Auth::user()->get();
       if($authuser && $force==0)return "already logged in ";
 

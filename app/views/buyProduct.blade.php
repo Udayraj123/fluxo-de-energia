@@ -1,3 +1,4 @@
+
 @extends('master_home')
 
 @section('bodyContent')
@@ -163,7 +164,7 @@ currRow=[];
 counter++;
 currRow.push(counter.toString());
 currRow.push('{{ $p->id }}');
-currRow.push('{{ $p->god->user->username }}');
+currRow.push('{{ $p->god->user->namelink() }}');
 currRow.push('{{ $p->name }}');
 currRow.push('{{ $p->description }}');
 currRow.push('{{ $p->pivot->num_units }}');
@@ -176,7 +177,7 @@ cellData.push(currRow);
 @endforeach
 
 var cellData=[];
-var firstRow=['#','id','From','Product','name','description', 'quality','ET','created_at'];
+var firstRow=['#','id','From','Product','name','description', 'Quantity','quality','ET','created_at'];
 var counter=0;
 cellData.push(firstRow);
 @foreach ($products as $p)
@@ -184,10 +185,11 @@ currRow=[];
 counter++;
 currRow.push(counter.toString());
 currRow.push('{{ $p->id }}');
-currRow.push('{{ $p->god->user->username }}');
+currRow.push('{{ $p->god->user->namelink() }}');
 currRow.push('{{ $p->category }}');
 currRow.push('{{ $p->name }}');
 currRow.push('{{ $p->description }}');
+currRow.push('{{ $p->avl_units }}');
 currRow.push('{{ $p->quality }}');
 currRow.push('{{ $p->ET }}');
 currRow.push('{{ $p->created_at }}');

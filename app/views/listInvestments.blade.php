@@ -71,7 +71,7 @@ god.jpg
 	currRow.push(counter.toString());
 	currRow.push('{{ $prod->id }}');
 	currRow.push('{{ $prod->category }}');
-	currRow.push('{{ $prod->god->user->username }}');
+	currRow.push('{{ $prod->god->user->namelink() }}');
 	currRow.push('{{ $prod->pivot->num_shares }}');
 	currRow.push('{{ $prod->pivot->bid_price }}');
 	currRow.push('{{ $prod->quality }}');

@@ -69,7 +69,7 @@ god.jpg
 	currRow.push(counter.toString());
 	currRow.push('<?php echo $prod->id; ?>');
 	currRow.push('<?php echo $prod->category; ?>');
-	currRow.push('<?php echo $prod->god->user->username; ?>');
+	currRow.push('<?php echo $prod->god->user->namelink(); ?>');
 	currRow.push('<?php echo $prod->pivot->num_shares; ?>');
 	currRow.push('<?php echo $prod->pivot->bid_price; ?>');
 	currRow.push('<?php echo $prod->quality; ?>');

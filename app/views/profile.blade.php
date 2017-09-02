@@ -34,8 +34,8 @@ god.jpg
       var counter=0;
       cellData.push(firstRow);
       for(var i=0; i<data1.length ;i++){
-        tot_inv += data1[i][4];
-        tot_rec += data1[i][5];
+        tot_inv += parseInt(data1[i][4]);
+        tot_rec += parseInt(data1[i][5]);
         cellData.push(convertDictToArr(data1[i]));
       }    
       insertTable(cellData,'inv_table',1);

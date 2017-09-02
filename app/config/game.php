@@ -3,7 +3,7 @@ return array(
 	'swapon'=>1,
 	'boostSwap'=>1,//bool
 	'boostFac'=>0.25,
-	'facDecay' => array("god" => 1*(0.1*0.1/60),"investor" =>(0.1*0.01/60),"farmer" =>1*(0.1*0.001/60)),
+	'facDecay' => array("god" => 0.1*(0.1*0.1/60),"investor" =>(0.01*0.01/60),"farmer" =>0.1*(0.1*0.001/60)),
 	'iniLE' => array("god" => 1000000,"investor" => 500000,"farmer" => 30000),
 	'stored_LE' => array("god" => 100000,"investor" => 60000,"farmer" => 10000),
 	'numGods'=>6,
@@ -61,7 +61,7 @@ return array(
 
 	'godPercent'=>0.51,
 	'godReturns'=>0.81, //funding returns
-	'godRecovery'=>0.1, //selling returns (of ET decay)
+	'godRecovery'=>0.4, //selling returns (of ET decay)
 	'farmerRecovery'=>20, //selling fruit returns
 
 	'maxET'=>60,
@@ -85,7 +85,7 @@ return array(
 	'fruitBP'=>500,  //later this wil be a factor from seed's price
 	'sellC1'=>0.002,
 	'sellC2'=>0.012,
-	'fruitReturns' => 20, //On fetch, directly dmultiplied by the quality  (num_units=1 at a time)
+	'fruitReturns' => 200, //On fetch, directly dmultiplied by the quality  (num_units=1 at a time)
 	'storage_fac' => 0.5, //*goes to (storage_fac + 1)*unit_price at 100% quality
 
 

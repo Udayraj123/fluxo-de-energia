@@ -515,6 +515,7 @@ public function testFruitRel(){
 					$inv_num_shares += $i->num_shares;
 					$percentage = $i->num_shares/$total_shares;
 					$i->amt_ret += $percentage*$price;
+					$i->save();
 				}
 				
 				// Investment::where('investor_id',$inv->id)->sum('amt_ret');

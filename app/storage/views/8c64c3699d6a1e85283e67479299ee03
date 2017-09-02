@@ -161,7 +161,7 @@ currRow=[];
 counter++;
 currRow.push(counter.toString());
 currRow.push('<?php echo $p->id; ?>');
-currRow.push('<?php echo $p->god->user->username; ?>');
+currRow.push('<?php echo $p->god->user->namelink(); ?>');
 currRow.push('<?php echo $p->name; ?>');
 currRow.push('<?php echo $p->description; ?>');
 currRow.push('<?php echo $p->pivot->num_units; ?>');
@@ -174,7 +174,7 @@ cellData.push(currRow);
 <?php endforeach; ?>
 
 var cellData=[];
-var firstRow=['#','id','From','Product','name','description', 'quality','ET','created_at'];
+var firstRow=['#','id','From','Product','name','description', 'Quantity','quality','ET','created_at'];
 var counter=0;
 cellData.push(firstRow);
 <?php foreach($products as $p): ?>
@@ -182,10 +182,11 @@ currRow=[];
 counter++;
 currRow.push(counter.toString());
 currRow.push('<?php echo $p->id; ?>');
-currRow.push('<?php echo $p->god->user->username; ?>');
+currRow.push('<?php echo $p->god->user->namelink(); ?>');
 currRow.push('<?php echo $p->category; ?>');
 currRow.push('<?php echo $p->name; ?>');
 currRow.push('<?php echo $p->description; ?>');
+currRow.push('<?php echo $p->avl_units; ?>');
 currRow.push('<?php echo $p->quality; ?>');
 currRow.push('<?php echo $p->ET; ?>');
 currRow.push('<?php echo $p->created_at; ?>');

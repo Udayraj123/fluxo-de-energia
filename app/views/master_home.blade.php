@@ -36,7 +36,7 @@
 
   </style>
 </head>
-
+<?php $user=Auth::user()->get(); ?>
 <body background="@yield('bgsource')" style="background-repeat:no-repeat;background-size: cover;" >
   <script type="text/javascript">
   var p =Math.pow(10,3); //(x*p)/p precision of all calculations here
@@ -153,146 +153,147 @@ function newsGetNow(){
 
   <span class="info-box-icon bg-aqua" style="opacity:0.85; position:relative; height: 100%">
     <i class="fa fa-fw fa-user" style="position:relative; top:10%">
-      <div id="active_cat" align="center" style="font-size: 40%"></div></i>
-    </span>
-    <!-- <nav class="navbar navbar-static-top"> -->
-    <div>
-      <div class="row">
-        <div class="col-xs-4" style="position: relative; left:3%">
+      <div id="active_cat" align="center" style="font-size: 40%"></div>
+    </i>
+  </span>
+  <!-- <nav class="navbar navbar-static-top"> -->
+  <div>
+    <div class="row">
+      <div class="col-xs-4" style="position: relative; left:3%">
 
-          <div class="row">
-            <br>
+        <div class="row">
+          <br>
+        </div>
+        <div class="row">
+          <!-- <ul class="nav navbar-nav ">  -->
+          <!-- We also have $user to be used -->
+          <!-- common one- -->
+          <div class="btn-group btn-group-justified">
+            <a href="{{ URL::route('profile',[ 'id'=>$user->id ]) }}" class="btn btn-primary" role="button">Profile</a>
+            <a href="{{ URL::route('energy') }}" class="btn btn-primary" role="button">Energy</a>
+            <a href="{{ URL::route('leaderBoard') }}" class="btn btn-primary" role="button"> Leader Board</a>
+            @foreach(C::get('master.catLinks')[$user->category] as $linkName=>$title)
+            <a href="{{ URL::route($linkName) }}" class="btn btn-primary" role="button">{{$title}}</a>
+            @endforeach
           </div>
-          <div class="row">
-            <!-- <ul class="nav navbar-nav ">  -->
-            <!-- We also have $user to be used -->
-            <!-- common one- -->
-            <div class="btn-group btn-group-justified">
-              <a href="{{ URL::route('energy') }}" class="btn btn-primary" role="button">Energy</a>
-              <a href="{{ URL::route('leaderBoard') }}" class="btn btn-primary" role="button"> Leader Board</a>
-              <?php $user=Auth::user()->get();$catLinks = C::get('master.catLinks'); ?>
-              @foreach($catLinks[$user->category] as $linkName=>$title)
-              <a href="{{ URL::route($linkName) }}" class="btn btn-primary" role="button">{{$title}}</a>
-              @endforeach
-            </div>
-            <!-- </ul> -->
+          <!-- </ul> -->
 
-          </div>
-          <div class="row">
-            <br>
-          </div>
-          <div class="row">
-            <div class="progress" style="height:10px;" >
-              <div id="LEwidth" class="progress-bar" style="width: 20%"></div>
-            </div>
+        </div>
+        <div class="row">
+          <br>
+        </div>
+        <div class="row">
+          <div class="progress" style="height:10px;" >
+            <div id="LEwidth" class="progress-bar" style="width: 20%"></div>
           </div>
         </div>
+      </div>
 
-        <div class="col-xs-6" style="position: relative; left:5%">
+      <div class="col-xs-6" style="position: relative; left:5%">
 
-          <div class="gap"><br></div>
-          <!-- <div class="input-group"> -->
-          <table >
-            <tr>
-              <td>
-                <button class="btn btn-sm btn-block bg-purple ">Lower</button>
-              </td>
-              <td>
-                <input  readonly="readonly" class="btn btn-block  btn-sm" disabled id='lowerTHR' value=0 /> 
-              </td>
-              <td>
-                <button class="btn btn-sm btn-block bg-purple ">User le</button>
-              </td>
-              <td>
-                <input readonly="readonly"  class="btn  btn-block btn-sm" disabled id='le' value=0 >
-              </td>
-              <td>
-                <button class="btn btn-sm btn-block bg-purple ">Upper</button>
-              </td>
-              <td>
-                <input readonly="readonly"  class="btn btn-block btn-sm" disabled id='upperTHR' value=0 /> 
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <button class="btn btn-sm btn-block bg-purple ">decay</button>
-              </td>
-              <td>
-                <input readonly="readonly"  class="btn btn-block btn-sm" disabled id='decay' value=0 /> 
-              </td>
-              <td>
+        <div class="gap"><br></div>
+        <!-- <div class="input-group"> -->
+        <table >
+          <tr>
+            <td>
+              <button class="btn btn-sm btn-block bg-purple ">Lower</button>
+            </td>
+            <td>
+              <input  readonly="readonly" class="btn btn-block  btn-sm" disabled id='lowerTHR' value=0 /> 
+            </td>
+            <td>
+              <button class="btn btn-sm btn-block bg-purple ">User le</button>
+            </td>
+            <td>
+              <input readonly="readonly"  class="btn  btn-block btn-sm" disabled id='le' value=0 >
+            </td>
+            <td>
+              <button class="btn btn-sm btn-block bg-purple ">Upper</button>
+            </td>
+            <td>
+              <input readonly="readonly"  class="btn btn-block btn-sm" disabled id='upperTHR' value=0 /> 
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <button class="btn btn-sm btn-block bg-purple ">decay</button>
+            </td>
+            <td>
+              <input readonly="readonly"  class="btn btn-block btn-sm" disabled id='decay' value=0 /> 
+            </td>
+            <td>
 
-                <button class="btn btn-sm btn-block bg-purple ">ETA</button>
-              </td>
-              <td>
-                <input readonly="readonly"  class="btn  btn-block btn-sm" disabled  id='ETA' value=0 />
-              </td>
-              <td>
-                <button class="btn btn-sm btn-block bg-purple ">Stored LE</button>
-              </td>
-              <td>
-                <input readonly="readonly"  class="btn btn-block btn-sm" disabled id='stored_LE' value=0 /> 
-              </td>
-            </tr>
-          </table>
-        </div>
+              <button class="btn btn-sm btn-block bg-purple ">ETA</button>
+            </td>
+            <td>
+              <input readonly="readonly"  class="btn  btn-block btn-sm" disabled  id='ETA' value=0 />
+            </td>
+            <td>
+              <button class="btn btn-sm btn-block bg-purple ">Stored LE</button>
+            </td>
+            <td>
+              <input readonly="readonly"  class="btn btn-block btn-sm" disabled id='stored_LE' value=0 /> 
+            </td>
+          </tr>
+        </table>
+      </div>
 
-        <div class="col-xs-1" style="width:10% ; position: relative;"> 
-          <div class="row"><br></div>
-          <table>
-            <tr>
-              <td>
-                <label> <small>Status:</small> <span id="msg"> </span> </label>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <div onclick="openNav()" id="news_btn"><button class="btn-block btn-success btn-sm">News &#9776;</button>
-                </div>
-              </td>
-            </tr>
-          </table>
-          
-        </div>
-
+      <div class="col-xs-1" style="width:10% ; position: relative;"> 
+        <div class="row"><br></div>
+        <table>
+          <tr>
+            <td>
+              <label> <small>Status:</small> <span id="msg"> </span> </label>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <div onclick="openNav()" id="news_btn"><button class="btn-block btn-success btn-sm">News &#9776;</button>
+              </div>
+            </td>
+          </tr>
+        </table>
 
       </div>
-    </div>
-
-    <!-- </nav> -->
-  </header>
 
 
-  <script>
-  function openNav() {
-    if(document.getElementById("news_pan").style.display == "block")
-      document.getElementById("news_pan").style.display = "none";
-    else {newsGetNow();
-      document.getElementById("news_pan").style.display = "block";
-
-      document.getElementById("news_btn").style.color = "white";
-    }
-  }
-
-  function closeNav() {
-    document.getElementById("news_pan").style.display = "none";
-  }
-  </script>
-
-  <div id="news_pan" class="container" style="background-color: white; padding:10px; position: fixed; right:0px; height:88%; z-index: 99; display: none;width:400px; font-family: 'Ubuntu';color:#666666; ">
-
-    <h1 align="center" style="margin-top: 5%;"> News</h1>
-    <a href="javascript:void(0)" class="closebtn" style="position: absolute;
-    top: 0;
-    right: 25px;
-    color: #666666;
-    text-decoration: none;
-    font-size: 60px;
-    margin-left: 50px;" onclick="closeNav()">&times;</a>
-    <div id="news_panel"  style="line-height: 20px;font-size: 15px; overflow-y: auto; height: 83%;">
     </div>
   </div>
-  @yield('bodyContent')
+
+  <!-- </nav> -->
+</header>
+
+
+<script>
+function openNav() {
+  if(document.getElementById("news_pan").style.display == "block")
+    document.getElementById("news_pan").style.display = "none";
+  else {newsGetNow();
+    document.getElementById("news_pan").style.display = "block";
+
+    document.getElementById("news_btn").style.color = "white";
+  }
+}
+
+function closeNav() {
+  document.getElementById("news_pan").style.display = "none";
+}
+</script>
+
+<div id="news_pan" class="container" style="background-color: white; padding:10px; position: fixed; right:0px; height:88%; z-index: 99; display: none;width:400px; font-family: 'Ubuntu';color:#666666; ">
+
+  <h1 align="center" style="margin-top: 5%;"> News</h1>
+  <a href="javascript:void(0)" class="closebtn" style="position: absolute;
+  top: 0;
+  right: 25px;
+  color: #666666;
+  text-decoration: none;
+  font-size: 60px;
+  margin-left: 50px;" onclick="closeNav()">&times;</a>
+  <div id="news_panel"  style="line-height: 20px;font-size: 15px; overflow-y: auto; height: 83%;">
+  </div>
+</div>
+@yield('bodyContent')
 
 </body>
 </html>
