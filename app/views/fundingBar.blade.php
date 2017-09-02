@@ -74,18 +74,18 @@ progressGroup+
 
 <script type="text/javascript">
 	var cellData=[];
-	var cellData2=[];
+	// var cellData2=[];
 	var InvestorNames=[];
 	var Percentages=[];
 	var currRow=[];
-	var preProg=['id','category','name','total_shares'];
+	var preProg=['id','launched','category','name','total_shares'];
 	var postProg=['avl_shares','FT'];
-	var firstRow=['#','id','category','name','total_shares','Fundings','avl_shares','FT'];//being funded
+	var firstRow=['#','id','is Launched?','category','name','total_shares','Fundings','avl_shares','FT'];//being funded
 	// From backend = ['id', 'category', 'name', 'total_shares', 'avl_shares', 'FT', ];
-	var firstRow2=['#','id','category','name','total_shares','Fundings','avl_shares','FT'];//launched
+	// var firstRow2=['#','id','category','name','total_shares','Fundings','avl_shares','FT'];//launched
 	var counter=1;
 	cellData.push(firstRow);
-	cellData2.push(firstRow2);
+	// cellData2.push(firstRow2);
 	// Now use ajax for this - 
 	var funding_products = {{json_encode($funding_products)}};
 

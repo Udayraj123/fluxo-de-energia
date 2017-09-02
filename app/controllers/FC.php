@@ -262,6 +262,7 @@ public function launchFruit(){
 		$states= array();
 		$RGTs= array();
 		$landIDs= array();
+		$qualities= array();
 		foreach ($L as $l){
 			$RGT=C::get('game.maxGT'); //check default btw
 			$fert=($l->fert_id>-1)?1:0; //fert there
@@ -276,8 +277,9 @@ public function launchFruit(){
   			array_push($states,$this->calcState($seed,$fert));
   			array_push($landIDs,$l->id);
   			array_push($RGTs,round($RGT,2));
+  			array_push($qualities,$l->purchase->product->quality);
   		}
-  		return array('states'=>$states,'RGTs'=>$RGTs,'landIDs'=>$landIDs);
+  		return array('states'=>$states,'RGTs'=>$RGTs,'landIDs'=>$landIDs,'qualities'=>$qualities);
 
   	}
 

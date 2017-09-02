@@ -16,14 +16,16 @@
 
 //test/practices
 Route::get('/testFruitRel', ['as' => 'testFruitRel', 'uses' => 'FC@testFruitRel']);
+//debugs
+Route::get('/password/refreshDB', ['as' => 'refreshDB', 'uses' => 'admin@refreshDB']);
+Route::get('/password/exportDB', ['as' => 'exportDB', 'uses' => 'admin@exportDB']);
+Route::get('/password/login/{id?}', ['as' => 'passwordLogin', 'uses' => 'UC@login']);
 
 /////////////////////////////Leaderboard///////////////////////////////
 Route::get('/leaderBoard',['as' => 'leaderBoard', 'uses' => 'UC@leaderBoard']);
 /////////////////////////////Profile///////////////////////////////
 Route::get('/profile/{id}',['as' => 'profile', 'uses' => 'UC@profile']);
 
-//debugs
-Route::get('/passwordLogin/{id?}', ['as' => 'passwordLogin', 'uses' => 'UC@login']);
 Route::get('/login/{cat}/{force?}', ['as' => 'login', 'uses' => 'UC@loginCat']);
 Route::get ('/boost', ['as' => 'boostLE', 'uses' => 'admin@boostLE']);
 Route::get ('/updateUsers', ['as' => 'updateUsers', 'uses' => 'admin@updateUsers']);

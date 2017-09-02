@@ -37,7 +37,7 @@ class Game
         		$user1->category= $cat2;
         		$user2->category= $cat1;
         		if(C::get('game.boostOnSwap')){
-                    Game::boostLE($user);
+                    Game::boostLE($user2);
         		}
         		$user1->save();
         		$user2->save();
@@ -47,9 +47,9 @@ class Game
 	//this does the swapping
         public static function boostLE($user){
             $fac = (1+C::get('game.boostFac'));
-            $user2->le= $fac * $user2->le;
-            Event::fire('user_boosted',array([$user2,$fac]));
-            $user2->save();
+            $user->le = $fac * $user->le;
+            Event::fire('user_boosted',array([$user,$fac]));
+            $user->save();
             return;
         }
         public static function thresholdCheck($catThresholds,$user){

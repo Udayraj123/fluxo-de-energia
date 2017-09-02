@@ -117,10 +117,12 @@ var stateText = ['<i class="fa fa-plus-square"></i> Unused',
 '<i class="fa fa-apple"></i> Fruit'];
 var colors = ['yellow','grey','blue','black','orange','green'];
 
-function makeBox(state,id,index,check,RGTs){
+function makeBox(state,id,index,check,RGTs,qualities){
     // console.log("makeBox",state,id,check,(check?'':'un')+'checked');
-    var Icon='<span style="font-size:30px;">&nbsp '+stateText[state]+
-    '</span> <br> <span style="font-size:30px;" id="status'+id+'">&nbsp'+RGTs[index]+'</span>';
+    var Icon='<span style="font-size:30px;">&nbsp '+stateText[state]+' </span>'+
+    '<br>'+
+    ' <span style="font-size:30px;" id="status'+id+'">&nbsp (q'+qualities[index]+',r'+RGTs[index]+')</span>';
+
     // console.log(id)
     var block= '<input type="checkbox" '+(check?'':'un')+'checked name="land_ids[]" onclick="updateLands(this.id)" id="land'+id+'" value="'+id+'"/>'+Icon;
     if(state==stateFruit || state==stateFertSeed )
@@ -130,7 +132,7 @@ function makeBox(state,id,index,check,RGTs){
     return block;
   }
 
-  function makeLand2(divID,states,landIDs,checks,RGTs){
+  function makeLand2(divID,states,landIDs,checks,RGTs,qualities){
 
     var cellCount=0
     var state=0;
@@ -157,7 +159,7 @@ function makeBox(state,id,index,check,RGTs){
 
         var land_index=landIDs.indexOf(parseInt(land_id));
 
-        current_col.innerHTML=makeBox(state,land_id,land_index,check,RGTs);
+        current_col.innerHTML=makeBox(state,land_id,land_index,check,RGTs,qualities);
         cellCount++;
       }
     }
@@ -178,12 +180,12 @@ function makeBox(state,id,index,check,RGTs){
         var states=data['states'];
         var landIDs=data['landIDs'];
         var RGTs=data['RGTs'];
+        var qualities=data['qualities'];
         
-        console.log(landIDs,states,RGTs);
+        console.log(landIDs,states,RGTs,qualities);
 
         var land_index=landIDs.indexOf(parseInt(land_id));
         var state=states[land_index];
-        console.log(landIDs,states,RGTs);
         console.log(land_index);
 
       //This is reseting the checkBoxes too !
@@ -191,7 +193,7 @@ function makeBox(state,id,index,check,RGTs){
         var checks=[];
         $(":checkbox").each(function(){checks[this.id]=this.checked; });
 
-        makeLand2("Land",states,landIDs,checks,RGTs); //this removes previous land & replaces with new states
+        makeLand2("Land",states,landIDs,checks,RGTs,qualities); //this removes previous land & replaces with new states
 
         //TODO put this following on onclick () directly
        // var text='Ajax:  land'+land_id+'state ' + state +' : will grow a fruit in '+RGTs[land_index]+' minutes !';

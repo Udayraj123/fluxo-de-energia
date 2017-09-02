@@ -13,5 +13,13 @@ User::where('logged_in',0)->where('is_moderator',0)->where('category','farmer')-
 // 'GTnoLand'=>0,
 'dontFool'=>"Don't play with me Fool",
 
+'today_format'=>'Y-m-d',
+'date_format'=>'H:i:s d-m-Y',
+'file_time_new'=>'d M, H:i:s',
+'file_time'=>'d,m,y-H_i_s',
+'log_date_format'=>'d M, H:i:s',
+'now_time'=>'H:i A, d M Y',
+'hour_format'=>'H:i',
+'feedback_format'=>'d M Y',
 ];
 ?>

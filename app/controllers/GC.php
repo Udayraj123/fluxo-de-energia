@@ -13,11 +13,12 @@ class GC extends \BaseController {
 	public function fundingBar(){
 
 		$user=Auth::user()->get();
-		$ps = Product::where('god_id',$user->god->id); //user->god_id isn't working ?!
+		
 		$fundingBarFields=['id', 'category', 'name', 'total_shares', 'avl_shares', 'FT', ];
 		
-		$funding_products = $ps->where('being_funded',1)->select($fundingBarFields)->get();
-		$prev_products = $ps->where('being_funded',0)->select($fundingBarFields)->get();
+		$funding_products = Product::where('god_id',$user->god->id)->orderBy('being_funded')->select($fundingBarFields)->get();
+		// $funding_products = $ps->where('being_funded',1)->select($fundingBarFields)->get();
+		// $prev_products = $ps->where('being_funded',0)->select($fundingBarFields)->get();
 		
 //seems heavy-2
 		$Info="Funding Details Here...";
@@ -36,13 +37,14 @@ class GC extends \BaseController {
 			$funding_products[$i]['InvestorNames']=$InvestorNames;
 			$funding_products[$i]['Percentages']=$Percentages;
 			$funding_products[$i]['Info']=$Info;
+			$funding_products[$i]['launched']= ($prod->being_funded==0)?'No':'Yes';
 		}
 		$funding_products = $funding_products?		$funding_products->toArray()	:	[];
-		$prev_products	  =    $prev_products?		$prev_products->toArray()		:	[];
+		// $prev_products	  =    $prev_products?		$prev_products->toArray()		:	[];
 		// log::info($funding_products);
 		return View::make('fundingBar')->with([
 			'funding_products'=>$funding_products,
-			'prev_products'=>$prev_products
+			// 'prev_products'=>$prev_products
 			]);
 	}
 //More to come- sale stats

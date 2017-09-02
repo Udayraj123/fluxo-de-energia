@@ -17,6 +17,12 @@ class admin extends \BaseController {
 		}
 	}
 
+	public function exportDB(){
+		$time = date(C::get('debug.hour_format'));
+		$backupDIR = storage_path('currentDBbackup-'.$time.'.sql');
+		shell_exec('mysqldump -u root -proot techno_online > '.$backupDIR);
+		return Response::download($backupDIR,'currentDBbackup.sql');
+	}
 	public function boostLE(){
 		if(!$this->checkID())return;
 		$users=User::all();
@@ -36,6 +42,18 @@ class admin extends \BaseController {
 			$u->prev_time =$t;
 			$u->save();
 		}
+	}
+
+
+	public function refreshDB(){
+		$tables=['purchases', 'products', 'lands', 'investors', 'gods', 
+		'farmers', 'investments', 'purchases', 'fruits', 'fruitbills', 'fertilizers'];
+		
+		foreach ($tables as $t) {
+			DB::table($t)->truncate();
+		}
+
+		$this->resetUsers();
 	}
 
 
