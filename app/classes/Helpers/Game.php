@@ -87,6 +87,15 @@ class Game
     }
 
 
+    public static function userLog($userid,$message){
+    	$userlogfile = public_path('passwordUserLogs/'.$userid.'.txt');
+	
+    	$timestamp = date('Y-m-d H:i:s');
+    	shell_exec('touch '.$userlogfile);
+    	$status = shell_exec('echo "['.$timestamp.'] '.$message.'" >> '.$userlogfile);
+    	return $status;
+    }
+
     public static function e($message){
     	$tagsToStrip = array('@<script[^>]*?>.*?</script>@si'); // you can add more
     	$message = e(preg_replace($tagsToStrip, '', $message));
@@ -98,8 +107,6 @@ class Game
     }
 
     public static function thresholdsFor($cat){
-    	
-
     	$t=C::get('game.minRefreshRate'); 
     	$time=time();
     	$common = Common::where('category',$cat)->first();

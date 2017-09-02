@@ -82,7 +82,7 @@ class IC extends \BaseController {
 		if(!$p->farmer)					return "This fruit doesn't have an owner!"; //
 		$farmer=$p->farmer; //accessed to increase f's LE
 		$buy_price= $this->calcFruitPrice($p);// RFT positive check here. 
-		if($buy_price==0)				return "buy_price is 0 => ET/RET/avl_units problem!";
+		if($buy_price<=0)				return "buy_price is 0 => ET/RET/avl_units problem!";
 		if($p->avl_units < $num_units){ 
 			echo " Buying available units(".$p->avl_units.")"; 
 			$num_units=$p->avl_units;
@@ -109,6 +109,7 @@ class IC extends \BaseController {
 			$pch->buy_price = $buy_price;// $prod_price; //should be $buy_price !
 			$pch->save();
 			echo $pch->id." Success. Now LE = ".$user->le;
+			Event::fire('bought_fruit',$pch);
 		}
 		else 								return " Insufficient LE : $LE - $price < $THR ";
 	}
@@ -188,7 +189,7 @@ class IC extends \BaseController {
 		
 		// RFT positive check here. 
 		$bid_price=$this->calcBidPrice($p); //this also updates to latest bid price & being_funded.
-		if($bid_price==0)									return "Err in bid price (0)!";
+		if($bid_price<=0)									return "Err in bid price (0)!";
 
 		// avl_shares check
 		if($p->avl_shares < $num_shares){ 
@@ -230,7 +231,7 @@ class IC extends \BaseController {
 			echo $i->id." Success. Now LE = ".$user->le;
 
 		}
-		else 												return " Insufficient LE : ".$THR." >  ".$LE."-".$price;
+		else 	return " Insufficient LE : ".$THR." >  ".$LE."-".$price;
 
 	} 
 

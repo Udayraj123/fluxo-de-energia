@@ -482,7 +482,7 @@ public function testFruitRel(){
 		$god=$p->god; //accessed to increase god LE
 		$d=$this->calcBuyPrice($p);// RFT positive check here. 
 		$buy_price= $d['buy_price'];
-		if($buy_price==0)				return "buy_price is 0 => ET/total_cost problem!";
+		if($buy_price<=0)				return "buy_price is <= 0 => ET/total_cost problem!";
 		if($p->avl_units < $num_units){ 
 			echo " Buying available units(".$p->avl_units.")"; 
 			$num_units=$p->avl_units;
