@@ -133,7 +133,7 @@ reqRedeem(0);
           <i class="fa fa-bar-chart-o"></i>
           <h3 class="box-title">Interactive Life Energy Chart</h3>
           <div class="box-tools pull-right" style="background:#3399ff">
-            Real time
+            
             <div class="btn-group" id="realtime_user" data-toggle="btn-toggle">
               <!-- <button type="button" class="btn btn-default btn-xs active" data-toggle="on">On</button> -->
               <!-- <button type="button" class="btn btn-default btn-xs" data-toggle="off">Off</button> -->
