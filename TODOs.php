@@ -19,7 +19,8 @@ ALL WATCH THRU LOGS!
 THINK THINK THINK
 > upcoming Products
 > Return events notify
-> Transaction Details Logs
+>> Transaction Details Logs
+
 _/ new Pages
 _/ leaderBoard
 
