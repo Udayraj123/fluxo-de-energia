@@ -1,3 +1,5 @@
 [2017-09-02 08:46:37]  User user11 got boosted by 1.25 now at LE 625000
 [2017-09-02 11:36:06] **** Reset Users has been executed ****
 [2017-09-02 11:37:39] **** Reset Users has been executed ****
+[2017-09-02 13:27:44] **** Reset Users has been executed ****
+[2017-09-02 13:28:24] **** Reset Users has been executed ****

@@ -33,10 +33,15 @@ class Game
         public static function swap($user1, $user2){
         	if(C::get('game.swapon'))
             {
-                $cat1 = $user1->category();
-                $cat2 = $user2->category();
+                $cat1 = $user1->category;
+                $cat2 = $user2->category;
+
+                $user1->$cat1->play_time += time() - $user1->$cat1->switch_time;
+                $user2->$cat2->play_time += time() - $user2->$cat2->switch_time;
+
                 $user1->$cat1->switch_time=time();
                 $user2->$cat2->switch_time=time();
+
                 $cat1=$user1->category;
         		$cat2=$user2->category;
         		$user1->category= $cat2;
@@ -44,8 +49,10 @@ class Game
         		if(C::get('game.boostOnSwap')){
                     Game::boostLE($user2);
         		}
-        		$user1->save();
-        		$user2->save();
+                $user1->save();
+                $user1->$cat1->save();
+                $user2->save();
+                $user2->$cat2->save();
         		Log::info('Swapped '.$cat1.' user with '.$cat2.' user');
         	}
         }
