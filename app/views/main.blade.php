@@ -135,8 +135,8 @@ reqRedeem(0);
           <div class="box-tools pull-right" style="background:#3399ff">
             Real time
             <div class="btn-group" id="realtime_user" data-toggle="btn-toggle">
-              <button type="button" class="btn btn-default btn-xs active" data-toggle="on">On</button>
-              <button type="button" class="btn btn-default btn-xs" data-toggle="off">Off</button>
+              <!-- <button type="button" class="btn btn-default btn-xs active" data-toggle="on">On</button> -->
+              <!-- <button type="button" class="btn btn-default btn-xs" data-toggle="off">Off</button> -->
             </div>
           </div>
         </div>
@@ -162,8 +162,8 @@ reqRedeem(0);
           <div class="box-tools pull-right" style="background:#3399ff">
             Real time
             <div class="btn-group" id="realtime_syst" data-toggle="btn-toggle">
-              <button type="button" class="btn btn-default btn-xs active" data-toggle="on">On</button>
-              <button type="button" class="btn btn-default btn-xs" data-toggle="off">Off</button>
+              <!-- <button type="button" class="btn btn-default btn-xs active" data-toggle="on">On</button> -->
+              <!-- <button type="button" class="btn btn-default btn-xs" data-toggle="off">Off</button> -->
             </div>
           </div>
         </div>

@@ -132,10 +132,15 @@ class UC extends \BaseController {
       public function decayHandle(){
         $user=Auth::user()->get();
         //------------------------------------------------------------------------------------------------
-        if($user->highest_LE<$user->le)
+        if($user->highest_LE<$user->le){
           $user->highest_LE=$user->le;
+        }
         //------------------------------------------------------------------------------------------------
-
+        $cat=$user->category;
+        $user->$cat->play_time=time()-$user->$cat->switch_time;
+        
+        $user->save();
+        
         if(!$user->prev_time){
           $user->prev_time=time();$user->save();
         }
@@ -221,7 +226,11 @@ class UC extends \BaseController {
           Auth::user()->logout(); 
         }
         Auth::user()->login($user); 
-        $user->logged_in = 1; $user->save(); 
+        $user->logged_in = 1; 
+        $cat = $authuser->category;
+        $authuser->$cat->switch_time=time();
+        // $authuser->farmer->switch_time=time();
+        $user->save(); 
         return View::make('goback');
       } 
       else 
