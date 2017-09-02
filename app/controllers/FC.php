@@ -96,7 +96,7 @@ public function launchFruit(){
 		$fruit->storage_le = $this->calcStorageLE($fruit); 												  $fruit->save();
 		
 		$fruit->sell_price =   $this->calcSellPrice($fruit); 	$fruit->save();
-
+		Event::fire('createFruit',[[$user,$fruit]]);
 		echo "Success. newly Launched Fruit is fruit $fruit->name$fruit->id: with storage $fruit->storage_le<BR>";
 	}
 

@@ -138,10 +138,10 @@ reqRedeem(0);
             </div>
           </div>
         </div>
-        
-
         <!-- Here comes the chart -->
         <div id="interactive_user" style="height: 32%; padding: 0px; position: relative;"> </div>
+        
+
       </div> <!-- /.box-body-->
     </div> <!-- /.box -->
   </div> <!-- /.col -->
