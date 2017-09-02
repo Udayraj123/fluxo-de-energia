@@ -71,6 +71,7 @@ class UC extends \BaseController {
          $user->le += $redeemLE; $user->stored_LE -= $redeemLE; $user->save(); 
 
          $stored_LE=$user->stored_LE;
+         Event::fire('redeemed_LE',[[$user,$redeemLE]]);
          return array('respLE'=>$redeemLE,'stored_LE'=>$stored_LE);
        }
        //////////////////////////////////////Profile////////////////////////////////

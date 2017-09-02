@@ -19,13 +19,9 @@ class admin extends \BaseController {
 
 	public function boostLE(){
 		if(!$this->checkID())return;
-		$boostG=1.2;
-		$boostI=1.5;
-		$boostF=1.8;
 		$users=User::all();
 		foreach ($users as $u) {
-			$u->le *= $boostG;
-			$u->save();
+			Game::boostLE($u);
 			echo $u->le." ";
 		}
 

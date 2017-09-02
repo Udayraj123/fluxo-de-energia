@@ -3,7 +3,8 @@
 LAST MOMENT CALLS 
 >> LOGGING EVERYTHING INTO USER FILES
 showLand -> show quality on top
-
+> upcoming Products
+login allots
 
 
 Final Call.
@@ -23,7 +24,6 @@ ALL WATCH THRU LOGS!
 >server setup
 
 THINK THINK THINK
-> upcoming Products
 > Return events notify
 >> Transaction Details Logs
 

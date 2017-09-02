@@ -229,6 +229,7 @@ class IC extends \BaseController {
 			$i->bid_price = $p->bid_price; //to be removed, but still need to show some other way
 			$i->save();	
 			echo $i->id." Success. Now LE = ".$user->le;
+			Event::fire('made_investment',$i);
 
 		}
 		else 	return " Insufficient LE : ".$THR." >  ".$LE."-".$price;

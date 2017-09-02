@@ -1,1 +1,2 @@
 [2017-09-02 08:43:02] Noted purchase : Notify the God, or Push to the table which is fetched with ajax
+[2017-09-02 09:02:04] Noted purchase : Notify the God, or Push to the table which is fetched with ajax
