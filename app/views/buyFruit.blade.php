@@ -56,7 +56,7 @@ god.jpg
 						<td>
 							<select class="form-control" name='fruit_id' id='fruit_id'>
 								@foreach ($fruits as $f)
-								<option value="{{ $f->id }}">{{ $f->farmer->user->namelink() or 'FARMER'}}'s {{ $f->name }}({{ $f->id }},{{ $f->avl_units }})</option>
+								<option value="{{ $f->id }}">{{ $f->farmer->user->username or 'FARMER'}}'s {{ $f->name }}({{ $f->id }},{{ $f->avl_units }})</option>
 								@endforeach
 							</select>
 						</td> </tr><tr><td><br><br>

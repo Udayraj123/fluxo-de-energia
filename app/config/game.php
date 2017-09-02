@@ -85,7 +85,7 @@ return array(
 	'fruitBP'=>500,  //later this wil be a factor from seed's price
 	'sellC1'=>0.002,
 	'sellC2'=>0.012,
-	'fruitReturns' => 200, //On fetch, directly dmultiplied by the quality  (num_units=1 at a time)
+	'fruitReturns' => 100, //On fetch, directly dmultiplied by the quality  (num_units=1 at a time)
 	'storage_fac' => 0.5, //*goes to (storage_fac + 1)*unit_price at 100% quality
 
 

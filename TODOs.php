@@ -1,5 +1,11 @@
 <?php
 """
+LAST MOMENT CALLS 
+>> LOGGING EVERYTHING INTO USER FILES
+showLand -> show quality on top
+
+
+
 Final Call.
 // save prev states into a file or something
 

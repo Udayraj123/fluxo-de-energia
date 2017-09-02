@@ -60,10 +60,11 @@ public function getUnitPrice($input){
 	$GT=1;
 	$ET=$input['ET'];
 	$Tol=$input['Tol'];
-	$c1=C::get('game.fruitC1');
-	$c2=C::get('game.fruitC2');
-	$c3=C::get('game.fruitC3');
-	$c4=C::get('game.fruitC4');
+	$cIs=C::get('game.fruitCIs');
+	$c1=$cIs['c1'];
+	$c2=$cIs['c2'];
+	$c3=$cIs['c3'];
+	$c4=$cIs['c4'];
 	$bp=C::get('game.fruitBP');
 	return $bp*($c1*$quality+$c2*$GT+$c3*$ET)*(1+$c4*$Tol);
 }
@@ -274,7 +275,7 @@ public function launchFruit(){
   			
   			array_push($states,$this->calcState($seed,$fert));
   			array_push($landIDs,$l->id);
-  			array_push($RGTs,$RGT);
+  			array_push($RGTs,round($RGT,2));
   		}
   		return array('states'=>$states,'RGTs'=>$RGTs,'landIDs'=>$landIDs);
 

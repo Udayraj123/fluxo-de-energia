@@ -99,7 +99,7 @@ setInterval(function(){$('#unit_price').val(getUC());},{{C::get('game.msRefreshR
     <label>name: <input type='text' name='name' id='name' value="myFruit" /></label><br>
     <label>description: <input type='text' name='description' id='description' value="description" /></label><br>
     <label>quality_factor : <input min="5" max="100" value="10" type="range" name='quality_factor' id='quality_factor'/></label><br>
-    <label>ET : <input min="5" max="30" value="5" type="range" name='ET' id='ET'/></label><br>
+    <label>ET : <input min="5" max="60" value="20" type="range" name='ET' id='ET'/></label><br>
     <label>Tolerance : <input min="0" max="100" type="range" name='Tol' id='Tol' value=4/></label><br>
     <label>unit_price: <input readonly="readonly" type='number' id='unit_price' name='unit_price' value="2000"/></label><br>
     <!-- Disabled ones are not sent, read only ones are sent -->
@@ -119,12 +119,13 @@ var colors = ['yellow','grey','blue','black','orange','green'];
 
 function makeBox(state,id,index,check,RGTs){
     // console.log("makeBox",state,id,check,(check?'':'un')+'checked');
-    var Icon='<span style="font-size:30px;">&nbsp '+stateText[state]+'</span> <br> <span style="font-size:30px;" id="status'+id+'">&nbsp'+RGTs[index]+'</span>';
+    var Icon='<span style="font-size:30px;">&nbsp '+stateText[state]+
+    '</span> <br> <span style="font-size:30px;" id="status'+id+'">&nbsp'+RGTs[index]+'</span>';
     // console.log(id)
     var block= '<input type="checkbox" '+(check?'':'un')+'checked name="land_ids[]" onclick="updateLands(this.id)" id="land'+id+'" value="'+id+'"/>'+Icon;
     if(state==stateFruit || state==stateFertSeed )
       block='<button type="button"'+(state==stateFruit?'':'')+'onclick="updateLands(this.id)" id="land'+id+'"/>'+Icon;
-    block = '<label style="width:205px;height:105px;margin:10px" class="btn btn-app bg-'+colors[state]+'" >'+block+'</label>';
+    block = '<label style="width:205px;height:105px;margin:10px" class="btn bg-'+colors[state]+'" >'+block+'</label>';
 
     return block;
   }
