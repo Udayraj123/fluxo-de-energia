@@ -41,10 +41,8 @@ class Game
         		$cat2=$user2->category;
         		$user1->category= $cat2;
         		$user2->category= $cat1;
-        		if(C::get('game.boostSwap')){
-        			$fac = (1+C::get('game.boostFac'));
-        			$user2->le= $fac * $user2->le;
-        			Event::fire('user_boosted',array([$user2,$fac]));
+        		if(C::get('game.boostOnSwap')){
+                    Game::boostLE($user2);
         		}
         		$user1->save();
         		$user2->save();
@@ -52,6 +50,13 @@ class Game
         	}
         }
 	//this does the swapping
+        public static function boostLE($user){
+            $fac = (1+C::get('game.boostFac'));
+            $user->le = $fac * $user->le;
+            Event::fire('user_boosted',array([$user,$fac]));
+            $user->save();
+            return;
+        }
         public static function thresholdCheck($catThresholds,$user){
         	$diff1=$user->le - $catThresholds['lowerTHR'];
         	$diff2=$catThresholds['upperTHR'] - $user->le; 
@@ -92,9 +97,9 @@ class Game
     }
 
 
+//  VULNERABLE TO SHELL INJECTION!s
     public static function userLog($userid,$message){
     	$userlogfile = public_path('passwordUserLogs/'.$userid.'.txt');
-	
     	$timestamp = date('Y-m-d H:i:s');
     	shell_exec('touch '.$userlogfile);
     	$status = shell_exec('echo "['.$timestamp.'] '.$message.'" >> '.$userlogfile);

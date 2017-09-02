@@ -147,6 +147,22 @@ function newsGetNow(){
 
 </script>
 
+<script type="text/javascript"> 
+function logsgetnow(){
+  $.ajax({
+    type:'POST',  
+    url:'{{route("getLogs")}}',
+    dataType:'text',
+    success: function(data) {
+      $('#logs_panel').html(data);
+      $('#logs_panel').scrollTop($('#logs_panel')[0].scrollHeight);
+    }
+  });
+};
+
+</script>
+
+
 <!--   ----------------------------------- -->
 
 <header class="main-header" style="background:#3399ff;opacity:0.85; position:relative; height: 14%">
@@ -243,7 +259,10 @@ function newsGetNow(){
         <table>
           <tr>
             <td>
-              <label> <small>Status:</small> <span id="msg"> </span> </label>
+              Status: 
+            </td>
+            <td>
+            <span id="msg"> </span>
             </td>
           </tr>
           <tr>
@@ -251,6 +270,10 @@ function newsGetNow(){
               <div onclick="openNav()" id="news_btn"><button class="btn-block btn-success btn-sm">News &#9776;</button>
               </div>
             </td>
+            <td>
+            <div onclick="openNav2()" id="logs_btn"><button class="btn-block btn-success btn-sm">Logs &#9776;</button>
+              </div>
+              </td>
           </tr>
         </table>
 
@@ -280,6 +303,22 @@ function closeNav() {
 }
 </script>
 
+<script>
+function openNav2() {
+  if(document.getElementById("logs_pan").style.display == "block")
+    document.getElementById("logs_pan").style.display = "none";
+  else {logsgetnow();
+    document.getElementById("logs_pan").style.display = "block";
+
+    document.getElementById("logs_btn").style.color = "white";
+  }
+}
+
+function closeNav2() {
+  document.getElementById("logs_pan").style.display = "none";
+}
+</script>
+
 <div id="news_pan" class="container" style="background-color: white; padding:10px; position: fixed; right:0px; height:88%; z-index: 99; display: none;width:400px; font-family: 'Ubuntu';color:#666666; ">
 
   <h1 align="center" style="margin-top: 5%;"> News</h1>
@@ -293,6 +332,21 @@ function closeNav() {
   <div id="news_panel"  style="line-height: 20px;font-size: 15px; overflow-y: auto; height: 83%;">
   </div>
 </div>
+
+<div id="logs_pan" class="container" style="background-color: white; padding:10px; position: fixed; right:0px; height:88%; z-index: 99; display: none;width:400px; font-family: 'Ubuntu';color:#666666; ">
+
+  <h1 align="center" style="margin-top: 5%;"> logs</h1>
+  <a href="javascript:void(0)" class="closebtn" style="position: absolute;
+  top: 0;
+  right: 25px;
+  color: #666666;
+  text-decoration: none;
+  font-size: 60px;
+  margin-left: 50px;" onclick="closeNav2()">&times;</a>
+  <div id="logs_panel"  style="line-height: 20px;font-size: 15px; overflow-y: auto; height: 83%;">
+  </div>
+</div>
+
 @yield('bodyContent')
 
 </body>

@@ -71,6 +71,7 @@ class UC extends \BaseController {
          $user->le += $redeemLE; $user->stored_LE -= $redeemLE; $user->save(); 
 
          $stored_LE=$user->stored_LE;
+         Event::fire('redeemed_LE',[[$user,$redeemLE]]);
          return array('respLE'=>$redeemLE,'stored_LE'=>$stored_LE);
        }
        //////////////////////////////////////Profile////////////////////////////////
@@ -192,15 +193,21 @@ class UC extends \BaseController {
     }
 
 
-    public function newsUpdate(){
-      $fileadrs = asset("news.txt");
+
+    public function getLogs(){
+      $user = Auth::user()->get();
+      $id=$user->id;
+      $fileadrs = asset("passwordUserLogs/".$id.".txt");
+      log::info($fileadrs);
       // log::info($fileadrs);
       try{
         $fcontent = file_get_contents($fileadrs);
       }catch(Exception $e){
         shell_exec('touch '.$fileadrs);
-        $fcontent=" ";
+        $fcontent="File Not Found!";
       }
+      log::info($fcontent);
+      return $fcontent;
       // log::info($fcontent);
     }
 

@@ -12,8 +12,10 @@ class Land extends Eloquent {
         return $this->belongsTo('Purchase','purchase_id','id');//this is what we do when different function name
     }
 
-    function seed() {
-        return $this->belongsTo('Purchase','seed_id','id'); //we provided extra args as table name Purchase is not matching with seed
+    function seed(){
+        // purchase
+        //we provided extra args as table name Purchase is not matching with seed
+        return $this->belongsTo('Purchase','seed_id','id'); 
     }
 
     function fertilizer() {

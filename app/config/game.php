@@ -1,7 +1,7 @@
 <?php
 return array(
 	'swapon'=>1,
-	'boostSwap'=>1,//bool
+	'boostOnSwap'=>1,//bool
 	'boostFac'=>0.25,
 	'facDecay' => array("god" => 0.1*(0.1*0.1/60),"investor" =>(0.01*0.01/60),"farmer" =>0.1*(0.1*0.001/60)),
 	'iniLE' => array("god" => 1000000,"investor" => 500000,"farmer" => 30000),
@@ -14,10 +14,10 @@ return array(
 	'minLE' => 1000,
 	'minDecay' => '0.005',
 	'leaderBoardRate'=>60,//currently in top movers
+	'topmovers_update_time'=>60,
 	'minRefreshRate'=>3,//seconds
 	'msRefreshRate'=>2500,//miliseconds
 	'notifTime'=>60,
-	'topmovers_update_time'=>60,
 	'notifHTMLs'=>[
 	'clean'=>'<i class="btn btn-block btn-primary btn-sm fa fa-check">All Okay</i>',
 	'warn_die'=>'<i class="btn btn-block btn-warning btn-sm fa fa-life-saver">	Death Warning</i>',

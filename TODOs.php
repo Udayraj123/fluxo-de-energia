@@ -1,10 +1,15 @@
 <?php
 """
 LAST MOMENT CALLS 
->> LOGGING EVERYTHING INTO USER FILES
-showLand -> show quality on top
+Done >> LOGGING EVERYTHING INTO USER FILES
+ - Test it
+Done> showLand -> show quality on top
+> upcoming Products
+login allots
 
+deploy fruit revise make
 
+Nope- Simple UI to view any table, - Mysql export
 
 Final Call.
 // save prev states into a file or something
@@ -23,7 +28,6 @@ ALL WATCH THRU LOGS!
 >server setup
 
 THINK THINK THINK
-> upcoming Products
 > Return events notify
 >> Transaction Details Logs
 

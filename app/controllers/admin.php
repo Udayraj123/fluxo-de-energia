@@ -17,15 +17,17 @@ class admin extends \BaseController {
 		}
 	}
 
+	public function exportDB(){
+		$time = date(C::get('debug.hour_format'));
+		$backupDIR = storage_path('currentDBbackup-'.$time.'.sql');
+		shell_exec('mysqldump -u root -proot techno_online > '.$backupDIR);
+		return Response::download($backupDIR,'currentDBbackup.sql');
+	}
 	public function boostLE(){
 		if(!$this->checkID())return;
-		$boostG=1.2;
-		$boostI=1.5;
-		$boostF=1.8;
 		$users=User::all();
 		foreach ($users as $u) {
-			$u->le *= $boostG;
-			$u->save();
+			Game::boostLE($u);
 			echo $u->le." ";
 		}
 
@@ -40,6 +42,18 @@ class admin extends \BaseController {
 			$u->prev_time =$t;
 			$u->save();
 		}
+	}
+
+
+	public function refreshDB(){
+		$tables=['purchases', 'products', 'lands', 'investors', 'gods', 
+		'farmers', 'investments', 'purchases', 'fruits', 'fruitbills', 'fertilizers'];
+		
+		foreach ($tables as $t) {
+			DB::table($t)->truncate();
+		}
+
+		$this->resetUsers();
 	}
 
 
@@ -94,6 +108,7 @@ class admin extends \BaseController {
 			$u->stored_LE=$stored_LE[$u->category];
 			$u->is_moderator=0;
 			$u->save();
+			Game::userLog($u->id,'**** Reset Users has been executed ****');
 		}
 
 		//Outside For Loop
