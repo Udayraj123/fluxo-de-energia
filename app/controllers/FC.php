@@ -494,42 +494,6 @@ public function testFruitRel(){
 		//Life Energy price check /successful here.
 		if($LE - $price > $thr['lowerTHR']){
 		// product's avl shares cut
-			$p->avl_units -= $num_units; 						$p->save();
-		//Farmer's le cut
-			$user->le -= $price;									$user->save();
-
-
-			$total_shares = $p->total_shares;
-
-		#Distribute acc to shares among investors & gods
-			$total_investments = Investment::where('product_id',$p->id)->sum('num_shares');
-			
-			$remPercent = ( 1-C::get('game.godPercent') )*(1- $total_investments/ $total_shares);
-
-			$god->user->le += (C::get('game.godPercent')+$remPercent) * $price;		$god->save();$god->user->save();
-			// Update 30Aug :  God shud get for more than 51% shares that were left after FT
-			
-			$investors= $p->investors;
-			foreach ($investors as $inv) {
-
-				$invms=	Investment::where('investor_id',$inv->id)->where('product_id',$p->id)->get();
-				$inv_num_shares=0;
-				foreach ($invms as $i) {
-					$inv_num_shares += $i->num_shares;
-					$percentage = $i->num_shares/$total_shares;
-					$i->amt_ret += $percentage*$price;
-					$i->save();
-				}
-				
-				// Investment::where('investor_id',$inv->id)->sum('amt_ret');
-
-			// $inv_num_shares = $inv->pivot->num_shares; //We've not CLUbbed them, so discard this
-				$inv_total_perc = $inv_num_shares/$total_shares;
-				$inv->user->le += $inv_total_perc * $price;						$inv->save();$inv->user->save();
-
-			}
-			$p->save();
-
 
 		//Notes this in purchases table
 			$pch = new Purchase();
@@ -541,6 +505,52 @@ public function testFruitRel(){
 
 			$pch->buy_price = $buy_price;// $prod_price; //should be $buy_price !
 			$pch->save();
+			
+			$p->avl_units -= $num_units; 						$p->save();
+		//Farmer's le cut
+			$user->le -= $price;									$user->save();
+
+
+			$total_shares = $p->total_shares;
+
+		#Distribute acc to shares among investors & gods
+			$total_investments = Investment::where('product_id',$p->id)->sum('num_shares');
+			
+			$remPercent = ( 1-C::get('game.godPercent') )*(1- $total_investments/ $total_shares);
+			$amt = (C::get('game.godPercent')+$remPercent) * $price;
+			$god->user->le += $amt	;	$god->save();$god->user->save();
+			Event::fire('bought_product_g',[[$pch,$amt,$god->user_id]]);
+			//update 2 sep investors will not get 100 % share
+			$invPrice = (1 - (C::get('game.godPercent')))*$price;
+
+			// Update 30Aug :  God shud get for more than 51% shares that were left after FT
+			
+			$invIds=	Investment::where('product_id',$p->id)->select(['investor_id'])->get()->toArray();
+			$investors= Investor::whereIn('id',$invIds)->get();
+			foreach ($investors as $inv) {
+				$invms=	Investment::where('investor_id',$inv->id)->where('product_id',$p->id)->get();
+				$inv_num_shares=0;
+				foreach ($invms as $i) {
+					$inv_num_shares += $i->num_shares;
+					$percentage = $i->num_shares/$total_shares;
+					$i->amt_ret += $percentage*$invPrice;
+
+					$i->save();
+				}
+				Log::info($inv);
+				
+				// Investment::where('investor_id',$inv->id)->sum('amt_ret');
+
+			// $inv_num_shares = $inv->pivot->num_shares; //We've not CLUbbed them, so discard this
+				$inv_total_perc = $inv_num_shares/$total_shares;
+				$amt1 = $inv_total_perc * $invPrice;
+				$inv->user->le += $amt1;
+				$inv->save();$inv->user->save();
+				Event::fire('bought_product_i',[[$pch,$amt1,$inv->user_id]]);
+
+			}
+			$p->save();
+
 
 
 

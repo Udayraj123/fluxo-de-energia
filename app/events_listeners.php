@@ -1,21 +1,38 @@
 <?php
 Event::listen('bought_product',function($pch){
-	Game::userLog($pch->product->god_id,'Farmer '.$pch->farmer_id.' '.$pch->farmer->user->username.
-		' purchased your product '.$pch->product->name.'*'.$pch->num_units.' of id '.$pch->product->id);
-	Game::userLog($pch->farmer_id,' You purchased '.$pch->num_units.' units of '.$pch->product->god_id.' '.$pch->product->god->user->username.'\'s product '.
-		$pch->product->name.' of description:  '.$pch->product->description);
+	
+	Game::userLog($pch->farmer->user_id,' You purchased '.$pch->num_units.' units of '.$pch->product->god->user_id.' '.$pch->product->god->user->username.'\'s product '.
+		$pch->product->name.' of description:  '.$pch->product->description.' priced at '.$pch->product->bid_price);
 	// Game::userLog($pch->god->addNotice(""));
 });
 
+Event::listen('bought_product_g',function($args){
+	// tell storageLE as well
+	$pch = $args[0];
+	$amt = $args[1];
+	$userId = $args[2];
+	Game::userLog($userId,'Farmer with id '.$pch->farmer->user_id.' and name '.$pch->farmer->user->username.'has purchased your product '.$pch->product->name.', and bought '.$pch->num_units.'units at price '.$pch->product->bid_price.' So the total amount received by you is '.$amt.'');
+});
+
+Event::listen('bought_product_i',function($args){
+	// tell storageLE as well
+	$pch = $args[0];
+	$amt = $args[1];
+	$userId = $args[2];
+	Game::userLog($userId,'Farmer with id '.$pch->farmer->user_id.' and name '.$pch->farmer->user->username.'has purchased your product '.$pch->product->name.', and bought '.$pch->num_units.'units at price '.$pch->product->bid_price.' So the total amount received by you is '.$amt.'');
+});
+
+
 Event::listen('bought_fruit',function($fbill){
 	// tell storageLE as well
-	Game::userLog($fbill->investor_id,'Noted purchase : Notify the Farmer, or Push to the table which is fetched with ajax');
-	Game::userLog($fbill->fruit->farmer_id,'Noted purchase : Notify the Farmer, or Push to the table which is fetched with ajax');
+
+	Game::userLog($fbill->investor->user_id,'You have successfully bought '.$fbill->num_units.' fruits priced at '.(int)($fbill->num_units)*(int)($fbill->buy_price).'. The Stored Le that you get is '.$fbill->fruit->storage_le.'. The farmer you bought from '.$fbill->fruit->farmer->user->username.' and id was '.$fbill->fruit->farmer->user_id);
+	Game::userLog($fbill->fruit->farmer->user_id,'Your fruit '.$fbill->fruit->name.' has been sold. The quantity sold was '.$fbill->num_units.' priced at '.$fbill->buy_price.' So the total amount you received is '.(int)($fbill->num_units)*(int)($fbill->buy_price).'. Investor who invested'.$fbill->investor->user->username.' and id was '.$fbill->investor->user_id);
 });
 
 Event::listen('made_investment',function($invm){
-	Game::userLog($invm->investor_id,'Noted purchase : Notify the Farmer, or Push to the table which is fetched with ajax');
-	Game::userLog($invm->product->god_id,'Noted purchase : Notify the Farmer, or Push to the table which is fetched with ajax');
+	Game::userLog($invm->investor->user_id,'You have bought the product '.$invm->product->name.', created by '.$invm->product->god->user->username.' and id '.$invm->product->god->user_id.'. Bought at Buy Price'.$invm->bid_price.' the quantity you bought is '.$invm->num_shares.'. Total Amount you paid '.(int)($invm->num_shares)*(int)($invm->bid_price));
+	Game::userLog($invm->product->god->user_id,'Your product '.$invm->product->name.' has been invested by '.$invm->investor->user->username.' and id '.$invm->investor->user_id.'. Bought at Buy Price'.$invm->bid_price.' the quantity taken is '.$invm->num_shares.'. So the remaining amount left is '.$invm->product->avl_shares.'Total Amount you recieved '.(int)($invm->num_shares)*(int)($invm->bid_price));
 });
 
 Event::listen('redeemed_LE',function($args){
