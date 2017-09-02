@@ -74,6 +74,7 @@ public function getUnitPrice($input){
 
 	//work on UI of this later
 public function launchFruit(){
+	$user= Auth::user()->get();
 	$input=Input::all();
 		$f0=Fruit::find($input['storage_id']); //Fruit::where('seed_id',$l->seed_id)->where('launched',0)->first(); 
 		$num_units = $f0->num_units; //to be transferred
