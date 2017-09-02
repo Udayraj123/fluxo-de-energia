@@ -109,7 +109,8 @@ class admin extends \BaseController {
 			//----------------------------------------------------------------
 			$u->change_percent =0;
 			$u->prev_time =$t;
-			$u->logged_in = 0;
+			// $u->logged_in = 0;
+			
 			$u->le=$ini[$u->category];
 			$u->prev_LE =$ini[$u->category];
 			$u->highest_LE=$ini[$u->category];

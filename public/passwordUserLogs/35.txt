@@ -3,3 +3,5 @@
 [2017-09-02 13:02:50] User 35 user4 redeemed LE 0 Now at LE 1000000
 [2017-09-02 13:05:09] User 35 user4 redeemed LE 0 Now at LE 483974
 [2017-09-02 13:05:22] User 35 user4 redeemed LE 0 Now at LE 480314
+[2017-09-02 13:27:42] **** Reset Users has been executed ****
+[2017-09-02 13:28:23] **** Reset Users has been executed ****

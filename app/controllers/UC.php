@@ -229,9 +229,9 @@ class UC extends \BaseController {
       if($user){
         if($authuser){
           $authuser->logged_in=0;
-          $cat = $authuser->category;
-          $authuser->$cat->switch_time=time();
-          $authuser->save();
+          // $cat = $authuser->category;
+          // $authuser->$cat->switch_time=time();
+          // $authuser->save();
           Auth::user()->logout(); 
         }
         Auth::user()->login($user); 
