@@ -30,6 +30,7 @@ class FC extends \BaseController {
 	$fq *= C::get('game.fertQual');
 
 	$GT= C::get('game.seedGT') / (1 + $sq*$fq*$lq);
+// add fert_time and plant_time HERE 
 
 	$l->GT=$GT; $l->save();
 
@@ -240,10 +241,9 @@ public function launchFruit(){
 
 		foreach ($sel_lands as $id) {
 				//FOR EACH (SPLICED)SELECTED LANDS, DO THIS-
-			$l=Land::find($id);
+				$l=Land::find($id);
 				$l->fert_id=$pch->id;		//update seed_id of sel land
 				$l->save(); //This will affect the farmer's visuals of land
-
 				
 				//TODO - This shall count in the plant_time as well as 'fert_time'
 				//action - set the new GT

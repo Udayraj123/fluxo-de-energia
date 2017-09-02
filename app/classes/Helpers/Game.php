@@ -47,7 +47,7 @@ class Game
 	//this does the swapping
         public static function boostLE($user){
             $fac = (1+C::get('game.boostFac'));
-            $user->le = $fac * $user->le;
+            $user->le *= $fac;
             Event::fire('user_boosted',array([$user,$fac]));
             $user->save();
             return;
