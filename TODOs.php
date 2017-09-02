@@ -1,6 +1,18 @@
 <?php
 """
 LAST MOMENT CALLS 
+
+TEST TEST TEST
+>> Farmer sellFruit and Returns
+
+BUG BUG
+resolved >> showLand land_ids is null
+>> Fertilizer Debug
+>> Fruit Deploy Ajax
+
+// add fert_time and plant_time HERE 
+
+
 Done >> LOGGING EVERYTHING INTO USER FILES
  - Test it
 Done> showLand -> show quality on top
@@ -16,9 +28,6 @@ Final Call.
 
 
 KEEP NOTE OF USER:: queries -> check is_moderator=0
-
-TEST TEST TEST
->> Farmer sellFruit and Returns
 
 ALL WATCH THRU LOGS!
 
@@ -39,9 +48,6 @@ REMOVE DEBUG LINES
 > Team ID instead of Usernames in Funding Bar
 
 FrontendDos- dataTables
-
-BUG BUG
-showLand land_ids is null
 
 26 August 
 Shall investment be in the God n not product??

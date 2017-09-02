@@ -8,7 +8,7 @@ return [
 	],
 	"investor" => [
 	'listInvestments'=>'listInvestments',
-	'buyFruit'=>'buyFruit',
+	'buyFruit'=>'Bazaar',
 	'makeInvestment'=>'makeInvestment',
 	],
 	"farmer" => [
