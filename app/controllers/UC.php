@@ -92,12 +92,12 @@ class UC extends \BaseController {
         $is = $puser->investor->investments;
         $totinv[0]=0;
         $totinv[1]=0;
-      foreach ($is as $i) {
+        foreach ($is as $i) {
         # code...
-        $totinv[1] += (int)($i->amt_ret);
-        $totinv[0] += (int)($i->bid_price) * (int)($i->num_shares);
-      }
-      return $totinv;
+          $totinv[1] += (int)($i->amt_ret);
+          $totinv[0] += (int)($i->bid_price) * (int)($i->num_shares);
+        }
+        return $totinv;
       }
 
 
@@ -138,7 +138,7 @@ class UC extends \BaseController {
         }
         //------------------------------------------------------------------------------------------------
         $cat=$user->category;
-        $user->$cat->play_time=time()-$user->$cat->switch_time;
+         $playtime = $user->$cat->play_time + time()-$user->$cat->switch_time;
         
         $user->save();
         
@@ -189,7 +189,7 @@ class UC extends \BaseController {
 
         $user->save();
       }
-      return array('reload'=>'0','le'=>$user->le,'stored_LE'=>$user->stored_LE,'decay'=>$char->decay,'active_cat'=>$active_cat);
+      return array('reload'=>'0','playtime'=>$playtime,'le'=>$user->le,'stored_LE'=>$user->stored_LE,'decay'=>$char->decay,'active_cat'=>$active_cat);
     }
 
 
@@ -220,7 +220,7 @@ class UC extends \BaseController {
       $authuser = Auth::user()->get();
       if($authuser && $force==0)return "already logged in ";
 
-        
+
       $user = User::where('is_moderator','0')
       ->where('logged_in','0')
       ->where('category',$cat)
@@ -229,14 +229,13 @@ class UC extends \BaseController {
       if($user){
         if($authuser){
           $authuser->logged_in=0;
+          $cat = $authuser->category;
+          $authuser->$cat->switch_time=time();
           $authuser->save();
           Auth::user()->logout(); 
         }
         Auth::user()->login($user); 
         $user->logged_in = 1; 
-        $cat = $authuser->category;
-        $authuser->$cat->switch_time=time();
-        // $authuser->farmer->switch_time=time();
         $user->save(); 
         return View::make('goback');
       } 

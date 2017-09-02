@@ -81,12 +81,14 @@ class admin extends \BaseController {
 		$landPrice = C::get('game.basePrices')['land'];
 		$stored_LE=C::get('game.stored_LE');
 		$models = ['Farmer','God','Investor'];
+		$cats = ['farmer','god','investor'];
 
 		foreach ($users as $c=> $u) {
 			if($c <$ng)$u->category='god';
 			else if($c <=$ni)$u->category='investor';
 			else $u->category='farmer';
 
+			// recreate models
 			foreach ($models as $m) {
 				if($m::where('user_id',$u->id)->count()==0){
 					echo "*";
@@ -94,6 +96,12 @@ class admin extends \BaseController {
 					$f->user_id=$u->id;
 					$f->save();
 				}
+			}
+			//update switch_time
+			foreach ($cats as $cat) {
+				$u->$cat->switch_time = time();
+				$u->$cat->play_time = 0;
+				$u->$cat->save();
 			}
 
 			//----------------------------------------------------------------
