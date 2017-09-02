@@ -184,9 +184,6 @@ class GC extends \BaseController {
 		$user->save();
 		$p->save();
 
-		
-		
-
 		Event::fire('createProd',[[$user,$p]]);
 		echo "<tr> <td> Final Life Energy </td><td>".$user->le."</td></tr></table>";
 
