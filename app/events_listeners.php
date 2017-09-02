@@ -38,7 +38,7 @@ Event::listen('made_investment',function($invm){
 Event::listen('redeemed_LE',function($args){
 	$user = $args[0];
 	$redeemed_LE = $args[1];
-	Game::userLog($user->id,'User '.$user->id.' '.$user->username.' redeemed LE '.$redeemed_LE.' Now at LE '.$user->le);
+	if($redeemed_LE!=0)Game::userLog($user->id,'User '.$user->id.' '.$user->username.' redeemed LE '.$redeemed_LE.' Now at LE '.$user->le);
 });
 
 Event::listen('createProd',function($args){
