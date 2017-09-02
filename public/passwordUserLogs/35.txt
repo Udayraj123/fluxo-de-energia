@@ -1,1 +1,5 @@
 [2017-09-02 11:30:41] User 35 user4 redeemed LE 0 Now at LE 1355
+[2017-09-02 13:02:40] User 35 user4 redeemed LE 0 Now at LE 1000000
+[2017-09-02 13:02:50] User 35 user4 redeemed LE 0 Now at LE 1000000
+[2017-09-02 13:05:09] User 35 user4 redeemed LE 0 Now at LE 483974
+[2017-09-02 13:05:22] User 35 user4 redeemed LE 0 Now at LE 480314
