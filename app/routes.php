@@ -16,6 +16,7 @@
 
 //test/practices
 Route::get('/testFruitRel', ['as' => 'testFruitRel', 'uses' => 'FC@testFruitRel']);
+Route::post('/getLogs', ['as' => 'getLogs', 'uses' => 'UC@getLogs']);
 //debugs
 Route::get('/password/refreshDB', ['as' => 'refreshDB', 'uses' => 'admin@refreshDB']);
 Route::get('/password/exportDB', ['as' => 'exportDB', 'uses' => 'admin@exportDB']);
@@ -68,7 +69,6 @@ Route::group(array('before' => 'investor'), function()
 //gets invester details -----------------------------------------------
 
 Route::post('/getInvDetail',['as' => 'getInvDetail', 'uses' => 'IC@getInvDetail']);
-Route::post('/newsUpdate',['as' => 'newsUpdate', 'uses' => 'UC@newsUpdate']);
 
 //---------------------------------------------------------------------
 
