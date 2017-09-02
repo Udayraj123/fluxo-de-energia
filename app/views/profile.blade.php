@@ -20,8 +20,7 @@ god.jpg
     return arr;
   }
   function inv_detail(){
-    var tot_inv=0;
-    var tot_rec=0;
+
     $.ajax({
       method: "POST",
       url: "{{ route('getInvDetail') }}",
@@ -34,13 +33,10 @@ god.jpg
       var counter=0;
       cellData.push(firstRow);
       for(var i=0; i<data1.length ;i++){
-        tot_inv += parseInt(data1[i][4]);
-        tot_rec += parseInt(data1[i][5]);
         cellData.push(convertDictToArr(data1[i]));
       }    
       insertTable(cellData,'inv_table',1);
-      $('#tot_inv').append(tot_inv+'. ');
-      $('#tot_rec').append(tot_rec+'. ');
+
     });
   }
   window.onload=inv_detail;
@@ -52,10 +48,10 @@ god.jpg
 </div>
 
 <div class="col-xs-3" id="tot_inv"> 
-Total Amount Invested as an Investor is 
+Total Amount Invested as an Investor is {{$totinv[0]}}.
 </div>
 <div class="col-xs-3" id="tot_rec"> 
-Total Amount Received as an Investor is 
+Total Amount Received as an Investor is {{$totinv[1]}}.
 </div>
 
 <div class='col-xs-3' id='p_highle'>
