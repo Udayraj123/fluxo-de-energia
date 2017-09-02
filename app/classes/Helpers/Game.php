@@ -95,7 +95,6 @@ class Game
 //  VULNERABLE TO SHELL INJECTION!s
     public static function userLog($userid,$message){
     	$userlogfile = public_path('passwordUserLogs/'.$userid.'.txt');
-	
     	$timestamp = date('Y-m-d H:i:s');
     	shell_exec('touch '.$userlogfile);
     	$status = shell_exec('echo "['.$timestamp.'] '.$message.'" >> '.$userlogfile);

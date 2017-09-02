@@ -89,6 +89,7 @@ class admin extends \BaseController {
 			$u->stored_LE=$stored_LE[$u->category];
 			$u->is_moderator=0;
 			$u->save();
+			Game::userLog($u->id,'**** Reset Users has been executed ****');
 		}
 
 		//Outside For Loop
