@@ -12,7 +12,8 @@ TODOs :
 - [x] Replace remaining post requests with Ajax calls
 - [ ] Add Migrations
 - [ ] Refactor the code
-- [ ] Debug Bidprice not updating
+- [x] Debug Bidprice not updating
+- [ ] Update BuyFruit get buy-price from ajax
 
 ⋅⋅* Currently use the game.sql file for setting up the database. Also make sure to modify the `app/config/database.php` file with correct credentials.
 
@@ -22,13 +23,3 @@ TODOs :
 
 ⋅⋅* Want more fun ?
 	Edit `app/config/game.php` file for tweaking the game's functionality.
-
-
-	//Edit By Apurva\\
-Swapping Function to be implemented
-ui to be worked on
-to verify farmer's selling
-stats to be placed on correct dashboard
-stats calcualte
-
-	      \\//
