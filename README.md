@@ -14,6 +14,7 @@ TODOs :
 - [ ] Refactor the code
 - [x] Debug Bidprice not updating
 - [ ] Update BuyFruit get buy-price from ajax
+- [ ] Shift UI from marginal view to bootstrap
 
 ⋅⋅* Currently use the game.sql file for setting up the database. Also make sure to modify the `app/config/database.php` file with correct credentials.
 
