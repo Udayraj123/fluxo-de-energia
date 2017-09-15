@@ -60,11 +60,15 @@ window.onload=inv_detail;
 <div class='col-xs-6' id='p_highle'>
   <h4>All time highest Life Energy was <strong>{{$puser->highest_LE}}.</strong></h4>
 </div>
-
+<!-- ------------ -->
+<!-- ------------ -->
+<!-- ------------ -->
 <div class='col-xs-6' id='p_perchng'>
-  <h4>The Change in Life Energy in last one minute is <strong>{{$puser->change_percent}}.</strong></h4>
+  <h4>The Change in Life Energy in last one minute is <strong>{{$puser->change_percent}}.</strong> percent</h4>
 </div>
-
+<!-- ------------ -->
+<!-- ------------ -->
+<!-- ------------ -->
 <div class='col-xs-6' id='p_perchng'>
   <h4>The current Life Energy is <strong>{{$puser->le}}.</strong></h4>
 </div>
@@ -84,10 +88,16 @@ window.onload=inv_detail;
   <h4>Money Earned from selling fruits : <strong>{{$total[1]}}. </strong></h4>
 </div>
 <div class="col-xs-6" id="p_fruit">
-
+<!-- ------------ -->
+<!-- ------------ -->
+<!-- ------------ -->
   @foreach(['farmer','investor','god'] as $cat)
-  <h4>Playtime as {{$cat}}* : <strong>{{ $puser->$cat->play_time + (($cat==$puser->category)?time()-$puser->$cat->switch_time:0)}} </strong></h4>
+  <h4>Playtime as {{$cat}} : <strong>{{ $puser->$cat->play_time + (($cat==$puser->category)?time()-$puser->$cat->switch_time:0)}} </strong> seconds.</h4>
   @endforeach
+
+  <!-- ------------ -->
+  <!-- ------------ -->
+  <!-- ------------ -->
 </div>
 
 <div class="col-xs-6" id="inv_table">

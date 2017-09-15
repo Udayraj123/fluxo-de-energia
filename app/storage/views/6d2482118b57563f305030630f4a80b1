@@ -173,6 +173,13 @@ function logsgetnow(){
   <span class="info-box-icon bg-aqua" style="opacity:0.85; position:relative; height: 100%">
     <i class="fa fa-fw fa-user" style="position:relative; top:10%">
       <div id="active_cat" align="center" style="font-size: 40%"></div>
+      <!-- -------------------------------------- -->
+      <!-- -------------------------------------- -->
+      <!-- -------------------------------------- -->
+      <div id="print_id" style="font-size: 40%"><?php echo $user->id; ?></div>
+      <!-- -------------------------------------- -->
+      <!-- -------------------------------------- -->
+      <!-- -------------------------------------- -->
     </i>
   </span>
   <!-- <nav class="navbar navbar-static-top"> -->
@@ -208,7 +215,7 @@ function logsgetnow(){
         </div>
       </div>
 
-      <div class="col-xs-6" style="position: relative; left:5%">
+      <div class="col-xs-5" style="position: relative; left:5%">
 
         <div class="gap"><br></div>
         <!-- <div class="input-group"> -->
@@ -257,26 +264,24 @@ function logsgetnow(){
         </table>
       </div>
 
-      <div class="col-xs-1" style="width:10% ; position: relative;"> 
+      <div class="col-xs-2" style="width:10% ; position: relative; left:6%"> 
         <div class="row"><br></div>
         <table>
-          <tr>
+          <tr class="btn-group">
             <td>
-              Status: 
+              <button class="btn btn-sm btn-default">Status:</button>
             </td>
             <td>
             <span id="msg"> </span>
             </td>
           </tr>
-          <tr>
+          <tr class="btn-group">
             <td>
-              <div onclick="openNav()" id="news_btn"><button class="btn-block btn-success btn-sm">News &#9776;</button>
-              </div>
-            </td>
-            <td>
-            <div onclick="openNav2()" id="logs_btn"><button class="btn-block btn-success btn-sm">Logs &#9776;</button>
-              </div>
+            <button onclick="openNav()" id="news_btn" class="btn-block btn-success btn-sm">News &#9776;</button>
               </td>
+            <td>
+            <button onclick="openNav2()" id="logs_btn" class="btn-block btn-success btn-sm">Logs &#9776;</button>
+                           </td>
           </tr>
         </table>
 
@@ -295,6 +300,8 @@ function openNav() {
   if(document.getElementById("news_pan").style.display == "block")
     document.getElementById("news_pan").style.display = "none";
   else {newsGetNow();
+        document.getElementById("logs_pan").style.display = "none";
+
     document.getElementById("news_pan").style.display = "block";
 
     document.getElementById("news_btn").style.color = "white";
@@ -311,8 +318,8 @@ function openNav2() {
   if(document.getElementById("logs_pan").style.display == "block")
     document.getElementById("logs_pan").style.display = "none";
   else {logsgetnow();
+    document.getElementById("news_pan").style.display = "none";
     document.getElementById("logs_pan").style.display = "block";
-
     document.getElementById("logs_btn").style.color = "white";
   }
 }
@@ -338,7 +345,7 @@ function closeNav2() {
 
 <div id="logs_pan" class="container" style="background-color: white; padding:10px; position: fixed; right:0px; height:88%; z-index: 99; display: none;width:400px; font-family: 'Ubuntu';color:#666666; ">
 
-  <h1 align="center" style="margin-top: 5%;"> logs</h1>
+  <h1 align="center" style="margin-top: 5%;"> Logs</h1>
   <a href="javascript:void(0)" class="closebtn" style="position: absolute;
   top: 0;
   right: 25px;

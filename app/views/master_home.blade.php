@@ -172,6 +172,13 @@ function logsgetnow(){
   <span class="info-box-icon bg-aqua" style="opacity:0.85; position:relative; height: 100%">
     <i class="fa fa-fw fa-user" style="position:relative; top:10%">
       <div id="active_cat" align="center" style="font-size: 40%"></div>
+      <!-- -------------------------------------- -->
+      <!-- -------------------------------------- -->
+      <!-- -------------------------------------- -->
+      <div id="print_id" style="font-size: 40%">{{$user->id}}</div>
+      <!-- -------------------------------------- -->
+      <!-- -------------------------------------- -->
+      <!-- -------------------------------------- -->
     </i>
   </span>
   <!-- <nav class="navbar navbar-static-top"> -->

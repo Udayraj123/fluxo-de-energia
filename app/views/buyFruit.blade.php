@@ -71,7 +71,6 @@ god.jpg
 		</td></tr>
 		{{ Form::close() }}
 	</table>
-	<button onclick="getUC()" >get buy_price</button><br>
 </div>
 
 <!-- /.box-header -->
