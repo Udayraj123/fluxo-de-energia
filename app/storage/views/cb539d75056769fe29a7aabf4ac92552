@@ -108,7 +108,7 @@ god.jpg
 	counter++;
 	currRow.push(counter.toString());
 	currRow.push('<?php echo $f->id; ?>');
-	currRow.push('<?php echo $f->farmer->user->username; ?>');
+	currRow.push('<?php echo $f->farmer->user->namelink(); ?>');
 	currRow.push('<?php echo $f->name; ?>');
 	currRow.push('<?php echo $f->description; ?>');
 	currRow.push('<?php echo $f->pivot->num_units; ?>');

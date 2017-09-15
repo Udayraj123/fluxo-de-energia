@@ -205,7 +205,7 @@ class UC extends \BaseController {
         $fcontent = file_get_contents($fileadrs);
       }catch(Exception $e){
         shell_exec('touch '.$fileadrs);
-        $fcontent="File Not Found!";
+        $fcontent="<hr>";
       }
       //log::info($fcontent);
       return $fcontent;
