@@ -1,12 +1,14 @@
-The Online Multiplayer Game for Technothlon Mains !
-Fluxo de Energia is a multiplayer game inspired from Virtual Stock Market to enable children to ~~learn~~ Experience how the stock market works.
-This game involves three characters : Gods, Investors and Farmers. Each player gets to play every role in the duration of the whole game.
+# Fluxo de Energia
+### The Online Multiplayer Game for Technothlon Mains !
+It is a multiplayer game inspired from Virtual Stock Market to enable children to ~~learn~~ Experience how the stock market works.
+This game involves three characters : Gods, Investors and Farmers. Each player gets to play every role 
+in the duration of the whole game.
 
 The students played against each other in real-time, in a quest to make trades and increase their life energy! A player could take up many roles, invest, grow and sell. The ultimate aim was to make the most profit. Being a real-time event, each player's action affected the other, resulting in a very dynamic game which had the participants thinking and planning at all times.
 
-The whole game is built on Laravel 4.2
+###### For more information view the presentation here - https://goo.gl/NxJfM8
 
-###### Refer <a href="https://laravel.com/docs/4.2/installation"> here</a> for laravel installation
+###### The whole game is built in php using Laravel 4.2. Refer <a href="https://laravel.com/docs/4.2/installation"> here</a> for laravel installation
 
 #### TODOs : 
 - [x] Test Run it
