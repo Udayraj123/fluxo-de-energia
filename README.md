@@ -8,7 +8,7 @@ The whole game is built on Laravel 4.2
 
 ###### Refer <a href="https://laravel.com/docs/4.2/installation"> here</a> for laravel installation
 
-#####TODOs : 
+#### TODOs : 
 - [x] Test Run it
 - [x] Complete the UI
 - [x] Resolve Threshold Transitions
@@ -18,6 +18,7 @@ The whole game is built on Laravel 4.2
 - [ ] Refactor the code
 - [ ] Shift UI from margin view to complete bootstrap
 - [ ] Add Migrations
+- [ ] Add UI photos to the Readme
 
 * Currently use the game.sql file for setting up the database. Also make sure to modify the `app/config/database.php` file with correct credentials.
 
@@ -25,5 +26,5 @@ The whole game is built on Laravel 4.2
 		`php artisan serve`
 	and Enjoy the game!
 
-###### Want more fun ?
+##### Want more fun ?
 	Edit `app/config/game.php` file for tweaking the game's functionality.
