@@ -6,9 +6,10 @@ in the duration of the whole game.
 
 The students played against each other in real-time, in a quest to make trades and increase their life energy! A player could take up many roles, invest, grow and sell. The ultimate aim was to make the most profit. Being a real-time event, each player's action affected the other, resulting in a very dynamic game which had the participants thinking and planning at all times.
 
-###### For more information view the presentation here - https://goo.gl/NxJfM8
+#### For coverage of the Technothlon event view here - https://www.facebook.com/pg/technothlon.techniche/photos/?tab=album&album_id=1605945489480835 
+#### For more information view the presentation here - https://goo.gl/NxJfM8
 
-###### The whole game is built in php using Laravel 4.2. Refer <a href="https://laravel.com/docs/4.2/installation"> here</a> for laravel installation
+#### The whole game is built in php 5 using Laravel 4.2 . Refer <a href="https://laravel.com/docs/4.2/installation"> here</a> for laravel installation
 
 #### TODOs : 
 - [x] Test Run it
